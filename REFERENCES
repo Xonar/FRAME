@@ -1,0 +1,12 @@
+REFERENCES
+----------
+
+TEXT:
+  I used Valves Distance Field Technique and made a map of different characters for text. 
+
+  Reasons:
+    - It allows for easy adding of specail effects
+    - Fast and works on old hw
+
+  Source: (See what I did there)
+    http://www.valvesoftware.com/publications/2007/SIGGRAPH2007_AlphaTestedMagnification.pdf
