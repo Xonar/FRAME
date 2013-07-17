@@ -8,7 +8,7 @@ OBJ_FILES = $(subst ./,./$(BUILD_DIR)/,$(SRC_FILES:.cpp=.o))
 
 DEPENDANCIES =  $(OBJ_FILES:.o=.d)
 
-DIRECTORIES = $(subst .,./$(BUILD_DIR),${shell find . -not -iwholename "./Build*" -type d})
+DIRECTORIES = $(subst .,./$(BUILD_DIR),${shell find . -not -iwholename "./Build*" -not -iwholename "./.*" -type d})
 
 CC = g++
 CFLAGS = -std=c++11 -g -Wall -O2
