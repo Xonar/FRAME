@@ -1,8 +1,9 @@
 /*
  * File :
- *      Window.h
+ *      ./Window/Window.h
+ *
  * Author :
- *      Xonar
+ *      Xonar <Paul le Roux>
  *
  * Description:
  *      The Window class is a handler for the window

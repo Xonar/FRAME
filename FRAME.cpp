@@ -1,9 +1,12 @@
 /*
- *  File : Main.cpp
+ * File :
+ *      ./Main.cpp
  *
- *  Author : Xonar < Paul le Roux >
+ * Author : 
+ *      Xonar <Paul le Roux>
  *
- *  Program Entry for FRAME and Program Loop
+ * Description :
+ *      Program Entry for FRAME and Program Loop
  *
  */
 

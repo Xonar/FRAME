@@ -3,7 +3,7 @@
  *      ./Global.h
  *
  * Author : 
- *      Xonar
+ *      Xonar <Paul le Roux>
  *
  * Description :
  *      Contains all global variables
