@@ -1,3 +1,14 @@
+/*
+ * File :
+ *      ./Window/Window.cpp
+ *
+ * Author :
+ *      Xonar <Paul le Roux>
+ *
+ * Description:
+ *      Definitions of ./Window/Window.h
+ */
+
 #include "Window.h"
 
 #include <SDL2/SDL_opengl.h>
