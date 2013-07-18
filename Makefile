@@ -14,7 +14,7 @@ CC = g++
 CFLAGS = -std=c++11 -g -Wall -O2
 
 LD = g++
-LDFLAGS = -lGL -lSDL2
+LDFLAGS = -lGL -lSDL2 -lSDL2_image
 
 #Include Dependancies
 ifdef DEPENDANCIES_GENERATED
