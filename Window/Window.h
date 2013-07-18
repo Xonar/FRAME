@@ -34,7 +34,9 @@ private:
   SDL_GLContext context = NULL;
 
   //OpenGL
-  //TODO
+  int glMajorVersion;
+  int glMinorVersion;
+
 public:
   FWindow(std::string title);
   
