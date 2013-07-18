@@ -11,6 +11,7 @@
  */
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "Global.h"
 #include "Window/Window.h"
@@ -21,6 +22,9 @@ int main()
   FWindow window("FRAME Engine Test");
 
   window.Init();
+
+  //Init SDL Font Engine
+  TTF_Init();
 
   SDL_Delay(2000);
 
