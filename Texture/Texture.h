@@ -13,6 +13,7 @@
 #define _F_H_TEXTURE_
 
 #include <string>
+#include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 
 #include <glm/glm.hpp>
@@ -26,8 +27,12 @@ class FTexture
     float height;
   public:
     FTexture();
+    ~FTexture();
 
+    int loadTextureFromSurface(SDL_Surface* surface);
     int loadTextureFromFile(std::string file);
+
+    int freeTexture();
 
     //TEST: Function to test image load capabilaties
     int blitToScreen(glm::vec2 pos);

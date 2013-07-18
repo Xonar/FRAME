@@ -25,11 +25,22 @@ FTexture::FTexture()
   this->height = 0;
 }
 
-int FTexture::loadTextureFromFile(std::string file)
+FTexture::~FTexture()
 {
-  SDL_Surface *surface;
+  if(glTexture)
+  this->freeTexture();
+}
 
-  if( (surface = IMG_Load(file.c_str()) ) )
+int FTexture::freeTexture()
+{
+  glDeleteTextures( 1, &this->glTexture );
+  this->glTexture = 0;
+  return 0;
+}
+
+int FTexture::loadTextureFromSurface(SDL_Surface* surface)
+{
+  if(surface)
   {
     this->width = surface->w;
     this->height = surface->h;
@@ -41,6 +52,22 @@ int FTexture::loadTextureFromFile(std::string file)
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  }
+  else
+  {
+    std::cerr << "Tried creating texture from a empty surface!" << std::endl;
+  }
+
+  return 0;
+}
+
+int FTexture::loadTextureFromFile(std::string file)
+{
+  SDL_Surface *surface;
+
+  if( (surface = IMG_Load(file.c_str()) ) )
+  {
+    loadTextureFromSurface(surface);
   }
 
   if(surface)
