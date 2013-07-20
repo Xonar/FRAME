@@ -22,15 +22,29 @@
 class FFont
 {
   private:
-    TTF_Font* sdlFont;
-    unsigned int fontSize;
+    struct FGlyph
+    {
+      glm::vec2 pos; //Position in Texture
+      glm::vec2 dim; //Dimensions of Char
+      glm::vec2 adv; //Cursor movement
+      glm::vec2 off; //Cursor offset in texture
+    };
+    
+    GLint chars_start;
+    GLint chars_end;
+    FGlyph *chars;
 
+    TTF_Font* sdlFont;
+    FTexture texture;
+
+    GLuint fontSize;
   public:
     FFont();
 
-    int createFromTTF(std::string ttf,const unsigned int size);
+    GLint createFromTTF(std::string ttf,const unsigned int size);
 
-    int drawText(std::string text,glm::vec2 pos);
+    GLint drawFontTexture(glm::vec2 pos);
+    GLint drawText(std::string text,glm::vec2 pos);
 };
 
 #endif //_F_H_FONT_
