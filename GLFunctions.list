@@ -1,0 +1,31 @@
+# File:
+#       ./GLFunctions.list
+#
+# Author :
+#      Xonar <Paul le Roux>
+#
+# Description:
+#      List from which GLFunctions and Appropriate Headers are generated
+
+#Instructions:
+#   '#' indicates the start of a comment
+#   All blank lines will be ignored
+#
+#   Function Declerations of GL Functions can be found 
+#   from man-pages or other references
+
+#Programs
+void glUseProgram(GLuint program);
+GLboolean glIsProgram(GLuint program);
+GLuint glCreateProgram(void);
+void glDeleteProgram(GLuint program);
+
+void glGetProgramiv(GLuint program, GLenum pname, GLint *params);
+void glGetProgramInfoLog(GLuint program, GLsizei maxLength, GLsizei *length, GLchar *infoLog);
+
+#Shaders
+GLboolean glIsShader(GLuint shader);
+void glGetShaderiv(GLuint shader, GLenum pname, GLint *params);
+void glGetShaderInfoLog(GLuint shader, GLsizei maxLength, GLsizei *length, GLchar *infoLog);
+
+#EOF
