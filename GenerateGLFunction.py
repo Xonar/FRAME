@@ -21,7 +21,7 @@ class GLFunction:
   def decl(self):
     return self.glReturn + " (*" + self.glFunction + ")(" + self.glParameters + ");"
   
-  #Return Function Define
+  #Return Function Definition
   def defi(self):
     return self.glFunction + " = (__typeof__("+self.glFunction+"))SDL_GL_GetProcAddress(\"" + self.glFunction + "\");"
   
@@ -136,7 +136,7 @@ def main():
 \n{\
 \n")
 
-  #Write Definations
+  #Write Definitions
   for i in glFunctions:
     f.write("  " + i.defi() + "\n")
 

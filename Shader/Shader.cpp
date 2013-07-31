@@ -150,7 +150,7 @@ GLint FShader::loadShader(std::string shader, GLenum type)
   std::string shaderSrc = readFileIntoString(shader);
   if(shaderSrc.compare(""))
   {
-    std::cerr << "Cant compile shader withour soutce!" << std::endl;
+    std::cerr << "Cant compile shader withour source!" << std::endl;
     return 1;
   }
 
