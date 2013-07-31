@@ -26,8 +26,6 @@ int main()
   //Init SDL Font Engine
   TTF_Init();
 
-  SDL_Delay(2000);
-
   //Game Loop
   while(gGameOn)
   {
