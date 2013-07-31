@@ -24,7 +24,7 @@ include $(DEPENDANCIES)
 endif
 
 #Generate Dependancies
-all: $(DIRECTORIES) $(DEPENDANCIES) $(GENERATED)
+all: $(DIRECTORIES) $(GENERATED) $(DEPENDANCIES)
 	@echo "-------------------------------"
 	@echo "Compiling : "
 	@echo "-------------------------------"
@@ -32,7 +32,7 @@ all: $(DIRECTORIES) $(DEPENDANCIES) $(GENERATED)
 
 #Generated Files
 ./Graphics/GLFunctions.h: GLFunctions.list
-	@echo "Generating GLFunctions.[h,cpp]"
+	@echo "Generating GLFunctions.{h,cpp}"
 	@python GenerateGLFunction.py
 
 #Create Directories
@@ -50,7 +50,8 @@ $(DIRECTORIES):
 	$(CC) -c $(CFLAGS) $*.cpp -o ./Build/$*.o
 
 clean:
-	rm -f -r $(BUILD_DIR)  
+	rm -f -r $(BUILD_DIR)
+	rm -f ./Graphics/GLFunctions.{h,cpp}
 
 $(EXECUTABLE) : $(OBJ_FILES)
 	$(LD) -o $(EXECUTABLE) $(OBJ_FILES) $(LDFLAGS)
