@@ -10,6 +10,8 @@ DEPENDANCIES =  $(OBJ_FILES:.o=.d)
 
 DIRECTORIES = $(patsubst .%,./$(BUILD_DIR)%,$(shell find . -not -iwholename "./Build*" -not -iwholename "./.*" -type d))
 
+GENERATED = ./Graphics/GLFunctions.h
+
 CC = g++
 CFLAGS = -std=c++11 -g -Wall -O2
 
@@ -22,11 +24,16 @@ include $(DEPENDANCIES)
 endif
 
 #Generate Dependancies
-all: $(DIRECTORIES) $(DEPENDANCIES)
+all: $(DIRECTORIES) $(DEPENDANCIES) $(GENERATED)
 	@echo "-------------------------------"
 	@echo "Compiling : "
 	@echo "-------------------------------"
 	@$(MAKE) DEPENDANCIES_GENERATED=1 $(EXECUTABLE)
+
+#Generated Files
+./Graphics/GLFunctions.h: GLFunctions.list
+	@echo "Generating GLFunctions.[h,cpp]"
+	@python GenerateGLFunction.py
 
 #Create Directories
 $(DIRECTORIES):
