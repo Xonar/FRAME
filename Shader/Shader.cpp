@@ -11,6 +11,9 @@
 
 #include "Shader.h"
 
+#include "../Graphics/Graphics.h"
+#include "../Lib/Files.h"
+
 #include <iostream>
 
 FShader::FShader()
@@ -45,7 +48,7 @@ GLint FShader::bind()
 
 void FShader::unbind()
 {
-  glUseProgram(NULL);
+  glUseProgram(0);
 }
 
 void FShader::printProgramLog(GLuint program)
@@ -55,7 +58,7 @@ void FShader::printProgramLog(GLuint program)
     int len = 0;
     int actLen = 0;
     
-    glGetProgamiv( program, GL_INFO_LOG_LENGTH, &len);
+    glGetProgramiv( program, GL_INFO_LOG_LENGTH, &len);
     
     char* log = new char[len];
 
@@ -94,4 +97,79 @@ void FShader::printShaderLog(GLuint shader)
   {
     std::cerr << "Invalid Shader : " << shader << std::endl;
   }
+}
+
+GLint FShader::loadShader(std::string shader, GLenum type)
+{
+  GLuint* pShader;
+
+  switch(type)
+  {
+    case GL_VERTEX_SHADER:
+      if(vs)
+      {
+        std::cerr << "Vertex Shader Already Exists!" << std::endl;
+        return 1;
+      }
+      pShader = &vs;
+      break;
+    case GL_GEOMETRY_SHADER:
+      if(gs)
+      {
+        std::cerr << "Geometry Shader Already Exists!" << std::endl;
+        return 1;
+      }
+      pShader = &gs;
+      break;
+    case GL_TESS_EVALUATION_SHADER:
+      if(te)
+      {
+        std::cerr << "Tesselation Evaluation Shader Already Exists!" << std::endl;
+        return 1;
+      }
+      pShader = &te;
+      break;
+    case GL_TESS_CONTROL_SHADER:
+      if(tc)
+      {
+        std::cerr << "Tesselation Control Shader Already Exists!" << std::endl;
+        return 1;
+      }
+      pShader = &tc;
+      break;
+    case GL_FRAGMENT_SHADER:
+      if(fs)
+      {
+        std::cerr << "Fragment Shader Already Exists!" << std::endl;
+        return 1;
+      }
+      pShader = &fs;
+      break;
+  }
+
+  std::string shaderSrc = readFileIntoString(shader);
+  if(shaderSrc.compare(""))
+  {
+    std::cerr << "Cant compile shader withour soutce!" << std::endl;
+    return 1;
+  }
+
+  GLint result;
+
+  GLuint shader = glCreateShader(type);
+
+  const char* pSrc = &shaderSrc[0];
+
+  glShaderSource(shader, 1, &pSrc, NULL);
+  glCompileShader(shader);
+
+  glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
+
+  if(result == GL_FALSE)
+  {
+    printShaderLog(shader);
+    return 1;
+  }
+
+  return 0;
 }
