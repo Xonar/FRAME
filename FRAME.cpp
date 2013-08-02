@@ -16,6 +16,8 @@
 #include "Global.h"
 #include "Window/Window.h"
 
+bool gGameOn = true;
+
 int main()
 {
   //Init SDL

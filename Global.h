@@ -12,6 +12,7 @@
 #ifndef _F_H_GLOBAL_
 #define _F_H_GLOBAL_
 
-bool gGameOn = true;
+//FRAME
+extern bool gGameOn;
 
 #endif // _F_H_GLOBAL_
