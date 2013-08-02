@@ -65,7 +65,7 @@ int FWindow::Init()
 
   this->context = SDL_GL_CreateContext( this->window);
 
-  //Set Viewport
+  //Set Default Viewport
   glViewport( 0.f, 0.f, this->width, this->height);
 
   //Initialize Clear Color

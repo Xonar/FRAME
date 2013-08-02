@@ -31,4 +31,12 @@ void glGetShaderInfoLog(GLuint shader, GLsizei maxLength, GLsizei *length, GLcha
 void glShaderSource(GLuint shader, GLsizei count, const GLchar **string, const GLint *length);
 void glCompileShader(GLuint shader);
 
+#Buffers
+void glGenBuffers(GLsizei n, GLuint * buffers);
+void glDeleteBuffers(GLsizei n, const GLuint * buffers);
+void glBindBuffer(GLenum target, GLuint buffer);
+void glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid * data);
+void glBindBufferBase(GLenum target, GLuint index, GLuint buffer);
+void glGetActiveUniformBlockiv(GLuint program, GLuint uniformBlockIndex, GLenum pname, GLint params);
+
 #EOF
