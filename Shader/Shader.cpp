@@ -148,9 +148,9 @@ GLint FShader::loadShader(std::string shader, GLenum type)
   }
 
   std::string shaderSrc = readFileIntoString(shader);
-  if(shaderSrc.compare(""))
+  if(shaderSrc.compare("") == 0)
   {
-    std::cerr << "Cant compile shader withour source!" << std::endl;
+    std::cerr << "Cant compile shader without source!" << std::endl;
     return 1;
   }
 
