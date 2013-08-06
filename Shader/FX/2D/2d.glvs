@@ -1,0 +1,30 @@
+#version 150
+
+//Input
+struct VS_In
+{
+  vec2 pos;
+  vec2 tex;
+  vec3 col;
+};
+
+in VS_In input;
+
+//Output
+struct VS_Out
+{
+  vec2 tex;
+  vec3 col;
+};
+
+out VS_Out output;
+
+uniform mat4 TextOrthoMatrix;
+
+//Main
+void main()
+{
+  output.tex = input.tex;
+  output.col = input.col;
+  gl_Position = TextOrthoMatrix * vec4(input.pos,1.f,1.f);
+}

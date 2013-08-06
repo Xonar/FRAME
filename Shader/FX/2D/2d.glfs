@@ -1,0 +1,21 @@
+#version 150
+
+//Input
+struct PS_In {
+  vec2 tex;
+  vec3 col;
+};
+
+in PS_In input;
+
+//Output
+out vec4 output;
+
+//Uniform
+uniform sampler2D Texture;
+
+//Main
+void main()
+{
+  output = vec4(input.col,1.0f) * texture ( Texture, input.tex ); 
+}
