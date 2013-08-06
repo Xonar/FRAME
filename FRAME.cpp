@@ -15,6 +15,7 @@
 
 #include "Global.h"
 #include "Window/Window.h"
+#include "Graphics/Graphics.h"
 
 bool gGameOn = true;
 
@@ -24,6 +25,9 @@ int main()
   FWindow window("FRAME Engine Test");
 
   window.Init();
+
+  //Init OpenGL
+  initGLFunction();
 
   //Init SDL Font Engine
   TTF_Init();
