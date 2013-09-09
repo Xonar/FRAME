@@ -14,6 +14,7 @@
 #include <SDL2/SDL_opengl.h>
 
 #include <iostream>
+#include <cstring>
 
 FWindow::FWindow(std::string title)
 {
@@ -44,7 +45,7 @@ int FWindow::Init()
   const GLubyte* sGLVersion =  glGetString(GL_VERSION);
 
   //Check if version string exists and contains enough characters
-  if( !sGLVersion || strlen(sGLVersion) > 2 )
+  if( !sGLVersion || strlen( (const char*) sGLVersion) > 2 )
   {
     std::cerr << "Invalid OpenGL Version String" << std::endl;
 
