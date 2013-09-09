@@ -27,6 +27,18 @@ int FWindow::Init()
   //Create Window
   this->window = SDL_CreateWindow(this->title.c_str(),this->x,this->y,width,height,mode);
 
+  //Check if Window was created succesfully
+  if(!this->context)
+  {
+    std::cerr << "Couldn't create SDL Window!" << std::endl;
+
+    std::cerr << "SDL Error : " << SDL_GetError() << std::endl;
+
+    //Exit
+    SDL_DestroyWindow( this->window);
+    
+    return 1;
+  }
   //Create Dummy Context
   this->context = SDL_GL_CreateContext(this->window);
 
