@@ -13,6 +13,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
+#include <iostream>
+
 #include "Global.h"
 #include "Window/Window.h"
 #include "Graphics/Graphics.h"
@@ -24,7 +26,14 @@ int main()
   //Init SDL
   FWindow window("FRAME Engine Test");
 
-  window.Init();
+  //If SDL/OpenGL Init Failed
+  if(window.Init())
+  {
+    std::cerr << "Failed startup!" << std::endl;
+    
+    //Failed
+    return 1; 
+  }
 
   //Init OpenGL
   initGLFunction();
