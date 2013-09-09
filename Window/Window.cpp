@@ -28,9 +28,31 @@ int FWindow::Init()
 
   //Create Dummy Context
   this->context = SDL_GL_CreateContext(this->window);
+
+  //Check if Context was created succesfully
+  if(!this->context)
+  {
+    std::cerr << "Couldn't create OpenGL Context!" << std::endl;
+
+    //Exit
+    SDL_DestroyWindow( this->window);
+    
+    return 1;
+  }
  
   //Get OpenGL Version
   const GLubyte* sGLVersion =  glGetString(GL_VERSION);
+
+  //Check if version string exists and contains enough characters
+  if( !sGLVersion || strlen(sGLVersion) > 2 )
+  {
+    std::cerr << "Invalid OpenGL Version String" << std::endl;
+
+    //Exit
+    SDL_DestroyWindow( this->window);
+    
+    return 1;
+  }
 
   this->glMajorVersion = (sGLVersion[0]-'0')*10;
   this->glMajorVersion += (sGLVersion[2]-'0');
