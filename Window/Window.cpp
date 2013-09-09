@@ -35,6 +35,8 @@ int FWindow::Init()
   {
     std::cerr << "Couldn't create OpenGL Context!" << std::endl;
 
+    std::cerr << "SDL Error : " << SDL_GetError() << std::endl;
+
     //Exit
     SDL_DestroyWindow( this->window);
     
