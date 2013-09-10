@@ -86,9 +86,14 @@ int FWindow::Init()
     this->glMajorVersion = 3;
     this->glMinorVersion = 3;
   }
+  else if(this->glMajorVersion >= 21)
+  {
+    this->glMajorVersion = 2;
+    this->glMinorVersion = 1;
+  }
   else
   {
-    std::cerr << "Can't create OpenGL 3.3+ Context! ( Can only create " 
+    std::cerr << "Can't create OpenGL 2.1+ Context! (Can only create " 
               << glMajorVersion/10 << "." << glMajorVersion%10 << ")" << std::endl;
 
     //Exit
