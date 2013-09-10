@@ -92,7 +92,6 @@ int FWindow::Init()
               << glMajorVersion/10 << "." << glMajorVersion%10 << ")" << std::endl;
 
     //Exit
-    SDL_GL_DeleteContext(this->context);
     SDL_DestroyWindow(this->window);
     
     return 1;
