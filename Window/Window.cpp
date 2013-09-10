@@ -28,7 +28,7 @@ int FWindow::Init()
   this->window = SDL_CreateWindow(this->title.c_str(),this->x,this->y,width,height,mode);
 
   //Check if Window was created succesfully
-  if(!this->context)
+  if(!this->window)
   {
     std::cerr << "Couldn't create SDL Window!" << std::endl;
 
