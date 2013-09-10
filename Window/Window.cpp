@@ -59,7 +59,7 @@ int FWindow::Init()
   const GLubyte* sGLVersion =  glGetString(GL_VERSION);
 
   //Check if version string exists and contains enough characters
-  if( !sGLVersion || strlen( (const char*) sGLVersion) > 2 )
+  if( !sGLVersion || strlen( (const char*) sGLVersion) < 3 )
   {
     std::cerr << "Invalid OpenGL Version String" << std::endl;
 
