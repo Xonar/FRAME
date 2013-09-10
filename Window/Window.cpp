@@ -64,6 +64,7 @@ int FWindow::Init()
     std::cerr << "Invalid OpenGL Version String" << std::endl;
 
     //Exit
+    SDL_GL_DeleteContext(this->context);
     SDL_DestroyWindow( this->window);
     
     return 1;
@@ -91,7 +92,8 @@ int FWindow::Init()
               << glMajorVersion/10 << "." << glMajorVersion%10 << ")" << std::endl;
 
     //Exit
-    SDL_DestroyWindow( this->window);
+    SDL_GL_DeleteContext(this->context);
+    SDL_DestroyWindow(this->window);
     
     return 1;
   }
