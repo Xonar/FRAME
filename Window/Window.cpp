@@ -76,20 +76,15 @@ int FWindow::Init()
   //Desotry Context as it's not needed any more
   SDL_GL_DeleteContext(this->context);
 
-  if(this->glMajorVersion >= 42)
+  if(this->glMajorVersion >= 40)
   {
     this->glMajorVersion = 4;
-    this->glMinorVersion = 2;
+    this->glMinorVersion = 0;
   }
-  else if(this->glMajorVersion >= 33)
+  else if(this->glMajorVersion >= 30)
   {
     this->glMajorVersion = 3;
-    this->glMinorVersion = 3;
-  }
-  else if(this->glMajorVersion >= 21)
-  {
-    this->glMajorVersion = 2;
-    this->glMinorVersion = 1;
+    this->glMinorVersion = 0;
   }
   else
   {
