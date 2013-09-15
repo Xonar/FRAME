@@ -18,8 +18,12 @@
 #include "Global.h"
 #include "Window/Window.h"
 #include "Graphics/Graphics.h"
+#include "Game.h"
 
+//Definitions of Global Variables
 bool gGameOn = true;
+FWindow *gWindow;
+
 
 int main()
 {
@@ -35,11 +39,15 @@ int main()
     return 1; 
   }
 
+  gWindow = &window;
+
   //Init OpenGL
   initGLFunction();
 
   //Init SDL Font Engine
   TTF_Init();
+
+  initializeGame();
 
   //Game Loop
   while(gGameOn)
