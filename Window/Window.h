@@ -43,6 +43,8 @@ public:
   int Init();
 
   int Render();
+
+  int getOpenGLVersion() { return glMajorVersion * 10 + glMinorVersion; }
 };
 
 #endif // _F_H_WINDOW_
