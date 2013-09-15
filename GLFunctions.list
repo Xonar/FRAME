@@ -19,6 +19,7 @@ void glUseProgram(GLuint program);
 GLboolean glIsProgram(GLuint program);
 GLuint glCreateProgram(void);
 void glDeleteProgram(GLuint program);
+void glLinkProgram(GLuint program);
 
 void glGetProgramiv(GLuint program, GLenum pname, GLint *params);
 void glGetProgramInfoLog(GLuint program, GLsizei maxLength, GLsizei *length, GLchar *infoLog);
@@ -31,12 +32,22 @@ void glGetShaderInfoLog(GLuint shader, GLsizei maxLength, GLsizei *length, GLcha
 void glShaderSource(GLuint shader, GLsizei count, const GLchar **string, const GLint *length);
 void glCompileShader(GLuint shader);
 
+#Shader/Program Additional
+void glBindAttribLocation(GLuint program, GLuint index, const GLchar *name);
+void glAttachShader(GLuint program, GLuint shader);
+
 #Buffers
 void glGenBuffers(GLsizei n, GLuint * buffers);
 void glDeleteBuffers(GLsizei n, const GLuint * buffers);
 void glBindBuffer(GLenum target, GLuint buffer);
+void glBufferData(GLenum target, GLsizeiptr size, const GLvoid * data, GLenum usage);
 void glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid * data);
 void glBindBufferBase(GLenum target, GLuint index, GLuint buffer);
 void glGetActiveUniformBlockiv(GLuint program, GLuint uniformBlockIndex, GLenum pname, GLint params);
+
+#VAO
+void glBindVertexArray(GLuint array);
+void glGenVertexArrays(GLsizei n, GLuint *arrays);
+void glDeleteVertexArrays(GLsizei  n, const GLuint * arrays);
 
 #EOF
