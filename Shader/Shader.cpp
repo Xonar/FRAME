@@ -102,7 +102,7 @@ void FShader::printShaderLog(GLuint shader)
 
 GLint FShader::loadShader(std::string shader, GLenum type)
 {
-  std::cout << "Loading Program : " << shader << std::endl;
+  std::cout << "Loading Shader : " << shader << std::endl;
   GLuint* pShader = NULL;
 
   switch(type)
