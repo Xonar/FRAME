@@ -13,6 +13,7 @@
 
 #include "../Graphics/Graphics.h"
 #include "../Lib/Files.h"
+#include "../Global.h"
 
 #include <iostream>
 
@@ -101,7 +102,8 @@ void FShader::printShaderLog(GLuint shader)
 
 GLint FShader::loadShader(std::string shader, GLenum type)
 {
-  GLuint* pShader;
+  std::cout << "Loading Program : " << shader << std::endl;
+  GLuint* pShader = NULL;
 
   switch(type)
   {
@@ -170,6 +172,50 @@ GLint FShader::loadShader(std::string shader, GLenum type)
     printShaderLog(shader);
     return 1;
   }
+
+  if(pShader)
+    *pShader = shader;
+
+  return 0;
+}
+
+GLint FShader::loadProgram()
+{
+  //Create Program
+  this->glProg = glCreateProgram();
+
+  if(!glProg)
+  {
+    std::cerr << "Failed Creating a Shader Program Object!" << std::endl;
+
+    std::cerr << "GL Error: " << glGetError() << std::endl;
+
+    return 1;
+  }
+
+  //Attach all shaders
+  if(this->vs)
+    glAttachShader(this->glProg, this->vs);
+  
+  if(this->gs)
+    glAttachShader(this->glProg, this->gs);
+
+  if(this->tc)
+    glAttachShader(this->glProg, this->tc);
+  
+  if(this->te)
+    glAttachShader(this->glProg, this->te);
+
+  if(this->fs)
+    glAttachShader(this->glProg, this->fs);
+
+  //If OpenGL version < 33 then bind Attribute Location
+  if(gWindow->getOpenGLVersion() < 33)
+  {
+    glBindAttribLocation(this->glProg, 0, "input");
+  }
+
+  glLinkProgram(this->glProg);
 
   return 0;
 }
