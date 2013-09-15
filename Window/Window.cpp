@@ -10,6 +10,7 @@
  */
 
 #include "Window.h"
+#include "../Game.h"
 
 #include <SDL2/SDL_opengl.h>
 
@@ -120,6 +121,8 @@ int FWindow::Init()
 int FWindow::Render()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  drawGame();
 
   SDL_GL_SwapWindow(this->window);
 
