@@ -1,15 +1,11 @@
-#version 130
+#version 140
 
 //Input
-struct PS_In {
-  vec2 tex;
-  vec3 col;
-};
-
-in PS_In input;
+in vec2 vstex;
+in vec3 vscol;
 
 //Output
-out vec4 output;
+out vec4 pscol;
 
 //Uniform
 uniform sampler2D Texture;
@@ -17,5 +13,5 @@ uniform sampler2D Texture;
 //Main
 void main()
 {
-  output = vec4(input.col,1.0f) * texture ( Texture, input.tex ); 
+  pscol = vec4(vscol,1.0f) * texture ( Texture, vstex ); 
 }
