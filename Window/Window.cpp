@@ -40,8 +40,12 @@ int FWindow::Init()
     
     return 1;
   }
+
   //Create Dummy Context
   this->context = SDL_GL_CreateContext(this->window);
+
+  glGetIntegerv(GL_MAJOR_VERSION, &this->glMajorVersion);
+  glGetIntegerv(GL_MINOR_VERSION, &this->glMinorVersion);
 
   //Check if Context was created succesfully
   if(!this->context)
@@ -59,43 +63,41 @@ int FWindow::Init()
   //Get OpenGL Version
   const GLubyte* sGLVersion =  glGetString(GL_VERSION);
 
-  //Check if version string exists and contains enough characters
-  if( !sGLVersion || strlen( (const char*) sGLVersion) < 3 )
-  {
-    std::cerr << "Invalid OpenGL Version String" << std::endl;
-
-    //Exit
-    SDL_GL_DeleteContext(this->context);
-    SDL_DestroyWindow( this->window);
-    
-    return 1;
-  }
-
-  this->glMajorVersion = (sGLVersion[0]-'0')*10;
-  this->glMajorVersion += (sGLVersion[2]-'0');
+  std::cout << "OpenGL Version String : " << sGLVersion << std::endl;
   
+
+
   //Desotry Context as it's not needed any more
   SDL_GL_DeleteContext(this->context);
+  bool validGLVersion = true;
 
-  if(this->glMajorVersion >= 40)
+  if(this->glMajorVersion > 4 || (this->glMajorVersion == 4 && this->glMinorVersion >= 2) ) 
   {
+    //If Tesselation and Tesselation Transoform feedback supported
     this->glMajorVersion = 4;
-    this->glMinorVersion = 0;
+    this->glMinorVersion = 2;
   }
-  else if(this->glMajorVersion >= 30)
+  else if(this->glMajorVersion >= 31)
   {
+    //Target highest version of the form 3.x which MESA supports
     this->glMajorVersion = 3;
-    this->glMinorVersion = 0;
+    this->glMinorVersion = 1;
   }
   else
   {
-    std::cerr << "Can't create OpenGL 2.1+ Context! (Can only create " 
-              << glMajorVersion/10 << "." << glMajorVersion%10 << ")" << std::endl;
+    validGLVersion = false;
 
-    //Exit
-    SDL_DestroyWindow(this->window);
-    
-    return 1;
+    std::cerr << "Can't create OpenGL 3.1+ Context! (Reported Version :  " 
+              << glMajorVersion << "." << glMinorVersion << " )" << std::endl;
+
+    //MESA 9.0 to 9.2 often has the ability to create a 3.1 context, but reports
+    //a lower version due to a technicallity of the specification
+
+    //Might be a bug on MESA's part, but report 3.0 and working 3.1 on test machine
+    std::cout << "Try and Create OpenGL 3.1 Context Anyway" << std::endl;
+
+    this->glMajorVersion = 3;
+    this->glMinorVersion = 1;
   }
 
   //Create Context
@@ -103,6 +105,20 @@ int FWindow::Init()
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, this->glMinorVersion );
 
   this->context = SDL_GL_CreateContext( this->window);
+
+  if(!this->context)
+  {
+    std::cerr << "Failed creating OpenGL Context!" << std::endl;
+
+    //Exit
+    SDL_DestroyWindow(this->window);
+    
+    return 1;
+  }
+  else if(!validGLVersion)
+  {
+    std::cout << "Context Creation reported succesful creation of 3.1 Context! Yay!" << std::endl;
+  }
 
   //Set Default Viewport
   glViewport( 0.f, 0.f, this->width, this->height);
