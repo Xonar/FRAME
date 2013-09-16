@@ -212,7 +212,10 @@ GLint FShader::loadProgram()
   //If OpenGL version < 33 then bind Attribute Location
   if(gWindow->getOpenGLVersion() < 33)
   {
-    glBindAttribLocation(this->glProg, 0, "input");
+    glBindAttribLocation(this->glProg, 0, "pos");
+    glBindAttribLocation(this->glProg, 1, "tex");
+    glBindAttribLocation(this->glProg, 2, "col");
+    glBindAttribLocation(this->glProg, 3, "nor");
   }
 
   glLinkProgram(this->glProg);
