@@ -82,7 +82,8 @@ int FTexture::loadTextureFromFile(std::string file)
   }
 }
 
-void FTexture::bindTexture()
+void FTexture::bindTexture(GLenum texture)
 {
-  glBindTexture( GL_TEXTURE_2D, this->glTexture);
+  glActiveTexture(texture);
+  glBindTexture(GL_TEXTURE_2D, this->glTexture);
 }

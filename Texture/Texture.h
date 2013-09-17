@@ -32,7 +32,7 @@ class FTexture
     int loadTextureFromSurface(SDL_Surface* surface);
     int loadTextureFromFile(std::string file);
 
-    void bindTexture();
+    void bindTexture(GLenum texture);
 
     int freeTexture();
 
