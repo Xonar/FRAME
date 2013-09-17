@@ -107,7 +107,7 @@ GLint FCamera::InitProjectionMatrix(float fovy, float near, float far)
 }
 
 //Use Camera
-void FCamera::bindMatrixUniformBlock()
+void FCamera::setMatrixUniformBlock()
 {
   glViewport(this->x,this->y,this->width,this->height);
 
@@ -120,7 +120,7 @@ void FCamera::bindMatrixUniformBlock()
   glBindBufferBase(GL_UNIFORM_BUFFER, F_UNIFORM_BLOCK_CAMERA , this->ubo);
 }
 
-void FCamera::bindMatrixUniformWorldView(GLuint uniform)
+void FCamera::setMatrixUniformWorldView(GLuint uniform)
 {
   glViewport(this->x,this->y,this->width,this->height);
   
@@ -133,7 +133,7 @@ void FCamera::bindMatrixUniformWorldView(GLuint uniform)
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
 }
 
-void FCamera::bindMatrixUniformViewScreen(GLuint uniform)
+void FCamera::setMatrixUniformViewScreen(GLuint uniform)
 {
   glViewport(this->x,this->y,this->width,this->height);
   
