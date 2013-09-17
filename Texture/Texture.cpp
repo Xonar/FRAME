@@ -81,3 +81,8 @@ int FTexture::loadTextureFromFile(std::string file)
     return 1;
   }
 }
+
+void FTexture::bindTexture()
+{
+  glBindTexture( GL_TEXTURE_2D, this->glTexture);
+}

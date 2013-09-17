@@ -32,6 +32,8 @@ class FTexture
     int loadTextureFromSurface(SDL_Surface* surface);
     int loadTextureFromFile(std::string file);
 
+    void bindTexture();
+
     int freeTexture();
 
     //TEST: Function to test image load capabilaties
