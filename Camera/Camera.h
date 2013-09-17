@@ -51,7 +51,9 @@ class FCamera
 
     GLint InitProjectionMatrix(float vovy, float zNear, float far);
 
-    void useCamera();
+    void bindMatrixUniformBlock();
+    void bindMatrixUniformWorldView(GLuint uniform);
+    void bindMatrixUniformViewScreen(GLuint uniform);
 };
 
 #endif // _F_H_CAMERA_

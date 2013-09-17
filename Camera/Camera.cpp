@@ -107,15 +107,41 @@ GLint FCamera::InitProjectionMatrix(float fovy, float near, float far)
 }
 
 //Use Camera
-void FCamera::useCamera()
+void FCamera::bindMatrixUniformBlock()
 {
   glViewport(this->x,this->y,this->width,this->height);
 
   this->updateUBO();
 
-  int curProg,curBlock;
+  int curProg;
 
   glGetIntegerv(GL_CURRENT_PROGRAM, &curProg);
 
-  glBindBufferBase(GL_UNIFORM_BUFFER, F_UNIFORM_BLOCK_CAMERA , ubo);
+  glBindBufferBase(GL_UNIFORM_BUFFER, F_UNIFORM_BLOCK_CAMERA , this->ubo);
+}
+
+void FCamera::bindMatrixUniformWorldView(GLuint uniform)
+{
+  glViewport(this->x,this->y,this->width,this->height);
+  
+  this->updateUBO();
+
+  int curProg;
+
+  glGetIntegerv(GL_CURRENT_PROGRAM, &curProg);
+
+  glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
+}
+
+void FCamera::bindMatrixUniformViewScreen(GLuint uniform)
+{
+  glViewport(this->x,this->y,this->width,this->height);
+  
+  this->updateUBO();
+
+  int curProg;
+
+  glGetIntegerv(GL_CURRENT_PROGRAM, &curProg);
+
+  glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
 }
