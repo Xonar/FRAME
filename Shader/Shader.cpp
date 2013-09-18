@@ -240,5 +240,16 @@ GLint FShader::loadProgram()
 
   glLinkProgram(this->glProg);
 
+  //Check if it linked succesfully
+  {
+    GLint linkStatus = GL_FALSE;
+    glGetProgramiv (this->glProg, GL_LINK_STATUS, &linkStatus);
+    if(linkStatus != GL_TRUE)
+    {
+      std::cerr << "Failed linking program : " << std::endl;
+      this->printProgramLog(this->glProg);
+    }
+  }
+
   return 0;
 }
