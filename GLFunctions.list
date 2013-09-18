@@ -27,6 +27,7 @@ void glGetProgramInfoLog(GLuint program, GLsizei maxLength, GLsizei *length, GLc
 #Shaders
 GLboolean glIsShader(GLuint shader);
 GLuint glCreateShader(GLenum shaderType);
+void glDeleteShader(GLuint shader);
 void glGetShaderiv(GLuint shader, GLenum pname, GLint *params);
 void glGetShaderInfoLog(GLuint shader, GLsizei maxLength, GLsizei *length, GLchar *infoLog);
 void glShaderSource(GLuint shader, GLsizei count, const GLchar **string, const GLint *length);
@@ -86,5 +87,15 @@ void glUniformMatrix2x4fv(GLint location, GLsizei count, GLboolean transpose, co
 void glUniformMatrix4x2fv(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
 void glUniformMatrix3x4fv(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
 void glUniformMatrix4x3fv(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
+
+GLint glGetUniformLocation(GLuint program, const GLchar *name);
+
+#Vertex Attributes
+void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer);
+void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const GLvoid * pointer);
+
+void glEnableVertexAttribArray(GLuint index);
+void glDisableVertexAttribArray(GLuint index);
+void glVertexAttribLPointer(GLuint index,  GLint size,  GLenum type,  GLsizei stride,  const GLvoid * pointer);
 
 #EOF
