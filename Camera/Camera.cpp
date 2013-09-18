@@ -57,6 +57,8 @@ GLint FCamera::updateUBO()
     //Only update if it's neccesary
     if(this->updateViewScreenMatrix)
     {
+      this->updateViewScreenMatrix = false;
+
       glBindBuffer(GL_UNIFORM_BUFFER, this->ubo);
 
       glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4),
