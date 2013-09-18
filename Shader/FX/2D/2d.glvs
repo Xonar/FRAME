@@ -6,15 +6,15 @@ in vec2 tex;
 in vec3 col;
 
 //Output
-vec2 vstex;
-vec3 vscol;
+out vec2 vstex;
+out vec3 vscol;
 
-uniform mat4 TextOrthoMatrix;
+//uniform mat4 TextOrthoMatrix;
 
 //Main
 void main()
 {
   vstex = tex;
   vscol = col;
-  gl_Position = TextOrthoMatrix * vec4(pos,1.f,1.f);
+  gl_Position = /*TextOrthoMatrix * */ vec4(pos, 0, 1);
 }
