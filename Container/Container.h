@@ -16,8 +16,9 @@
 
 struct FTextVertex
 {
-  glm::vec3 pos;
-  glm::vec3 tex;
+  glm::vec2 pos;
+  glm::vec2 tex;
+  glm::vec3 col;
 };
 
 struct FVertex
