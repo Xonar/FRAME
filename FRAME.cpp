@@ -19,6 +19,7 @@
 #include "Window/Window.h"
 #include "Graphics/Graphics.h"
 #include "Game.h"
+#include "Lib/FGLext.h"
 
 //Definitions of Global Variables
 bool gGameOn = true;
@@ -63,8 +64,11 @@ int main()
         break;
       }
     }
-
+    
     window.Render();
+
+    //All GL Error should be handled immediately and the GL error flag set to GL_NO_ERROR
+    GL_ERROR_ASSERT();
   }
 
   return 0;
