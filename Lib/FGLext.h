@@ -13,6 +13,7 @@
 #define _F_H_FGLEXT_
 
 #include <SDL2/SDL_opengl.h>
+#include "../Container/Container.h"
 
 const GLchar* glErrorString(GLenum err);
 
@@ -21,5 +22,9 @@ const GLchar* glErrorString(GLenum err);
 #else
 #define GL_ERROR_ASSERT() /* No Assert */
 #endif //DEBUG
+
+GLvoid glVertexAttribPointers( FVertexEnum type );
+GLvoid glEnableVertexAttribs( FVertexEnum type );
+GLvoid glDisableVertexAttribs( FVertexEnum type );
 
 #endif //_F_H_FGLEXT_
