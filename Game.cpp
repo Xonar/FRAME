@@ -16,6 +16,7 @@
 #include "Camera/Camera.h"
 #include "Graphics/Graphics.h"
 #include "Lib/FGLext.h"
+#include "Container/Container.h"
 
 #include <iostream>
 
@@ -23,10 +24,10 @@
 
 FShader *shader = NULL;
 
-const GLfloat Triangle_Vertex_Buffer_Data[] = {
-  -1.0f, -1.0f,
-   1.0f, -1.0f,
-   0.0f,  1.0f,
+const FTextVertex Triangle_Vertex_Buffer_Data[] = {
+  {glm::vec2(-1.0f, -1.0f), glm::vec2(0.f, 0.f), glm::vec3(1.0f,0.f,0.f) }, //Bottom Left
+  {glm::vec2( 1.0f, -1.0f), glm::vec2(1.f, 0.f), glm::vec3(0.0f,1.f,0.f) }, //Top Middle
+  {glm::vec2( 0.0f,  1.0f), glm::vec2(.5f, 1.f), glm::vec3(0.0f,0.f,1.f) }, //Bottom Right
 };
 
 GLuint triangleVertexArray = 0;
@@ -59,9 +60,14 @@ GLvoid drawGame()
   shader->bind();
 
   glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+  glEnableVertexAttribArray(2);
+
   glBindBuffer(GL_ARRAY_BUFFER, triangleVertexBuffer);
 
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*) 0);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) 0);
+  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) sizeof(glm::vec2));
+  glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) sizeof(glm::vec4));
 
   glDrawArrays(GL_TRIANGLES, 0, 3);
 
