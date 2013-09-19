@@ -8,11 +8,10 @@ in vec3 vscol;
 out vec4 pscol;
 
 //Uniform
-//uniform sampler2D Texture;
+uniform sampler2D Texture;
 
 //Main
 void main()
 {
-  //pscol = vec4(vscol,1.0f) * texture ( Texture, vstex ); 
-  pscol = vec4(vscol, 1.0f);
+  pscol = vec4(vscol,1.0f) * vec4(texture ( Texture, vstex ).xyz,1.0f); 
 }
