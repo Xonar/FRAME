@@ -23,7 +23,7 @@ class FModel
   private:
   
   //Model Data:
-  FVertex *vertices;
+  FVertex3 *vertices;
   GLuint numVertices;
 
   GLuint *indices;
@@ -46,7 +46,7 @@ class FModel
   GLint draw();
 
   GLint loadModelFormFileObj(std::string path);
-  GLint loadModelFromVertices(FVertex vertices);
+  GLint loadModelFromVertices(FVertex3 vertices);
 };
 
 #endif //_F_H_MODEL_
