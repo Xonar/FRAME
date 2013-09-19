@@ -14,6 +14,7 @@
 
 #include <glm/glm.hpp>
 
+//Text Vertex
 struct FTextVertex
 {
   glm::vec2 pos;
@@ -21,7 +22,16 @@ struct FTextVertex
   glm::vec3 col;
 };
 
-struct FVertex
+//2D Vertex
+struct FVertex2
+{
+  glm::vec2 pos;
+  glm::vec3 col;
+  glm::vec2 tex;
+};
+
+//3D Vertex
+struct FVertex3
 {
   glm::vec3 pos;
   glm::vec3 col;
