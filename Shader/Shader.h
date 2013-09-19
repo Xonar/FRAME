@@ -39,6 +39,9 @@ class FShader
 
     GLint loadProgram();
     void freeProgram();
+
+    //ACCESSOR METHODS
+    GLuint getProgram() { return glProg; };
 };
 
 #endif // _F_H_SHADER
