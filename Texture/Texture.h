@@ -35,9 +35,6 @@ class FTexture
     void bindTexture(GLenum texture);
 
     int freeTexture();
-
-    //TEST: Function to test image load capabilaties
-    int blitToScreen(glm::vec2 pos);
 };
 
 #endif // _F_H_TEXTURE_
