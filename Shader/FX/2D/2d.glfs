@@ -14,5 +14,5 @@ out vec4 pscol;
 void main()
 {
   //pscol = vec4(vscol,1.0f) * texture ( Texture, vstex ); 
-  pscol = vec4(1, 0, 0, 1);
+  pscol = vec4(vscol, 1.0f);
 }
