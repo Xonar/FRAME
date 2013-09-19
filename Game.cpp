@@ -22,6 +22,9 @@
 
 //TODO Temp Resources
 
+FTexture *tex = NULL;
+GLint uniformTextureSampler = 0;
+
 FShader *shader = NULL;
 
 const FTextVertex Triangle_Vertex_Buffer_Data[] = {
@@ -52,13 +55,22 @@ GLint initializeGame()
   glBindBuffer(GL_ARRAY_BUFFER, triangleVertexBuffer);
   glBufferData(GL_ARRAY_BUFFER, sizeof(Triangle_Vertex_Buffer_Data), Triangle_Vertex_Buffer_Data, GL_STATIC_DRAW);
 
+  //Create Texture
+  tex = new FTexture();
+  
+  tex->loadTextureFromFile("Assets/perlin.bmp");
+  GL_ERROR_ASSERT();
+
+  uniformTextureSampler = glGetUniformLocation(shader->getProgram(), "Texture");
   return 0;
 }
 
 GLvoid drawGame()
 {
+  //Bind Shader
   shader->bind();
 
+  //Setup Vertex Attributes
   glEnableVertexAttribArray(0);
   glEnableVertexAttribArray(1);
   glEnableVertexAttribArray(2);
@@ -69,6 +81,10 @@ GLvoid drawGame()
   glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) sizeof(glm::vec2));
   glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) sizeof(glm::vec4));
 
+  tex->bindTexture(GL_TEXTURE0);
+  glUniform1i(uniformTextureSampler, 0);
+  
+  //Draw Arrays
   glDrawArrays(GL_TRIANGLES, 0, 3);
 
   glDisableVertexAttribArray(0);
