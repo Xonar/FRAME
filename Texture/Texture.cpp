@@ -10,6 +10,8 @@
  */
 
 #include "Texture.h"
+#include "../Container/Container.h"
+#include "../Graphics/Graphics.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -45,10 +47,11 @@ int FTexture::loadTextureFromSurface(SDL_Surface* surface)
     this->width = surface->w;
     this->height = surface->h;
 
+    GLenum format = (surface->format->BytesPerPixel==3)?GL_RGB:GL_RGBA;
+
     glGenTextures( 1, &glTexture);
     glBindTexture( GL_TEXTURE_2D, glTexture);
-    glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel, width, height, 0,
-        (surface->format->BytesPerPixel==3)?GL_RGB:GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
+    glTexImage2D( GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, surface->pixels );
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
