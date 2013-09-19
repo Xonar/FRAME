@@ -25,9 +25,9 @@ struct FTextVertex
 //2D Vertex
 struct FVertex2
 {
-  glm::vec2 pos;
-  glm::vec3 col;
+  glm::vec3 pos;
   glm::vec2 tex;
+  glm::vec3 col;
 };
 
 //3D Vertex
@@ -38,5 +38,7 @@ struct FVertex3
   glm::vec2 tex;
   glm::vec3 nor;
 };
+
+enum FVertexEnum { F_VERTEX_TEXT, F_VERTEX_3, F_VERTEX_2 };
 
 #endif //_F_H_CONTAINER
