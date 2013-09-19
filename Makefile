@@ -14,11 +14,11 @@ GENERATED = ./Graphics/GLFunctions.h
 
 CC = g++
 CFLAGS = -std=c++11 -g -Wall -O2
+CDEPFLAGS = -std=gnu++11
 
 LD = g++
 LDFLAGS = -lGL -lSDL2 -lSDL2_ttf -lSDL2_image
 
-#Include Dependancies
 ifdef DEPENDANCIES_GENERATED
 include $(DEPENDANCIES)
 endif
@@ -43,15 +43,17 @@ $(DIRECTORIES):
 #Generate Dependancies
 ./Build/%.d : %.cpp
 	@echo "Generating Dependancy file for $*.cpp"
-	@$(CC) -MM $(CFLAGS) $*.cpp > ./Build/$*.d
+	@$(CC) -MM $(CDEPFLAGS) -MT ./Build/$*.o $*.cpp > ./Build/$*.d
 
 #Objects : Source
 ./Build/%.o : %.cpp
 	$(CC) -c $(CFLAGS) $*.cpp -o ./Build/$*.o
 
+#Clean
 clean:
 	rm -f -r $(BUILD_DIR)
 	rm -f ./Graphics/GLFunctions.{h,cpp}
 
+#Executable : Objects
 $(EXECUTABLE) : $(OBJ_FILES)
 	$(LD) -o $(EXECUTABLE) $(OBJ_FILES) $(LDFLAGS)
