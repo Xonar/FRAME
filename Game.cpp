@@ -22,15 +22,20 @@
 
 //TODO Temp Resources
 
+FCamera *camera;
+
+GLuint uniformViewScreenMatrix = 0;
+GLuint uniformWorldViewMatrix = 0;
+
 FTexture *tex = NULL;
 GLint uniformTextureSampler = 0;
 
 FShader *shader = NULL;
 
 const FTextVertex Triangle_Vertex_Buffer_Data[] = {
-  {glm::vec2(-1.0f, -1.0f), glm::vec2(0.f, 0.f), glm::vec3(1.0f,0.f,0.f) }, //Bottom Left
-  {glm::vec2( 1.0f, -1.0f), glm::vec2(1.f, 0.f), glm::vec3(0.0f,1.f,0.f) }, //Top Middle
-  {glm::vec2( 0.0f,  1.0f), glm::vec2(.5f, 1.f), glm::vec3(0.0f,0.f,1.f) }, //Bottom Right
+  {glm::vec2( 0.0f , 0.f), glm::vec2(0.f, 0.f), glm::vec3(1.0f,0.f,0.f) }, //Bottom Left
+  {glm::vec2( 320.0f, 480.0f), glm::vec2(1.f, 0.f), glm::vec3(0.0f,1.f,0.f) }, //Top Middle
+  {glm::vec2( 640.0f, .0f), glm::vec2(.5f, 1.f), glm::vec3(0.0f,0.f,1.f) }, //Bottom Right
 };
 
 GLuint triangleVertexArray = 0;
@@ -62,6 +67,15 @@ GLint initializeGame()
   GL_ERROR_ASSERT();
 
   uniformTextureSampler = glGetUniformLocation(shader->getProgram(), "Texture");
+
+  //Create Camera
+  camera = new FCamera();
+
+  camera->setViewPort(0, 0, 640, 480);
+  camera->InitOrthoMatrix(0,640,0,480);
+
+  uniformViewScreenMatrix = glGetUniformLocation(shader->getProgram(), "OrthoMatrix" );
+
   return 0;
 }
 
@@ -81,11 +95,13 @@ GLvoid drawGame()
   glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) sizeof(glm::vec2));
   glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) sizeof(glm::vec4));
 
+  //Setup Textures
   tex->bindTexture(GL_TEXTURE0);
   glUniform1i(uniformTextureSampler, 0);
   
+  //Setup Ortho Matrix
+  camera->setMatrixUniformViewScreen(shader->getProgram(), uniformViewScreenMatrix);
+
   //Draw Arrays
   glDrawArrays(GL_TRIANGLES, 0, 3);
-
-  glDisableVertexAttribArray(0);
 }
