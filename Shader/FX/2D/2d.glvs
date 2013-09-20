@@ -9,12 +9,13 @@ in vec3 col;
 out vec2 vstex;
 out vec3 vscol;
 
-//uniform mat4 TextOrthoMatrix;
+uniform mat4 OrthoMatrix;
 
 //Main
 void main()
 {
   vstex = tex;
   vscol = col;
-  gl_Position = /*TextOrthoMatrix * */ vec4(pos, 0, 1);
+
+  gl_Position = OrthoMatrix * vec4(pos, 0, 1);
 }
