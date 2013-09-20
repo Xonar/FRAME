@@ -9,6 +9,7 @@
  *      The Camera class is a handler for the a camera Object
  */
 
+
 #ifndef _F_H_CAMERA_
 #define _F_H_CAMERA_
 
@@ -38,7 +39,8 @@ class FCamera
     glm::vec3 dir;
 
     //GL Buffers
-    GLuint ubo;
+    GLuint ubViewScreen;
+    GLuint ubWorldView;
 
     //Functions
     GLint updateUBO();
@@ -46,14 +48,16 @@ class FCamera
     FCamera();
     ~FCamera();
 
+    GLvoid setViewPort(GLint x, GLint y, GLint w, GLint h);
+
     GLint InitOrthoMatrix(float left,float right,float bottom,float top, float near,float far);
     GLint InitOrthoMatrix(float left,float right,float bottom,float top);
 
     GLint InitProjectionMatrix(float vovy, float zNear, float far);
 
-    void setMatrixUniformBlock();
-    void setMatrixUniformWorldView(GLuint uniform);
-    void setMatrixUniformViewScreen(GLuint uniform);
+    void setMatrixUniform(GLuint glProg, GLuint worldScreen, GLuint viewScreen);
+    void setMatrixUniformWorldView(GLuint glProg, GLuint uniform);
+    void setMatrixUniformViewScreen(GLuint glProg, GLuint uniform);
 };
 
 #endif // _F_H_CAMERA_

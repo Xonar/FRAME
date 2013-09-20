@@ -22,20 +22,23 @@ FCamera::FCamera()
   this->x = this->y = this->width = this->height = 0;
 
   this->updateWorldViewMatrix = true;
+  this->updateViewScreenMatrix = true;
   this->ready = false;
 
   this->pos = glm::vec3(0,0,0);
   this->dir = glm::vec3(0,0,1);
 
-  this->ubo = 0;
-
-  glGenBuffers(1, &this->ubo);
+  this->ubViewScreen = this->ubWorldView = 0;
 }
 
 FCamera::~FCamera()
 {
-  glDeleteBuffers(1, &this->ubo);
-  this->ubo = 0;
+  if(this->ubViewScreen)
+    glDeleteBuffers(1, &this->ubViewScreen);
+  if(this->ubWorldView)
+    glDeleteBuffers(1, &this->ubWorldView);
+
+  this->ubViewScreen = this->ubWorldView = 0;
 }
 
 GLint FCamera::updateUBO()
@@ -49,9 +52,9 @@ GLint FCamera::updateUBO()
       this->WorldViewMatrix = glm::lookAt(pos,pos+dir,glm::vec3(0,1,0));
       this->updateWorldViewMatrix = false;
       
-      glBindBuffer(GL_UNIFORM_BUFFER, this->ubo);
+      glBindBuffer(GL_UNIFORM_BUFFER, this->ubWorldView);
 
-      glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), &this->WorldViewMatrix[0][0]);
+      glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), &this->WorldViewMatrix[0][0], GL_DYNAMIC_DRAW);
     }
 
     //Only update if it's neccesary
@@ -59,10 +62,9 @@ GLint FCamera::updateUBO()
     {
       this->updateViewScreenMatrix = false;
 
-      glBindBuffer(GL_UNIFORM_BUFFER, this->ubo);
+      glBindBuffer(GL_UNIFORM_BUFFER, this->ubViewScreen);
 
-      glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4),
-                        &this->ViewScreenMatrix[0][0]);
+      glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), &this->ViewScreenMatrix[0][0], GL_DYNAMIC_DRAW);
     }
   }
   else
@@ -74,10 +76,27 @@ GLint FCamera::updateUBO()
   return 0;
 }
 
+GLvoid FCamera::setViewPort(GLint x, GLint y, GLint w, GLint h)
+{
+  this->x = x;
+  this->y = y;
+  this->width = w;
+  this->height = h;
+}
+
 //Init 3D Ortho Matrix
 GLint FCamera::InitOrthoMatrix( float left,float right,float bottom,float top, 
                                 float near,float far)
 {
+  //Create a allocate ViewScreen and WorlView Matrix
+  glGenBuffers(1, &this->ubViewScreen);
+  glBindBuffer(GL_UNIFORM_BUFFER, this->ubViewScreen);
+  glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STREAM_DRAW);
+
+  glGenBuffers(1, &this->ubWorldView);
+  glBindBuffer(GL_UNIFORM_BUFFER, this->ubWorldView);
+  glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STREAM_DRAW);
+
   this->updateViewScreenMatrix = true;
 
   this->ViewScreenMatrix = glm::ortho(left,right,bottom,top,near,far);
@@ -89,7 +108,13 @@ GLint FCamera::InitOrthoMatrix( float left,float right,float bottom,float top,
 //Init 2D Ortho Matrix
 GLint FCamera::InitOrthoMatrix(float left,float right,float bottom,float top)
 {
+  //Create a allocate View Screen Matrix
+  glGenBuffers(1, &this->ubViewScreen);
+  glBindBuffer(GL_UNIFORM_BUFFER, this->ubViewScreen);
+  glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STREAM_DRAW);
+
   this->updateViewScreenMatrix = true;
+  this->updateWorldViewMatrix = false;
 
   this->ViewScreenMatrix = glm::ortho(left,right,bottom,top);
 
@@ -100,6 +125,15 @@ GLint FCamera::InitOrthoMatrix(float left,float right,float bottom,float top)
 //Init Projection Matrix
 GLint FCamera::InitProjectionMatrix(float fovy, float near, float far)
 {
+  //Create a allocate ViewScreen and WorlView Matrix
+  glGenBuffers(1, &this->ubViewScreen);
+  glBindBuffer(GL_UNIFORM_BUFFER, this->ubViewScreen);
+  glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STREAM_DRAW);
+
+  glGenBuffers(1, &this->ubWorldView);
+  glBindBuffer(GL_UNIFORM_BUFFER, this->ubWorldView);
+  glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STREAM_DRAW);
+
   this->updateViewScreenMatrix = true;
 
   this->ViewScreenMatrix = glm::perspective(fovy, this->aspect, near, far);
@@ -109,41 +143,30 @@ GLint FCamera::InitProjectionMatrix(float fovy, float near, float far)
 }
 
 //Use Camera
-void FCamera::setMatrixUniformBlock()
+void FCamera::setMatrixUniform( GLuint glProg, GLuint worldView, GLuint viewScreen)
 {
   glViewport(this->x,this->y,this->width,this->height);
 
   this->updateUBO();
 
-  int curProg;
-
-  glGetIntegerv(GL_CURRENT_PROGRAM, &curProg);
-
-  glBindBufferBase(GL_UNIFORM_BUFFER, F_UNIFORM_BLOCK_CAMERA , this->ubo);
+  glUniformMatrix4fv(worldView, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
+  glUniformMatrix4fv(viewScreen, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
 }
 
-void FCamera::setMatrixUniformWorldView(GLuint uniform)
+void FCamera::setMatrixUniformWorldView(GLuint glProg, GLuint uniform)
 {
   glViewport(this->x,this->y,this->width,this->height);
   
   this->updateUBO();
-
-  int curProg;
-
-  glGetIntegerv(GL_CURRENT_PROGRAM, &curProg);
 
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
 }
 
-void FCamera::setMatrixUniformViewScreen(GLuint uniform)
+void FCamera::setMatrixUniformViewScreen(GLuint glProg, GLuint uniform)
 {
   glViewport(this->x,this->y,this->width,this->height);
   
   this->updateUBO();
-
-  int curProg;
-
-  glGetIntegerv(GL_CURRENT_PROGRAM, &curProg);
 
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
 }
