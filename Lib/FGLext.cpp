@@ -30,6 +30,55 @@ const GLchar* glErrorString(GLenum err)
   }
 }
 
+#if defined(GL_KHR_debug) && GL_KHR_debug == 1
+const GLchar* glDebugSourceString(GLenum source)
+{
+  switch(source)
+  {
+    case GL_DEBUG_SOURCE_API_ARB: return "GL_DEBUG_SOURCE_API";
+    case GL_DEBUG_SOURCE_WINDOW_SYSTEM_ARB: return "GL_DEBUG_SOURCE_WINDOW_SYSTEM";
+    case GL_DEBUG_SOURCE_SHADER_COMPILER_ARB: return "GL_DEBUG_SOURCE_SHADER_COMPILER";
+    case GL_DEBUG_SOURCE_THIRD_PARTY_ARB: return "GL_DEBUG_SOURCE_THIRD_PARTY";
+    case GL_DEBUG_SOURCE_APPLICATION_ARB: return "GL_DEBUG_SOURCE_APPLICATION";
+    case GL_DEBUG_SOURCE_OTHER_ARB: return "GL_DEBUG_SOURCE_OTHER";
+    default: return "glDebugSourceString: INVALID_ENUM";
+  }
+}
+
+const GLchar* glDebugTypeString(GLenum type)
+{
+  switch(type)
+  {
+    case GL_DEBUG_TYPE_ERROR_ARB: return "GL_DEBUG_TYPE_ERROR";
+    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR_ARB: return "GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR";
+    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR_ARB: return "GL_DEBUG_TYPE_UNDEFINED_BAHAVIOR";
+    case GL_DEBUG_TYPE_PORTABILITY_ARB: return "GL_DEBUG_TYPE_PORTABILITY";
+    case GL_DEBUG_TYPE_PERFORMANCE_ARB: return "GL_DEBUG_TYPE_PERFORMANCE";
+    case GL_DEBUG_TYPE_OTHER_ARB: return "GL_DEBUG_TYPE_OTHER";
+    default: return "glDebugTypeString: INVALID_ENUM";
+  }
+}
+
+const GLchar* glDebugSeverityString(GLenum severe)
+{
+  switch(severe)
+  {
+    case GL_DEBUG_SEVERITY_HIGH_ARB: return "GL_DEBUG_SEVERITY_HIGH";
+    case GL_DEBUG_SEVERITY_MEDIUM_ARB: return "GL_DEBUG_SEVERITY_MEDIUM";
+    case GL_DEBUG_SEVERITY_LOW_ARB: return "GL_DEBUG_SEVERITY_LOW";
+    default: return "glDebugSeverityString: INVALID_ENUM";
+  }
+}
+
+GLvoid glDebugMessageCallback( GLenum source, GLenum type, GLuint id, GLenum severity,
+                               GLsizei length, const GLchar* message, GLvoid* userParam)
+{
+  std::cout << "Source:   " << glDebugSourceString(source) << std::endl;
+  std::cout << "Type:     " << glDebugTypeString(type) << std::endl;
+  std::cout << "Severity: " << glDebugSeverity(severity) << std::endl;
+  std::cout << "Message:  " << std::endl << "\t" << message << std::endl;
+}
+#endif
 
 GLvoid glVertexAttribPointers( FVertexEnum type )
 {
