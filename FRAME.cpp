@@ -45,10 +45,14 @@ int main()
   //Init OpenGL
   initGLFunction();
 
+  GL_ERROR_ASSERT();
+
   //Init SDL Font Engine
   TTF_Init();
 
   initializeGame();
+
+  GL_ERROR_ASSERT();
 
   //Game Loop
   while(gGameOn)
