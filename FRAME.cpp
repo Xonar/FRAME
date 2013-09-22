@@ -42,14 +42,14 @@ int main()
 
   gWindow = &window;
 
+  //Init OpenGL
+  initGLFunction();
+
 #ifdef DEBUG
   //Start Debug Output
   glDebugMessageCallbackARB(glDebugMessageCallbackFunction, NULL);
 #endif //DEBUG
-
-  //Init OpenGL
-  initGLFunction();
-
+  
   GL_ERROR_ASSERT();
 
   //Init SDL Font Engine
