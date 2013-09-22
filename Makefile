@@ -8,7 +8,7 @@ OBJ_FILES = $(subst ./,./$(BUILD_DIR)/,$(SRC_FILES:.cpp=.o))
 
 DEPENDANCIES =  $(OBJ_FILES:.o=.d)
 
-DIRECTORIES = $(patsubst .%,./$(BUILD_DIR)%,$(shell find . -not -iwholename "./Build*" -not -iwholename "./.*" -type d))
+DIRECTORIES = $(patsubst .%,./$(BUILD_DIR)%,$(shell find . -not -iwholename "./$(BUILD_DIR)*" -not -iwholename "./.*" -type d))
 
 GENERATED = ./Graphics/GLFunctions.h
 
@@ -46,11 +46,11 @@ $(DIRECTORIES):
 #Generate Dependancies
 ./Build/%.d : %.cpp
 	@echo "Generating Dependancy file for $*.cpp"
-	@$(CC) -MM $(CDEPFLAGS) -MT ./Build/$*.o $*.cpp > ./Build/$*.d
+	@$(CC) -MM $(CDEPFLAGS) -MT ./$(BUILD_DIR)/$*.o $*.cpp > ./$(BUILD_DIR)/$*.d
 
 #Objects : Source
-./Build/%.o : %.cpp
-	$(CC) -c $(CFLAGS) $*.cpp -o ./Build/$*.o
+./$(BUILD_DIR)/%.o : %.cpp
+	$(CC) -c $(CFLAGS) $*.cpp -o ./$(BUILD_DIR)/$*.o
 
 #Clean
 clean:
