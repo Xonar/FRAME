@@ -74,7 +74,7 @@ GLvoid glDebugMessageCallback( GLenum source, GLenum type, GLuint id, GLenum sev
 {
   std::cout << "Source:   " << glDebugSourceString(source) << std::endl;
   std::cout << "Type:     " << glDebugTypeString(type) << std::endl;
-  std::cout << "Severity: " << glDebugSeverity(severity) << std::endl;
+  std::cout << "Severity: " << glDebugSeverityString(severity) << std::endl;
   std::cout << "Message:  " << std::endl << "\t" << message << std::endl;
 }
 
