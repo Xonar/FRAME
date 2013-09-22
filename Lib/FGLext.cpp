@@ -30,7 +30,6 @@ const GLchar* glErrorString(GLenum err)
   }
 }
 
-#if defined(GL_KHR_debug) && GL_KHR_debug == 1
 const GLchar* glDebugSourceString(GLenum source)
 {
   switch(source)
@@ -78,7 +77,6 @@ GLvoid glDebugMessageCallback( GLenum source, GLenum type, GLuint id, GLenum sev
   std::cout << "Severity: " << glDebugSeverity(severity) << std::endl;
   std::cout << "Message:  " << std::endl << "\t" << message << std::endl;
 }
-#endif
 
 GLvoid glVertexAttribPointers( FVertexEnum type )
 {
