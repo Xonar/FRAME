@@ -42,6 +42,11 @@ int main()
 
   gWindow = &window;
 
+#ifdef DEBUG
+  //Start Debug Output
+  glDebugMessageCallbackARB(glDebugMessageCallback, NULL);
+#endif //DEBUG
+
   //Init OpenGL
   initGLFunction();
 

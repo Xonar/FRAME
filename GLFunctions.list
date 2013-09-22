@@ -14,6 +14,9 @@
 #   Function Declerations of GL Functions can be found 
 #   from man-pages or other references
 
+#ARB_debug_output
+void glDebugMessageCallbackARB(GLDEBUGPROCARB callback, const GLvoid *userParam);
+
 #Programs
 void glUseProgram(GLuint program);
 GLboolean glIsProgram(GLuint program);
