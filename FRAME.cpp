@@ -44,7 +44,7 @@ int main()
 
 #ifdef DEBUG
   //Start Debug Output
-  glDebugMessageCallbackARB(glDebugMessageCallback, NULL);
+  glDebugMessageCallbackARB(glDebugMessageCallbackFunction, NULL);
 #endif //DEBUG
 
   //Init OpenGL

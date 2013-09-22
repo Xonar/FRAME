@@ -69,7 +69,7 @@ const GLchar* glDebugSeverityString(GLenum severe)
   }
 }
 
-GLvoid glDebugMessageCallback( GLenum source, GLenum type, GLuint id, GLenum severity,
+GLvoid glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id, GLenum severity,
                                GLsizei length, const GLchar* message, GLvoid* userParam)
 {
   std::cout << "Source:   " << glDebugSourceString(source) << std::endl;

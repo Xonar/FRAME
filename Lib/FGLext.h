@@ -30,7 +30,7 @@ GLvoid glVertexAttribPointers( FVertexEnum type );
 GLvoid glEnableVertexAttribs( FVertexEnum type );
 GLvoid glDisableVertexAttribs( FVertexEnum type );
 
-GLvoid glDebugMessageCallback( GLenum source, GLenum type, GLuint id, GLenum severity,
+GLvoid glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id, GLenum severity,
                                GLsizei lengths, const GLchar* message, GLvoid* userParam);
 
 #endif //_F_H_FGLEXT_
