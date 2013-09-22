@@ -29,6 +29,11 @@ int FWindow::Init()
   //Create Window
   this->window = SDL_CreateWindow(this->title.c_str(),this->x,this->y,width,height,mode);
 
+  //Set SDL log lvl
+#ifdef DEBUG
+  SDL_LogSetAllPriority(SDL_LOG_PRIORITY_VERBOSE);
+#endif
+
   //Check if Window was created succesfully
   if(!this->window)
   {
