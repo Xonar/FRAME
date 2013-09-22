@@ -43,8 +43,7 @@ int FWindow::Init()
   }
 
   //Context Flags
-  SDL_GL_SetAttribute( SDL_GL_CONTEXT_FLAGS, 
-        SDL_GL_CONTEXT_PROFILE_CORE
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_FLAGS, 0
 #ifdef DEBUG
         | SDL_GL_CONTEXT_DEBUG_FLAG
 #endif
@@ -73,8 +72,6 @@ int FWindow::Init()
   const GLubyte* sGLVersion =  glGetString(GL_VERSION);
 
   std::cout << "OpenGL Version String : " << sGLVersion << std::endl;
-  
-
 
   //Desotry Context as it's not needed any more
   SDL_GL_DeleteContext(this->context);
