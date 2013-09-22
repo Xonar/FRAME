@@ -44,7 +44,7 @@ $(DIRECTORIES):
 	@test -d $@ || mkdir $@
 
 #Generate Dependancies
-./Build/%.d : %.cpp
+./$(BUILD_DIR)/%.d : %.cpp
 	@echo "Generating Dependancy file for $*.cpp"
 	@$(CC) -MM $(CDEPFLAGS) -MT ./$(BUILD_DIR)/$*.o $*.cpp > ./$(BUILD_DIR)/$*.d
 
