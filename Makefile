@@ -28,7 +28,7 @@ all: $(DIRECTORIES) $(GENERATED) $(DEPENDANCIES)
 	@echo "-------------------------------"
 	@echo "Compiling : "
 	@echo "-------------------------------"
-	@$(MAKE) DEPENDANCIES_GENERATED=1 CFLAGS='$(CFLAGS)' $(EXECUTABLE)
+	@$(MAKE) DEPENDANCIES_GENERATED=1 CFLAGS='$(CFLAGS)' BUILD_DIR='$(BUILD_DIR)' $(EXECUTABLE)
 
 debug: all
 debug: CFLAGS += -D DEBUG=1 -g
@@ -41,7 +41,7 @@ debug: CFLAGS += -D DEBUG=1 -g
 #Create Directories
 $(DIRECTORIES):
 	@echo "Creating Directory : $@"
-	@test -d $@ || mkdir $@
+	@test -d $@ || mkdir -p $@
 
 #Generate Dependancies
 ./$(BUILD_DIR)/%.d : %.cpp
