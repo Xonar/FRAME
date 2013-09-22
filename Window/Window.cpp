@@ -23,6 +23,7 @@ FWindow::FWindow(std::string title)
   this->title = title;
 }
 
+
 int FWindow::Init()
 {
   //Create Window
@@ -40,6 +41,14 @@ int FWindow::Init()
     
     return 1;
   }
+
+  //Context Flags
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_FLAGS, 
+        SDL_GL_CONTEXT_PROFILE_CORE
+#ifdef DEBUG
+        | SDL_GL_CONTEXT_DEBUG_FLAG
+#endif
+        );
 
   //Create Dummy Context
   this->context = SDL_GL_CreateContext(this->window);
