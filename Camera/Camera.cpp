@@ -153,7 +153,7 @@ GLint FCamera::InitProjectionMatrix(float fovy, float near, float far)
 }
 
 //Use Camera
-void FCamera::setMatrixUniform( GLuint glProg, GLuint worldView, GLuint viewScreen)
+void FCamera::setMatrixUniform(GLuint worldView, GLuint viewScreen)
 {
   glViewport(this->x,this->y,this->width,this->height);
 
@@ -163,7 +163,7 @@ void FCamera::setMatrixUniform( GLuint glProg, GLuint worldView, GLuint viewScre
   glUniformMatrix4fv(viewScreen, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
 }
 
-void FCamera::setMatrixUniformWorldView(GLuint glProg, GLuint uniform)
+void FCamera::setMatrixUniformWorldView(GLuint uniform)
 {
   glViewport(this->x,this->y,this->width,this->height);
   
@@ -172,7 +172,7 @@ void FCamera::setMatrixUniformWorldView(GLuint glProg, GLuint uniform)
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
 }
 
-void FCamera::setMatrixUniformViewScreen(GLuint glProg, GLuint uniform)
+void FCamera::setMatrixUniformViewScreen(GLuint uniform)
 {
   glViewport(this->x,this->y,this->width,this->height);
   

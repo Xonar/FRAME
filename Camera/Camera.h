@@ -55,9 +55,9 @@ class FCamera
 
     GLint InitProjectionMatrix(float vovy, float zNear, float far);
 
-    void setMatrixUniform(GLuint glProg, GLuint worldScreen, GLuint viewScreen);
-    void setMatrixUniformWorldView(GLuint glProg, GLuint uniform);
-    void setMatrixUniformViewScreen(GLuint glProg, GLuint uniform);
+    void setMatrixUniform(GLuint worldScreen, GLuint viewScreen);
+    void setMatrixUniformWorldView(GLuint uniform);
+    void setMatrixUniformViewScreen(GLuint uniform);
 };
 
 #endif // _F_H_CAMERA_
