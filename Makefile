@@ -13,7 +13,7 @@ DIRECTORIES = $(patsubst .%,./$(BUILD_DIR)%,$(shell find . -not -iwholename "./$
 GENERATED = ./Graphics/GLFunctions.h
 
 CC = g++
-CFLAGS = -std=c++11 -Wall -O2
+CFLAGS = -std=c++11 -Wall -g -D DEBUG=1
 CDEPFLAGS = -std=gnu++11
 
 LD = g++
@@ -29,9 +29,6 @@ all: $(DIRECTORIES) $(GENERATED) $(DEPENDANCIES)
 	@echo "Compiling : "
 	@echo "-------------------------------"
 	@$(MAKE) DEPENDANCIES_GENERATED=1 CFLAGS='$(CFLAGS)' BUILD_DIR='$(BUILD_DIR)' $(EXECUTABLE)
-
-debug: all
-debug: CFLAGS += -D DEBUG=1 -g
 
 #Generated Files
 ./Graphics/GLFunctions.h: GLFunctions.list
