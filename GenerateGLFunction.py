@@ -84,7 +84,7 @@ def main():
 \n#define _F_H_GLFUNCTIONS_\n")
 
   #Write Header Includes
-  f.write("\n#include \"SDL2/SDL_opengl.h\"\n")
+  f.write("\n#include <SDL2/SDL_opengl.h>\n")
 
   #Write initGlFunction decleration
   f.write("\nint initGLFunction();\n\n")
@@ -123,7 +123,7 @@ def main():
 
   #Write Header Includes
   f.write("\n#include \"GLFunctions.h\"\
-\n#include \"SDL2/SDL.h\"\n")
+\n#include <SDL2/SDL.h>\n")
 
   #Write Declerations
   f.write("\n// DECLERATIONS\n")
