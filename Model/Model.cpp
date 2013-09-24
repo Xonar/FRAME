@@ -78,3 +78,16 @@ GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, GLuint numVert
 
   return 0;
 }
+
+GLvoid FModel::attachTexture(FTexture *tex, F_MODEL_TEXTURE_ENUM type)
+{
+  //TODO Use Resource Manager
+  switch(type)
+  {
+    case F_MODEL_TEXTURE_TEXTURE:   this->tTexture = tex;
+    case F_MODEL_TEXTURE_NORMAL:    this->tNormalMap = tex;
+    case F_MODEL_TEXTURE_HEIGHT:    this->tHeightMap = tex;
+    case F_MODEL_TEXTURE_OVERLAY:   this->tOverlay = tex;
+  }
+}
+
