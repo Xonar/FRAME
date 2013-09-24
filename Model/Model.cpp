@@ -48,25 +48,24 @@ FModel::~FModel()
 GLint FModel::loadModelFromVertices(FVertex3 *vertices, GLuint numVertices)
 {
   //Generate Indices
-  GLuint* tmpIndices = new GLuint[vertices];
+  GLuint* tmpIndices = new GLuint[numVertices];
 
-  for(int i = 0;i < numVertices; i++)
+  for(GLuint i = 0;i < numVertices; i++)
     tmpIndices[i] = i;
 
   return loadModelFromVerticesAndIndices(vertices, numVertices, tmpIndices, numVertices);
 
 }
 
-
-GLint loadModelFromVerticesAndIndices(FVertex3 *vertices, GLuint numVertices, GLuint* indices, GLuint numIndices)
+GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, GLuint numVertices, GLuint* indices, GLuint numIndices)
 {
   //Create Vertex Buffer
   glGenBuffers(1, &this->vbo);
   glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, sizeof( FVertex ) * numVertices, vertices, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof( FVertex3 ) * numVertices, vertices, GL_STATIC_DRAW);
 
   //Create Index Buffer
-  glGenBuffers(1, %this->ibo);
+  glGenBuffers(1, &this->ibo);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices * sizeof(GLuint), indices, GL_STATIC_DRAW);
 
