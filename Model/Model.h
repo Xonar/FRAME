@@ -46,7 +46,8 @@ class FModel
   GLint draw();
 
   GLint loadModelFormFileObj(std::string path);
-  GLint loadModelFromVertices(FVertex3 vertices);
+  GLint loadModelFromVertices(FVertex3 *vertices, GLuint numVertices);
+  GLint loadModelFromVerticesAndIndices(FVertex3 vertices, GLuint numVertices, GLuint* indices, GLuint numIndices);
 };
 
 #endif //_F_H_MODEL_
