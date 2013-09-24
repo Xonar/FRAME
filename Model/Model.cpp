@@ -57,7 +57,8 @@ GLint FModel::loadModelFromVertices(FVertex3 *vertices, GLuint numVertices)
 
 }
 
-GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, GLuint numVertices, GLuint* indices, GLuint numIndices)
+GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, GLuint numVertices,
+                                              GLuint* indices, GLuint numIndices)
 {
   //Create Vertex Buffer
   glGenBuffers(1, &this->vbo);

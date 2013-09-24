@@ -47,7 +47,8 @@ class FModel
 
   GLint loadModelFormFileObj(std::string path);
   GLint loadModelFromVertices(FVertex3 *vertices, GLuint numVertices);
-  GLint loadModelFromVerticesAndIndices(FVertex3 *vertices, GLuint numVertices, GLuint* indices, GLuint numIndices);
+  GLint loadModelFromVerticesAndIndices(FVertex3 *vertices, GLuint numVertices, 
+                                        GLuint* indices, GLuint numIndices);
 
   GLvoid attachTexture(FTexture *tex, F_MODEL_TEXTURE_ENUM type);
 };
