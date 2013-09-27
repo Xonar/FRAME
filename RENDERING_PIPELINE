@@ -1,0 +1,142 @@
+Rendering Pipeline Design
+-------------------------
+
+This explains how the rendering pipeline working and implementation is planned.
+
+Shader Groupings
+----------------
+There will be four shader groups that a shader will fall into.
+
+1. Model Shaders
+2. Particle Shaders (Not designed)
+3. Combining Shaders (Incomeplete)
+4. Sprite Shaders (Incomeplete)
+5. Text Shaders (Incomplete)
+6. Post Processing (Not designed)
+
+The States that are in brackets refer to the design document and not the implementation.
+
+Overview of Render Sequence:
+The Pipeline is a deffered rendering pipeline with pseudo transparency support.
+
+The Model and Particle shaders will render to their respective buffers. They will be combined with
+the Combining Shaders to form the final 3D scene. The depth buffer data will be cleared and the
+sprite and text shaders will do their passes in that order and depth buffer is then used to order
+text and sprites. This will then be the image that is displayed on the screen.
+
+NOTES
+-----
+Computational Complexity Variables
+
+M - Model Complexity
+N - Number of Models
+V - Number of Views
+P - Number of Pixels (Fragment Operations)
+L - Number of Lights
+
+Branches
+--------
+All shaders will have two branches GL3 and GL4. the numerical value refer to the major opengl
+version that it supports. 
+
+OpenGL Version GL3:
+The opengl version that is being used is equal to the highest version of the form 3.X which MESA
+officially supports. Currently this is 3.1. Certain features will only be implemented when newer
+versions are supported.
+
+OpenGL Version GL4:
+The opengl version that is being used is OpenGL 4.3 since that is the first version that supports
+dynamic array sizes that is necesary in the tesselation control stage.
+
+Differences:
+GL4 will almost be a superset of GL3, but will include tesselation and certain stages will be
+changed to use newer OpenGL 4 Extensions for increased speed and efficiency.
+
+1. Model Shaders
+----------------
+The Model Shaders will be responsible for all solid body objectsi.
+
+There will be two branches:
+1. Static
+2. Dynamic
+Static branches will rarely be updated where dynamic branches will be updated every frame. They are
+meshed together to give the output buffers.
+
+There will be two sub-types
+1. Non-transparency
+2. Transparency
+
+Overview:
+The Non-Transparency will be done as normal. The depth buffer data will be held to do the
+transparency, but it will be rendered to a different buffer. Color will be also blended in transparency stage.
+
+Shaders:
+
+1.1 Vertex Shaders:
+This shader is responsible for transforming all the vertex data to wolrd space. All animation and
+model to world transformations will be done here. The complexity for this stage is O(M*N). If there
+is no tesselation stage then the output from this shader will be buffered.
+
+1.2 Tesselation shaders (ONLY IN GL4):
+1.2.1 Tesselation control:
+This step will determine the how much tesselation to be applied based on the View Information that
+is stored in a dynamic array. O(M*N*V)
+
+1.2.2 Tesselation evalution:
+Simply evaluate to give a smooth model. The worst case complexity is O(M*N*_MaxTesselationLevel),
+but will never actually be that bad. This data will be buffered.
+
+1.3 Geometry Shader:
+The Geometry shader will transform the vertex information to all the required views and pass the
+transformed vertex data to their respective fragment shaders. The complexity for this stage is
+O(M*N*V).
+
+1.4 Fragment Shader:
+This shader will output all buffers to texture and handle color blending of transparencies. O(P)
+
+2. Particle Shaders
+-------------------
+The particle shaders will be responsible for all particle systems
+
+The particle shader is still in the process of being designed, but they output the same buffers as
+the Model Shaders.
+
+3. Combining Shaders
+--------------------
+This will take into account all other buffers and use them to display the final rendered 3d scene.
+
+This shader has multiple passes:
+1. Light Pass - handles all lighting effects (Light has the nice property that it's cumalative)
+  The passes will be done independantly for the non-transparent and transparent buffers. Except the
+  Ambient pass on the transparent pass will use the depth buffer from it's non-transparent
+  counter part.
+  1.1 Ambient Lighting
+  1.2 Lighting From Shadowing Lights
+  1.3 Lighting Form Non-Shadowing Lights
+2. Combining Stage
+  This stage will combine all remaining buffers into a single buffer. (Implementation still to be
+    finalized)
+
+Shaders:
+
+3.1 Vertex Shader, Tesselation Shaders, Geometry Shaders: 
+Not included - A VBO is used that stores 2 triangles for the screen and is directly passed to the
+fragment shader. Therefore constant time O(1) :D .
+
+3.2 Fragment Shader:
+Lighting:
+  Lighting will be done in this step. Overall complexity of O(L*P)
+Combining:
+  Combines all remaining buffer into the final 3d scene. Complexity of O(P)
+
+4. Sprite Shaders
+-----------------
+The sprite shader will simply render 2D images to the screen
+
+5. Text Shader
+--------------
+Text shaders handle all text rendering
+
+There will be 2 types of Text Shaders
+1. Mapped Texture
+2. Distance Field
