@@ -73,9 +73,15 @@ transparency, but it will be rendered to a different buffer. Color will be also 
 Shaders:
 
 1.1 Vertex Shaders:
+Pass 1:
 This shader is responsible for transforming all the vertex data to wolrd space. All animation and
 model to world transformations will be done here. The complexity for this stage is O(M*N). If there
 is no tesselation stage then the output from this shader will be buffered.
+
+Pass 2:
+The second pass will transform the vertex information to all the required views and pass the
+transformed vertex data to their respective fragment shaders. The complexity for this stage is
+O(M*N*V). (This will be done after tesselation)
 
 1.2 Tesselation shaders (ONLY IN GL4):
 1.2.1 Tesselation control:
@@ -87,9 +93,7 @@ Simply evaluate to give a smooth model. The worst case complexity is O(M*N*_MaxT
 but will never actually be that bad. This data will be buffered.
 
 1.3 Geometry Shader:
-The Geometry shader will transform the vertex information to all the required views and pass the
-transformed vertex data to their respective fragment shaders. The complexity for this stage is
-O(M*N*V).
+Not Used Currently
 
 1.4 Fragment Shader:
 This shader will output all buffers to texture and handle color blending of transparencies. O(P)
