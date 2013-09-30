@@ -29,7 +29,7 @@ FModel::FModel()
 
   vbo = ibo = 0;
 
-  tTexture = tOverlay = tHeightMap = tNormalMap = 0;
+  tTexture = tHeightMap = tNormalMap = 0;
 }
 
 FModel::~FModel()
@@ -87,7 +87,6 @@ GLvoid FModel::attachTexture(FTexture *tex, F_MODEL_TEXTURE_ENUM type)
     case F_MODEL_TEXTURE_TEXTURE:   this->tTexture = tex;
     case F_MODEL_TEXTURE_NORMAL:    this->tNormalMap = tex;
     case F_MODEL_TEXTURE_HEIGHT:    this->tHeightMap = tex;
-    case F_MODEL_TEXTURE_OVERLAY:   this->tOverlay = tex;
   }
 }
 
