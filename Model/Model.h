@@ -38,7 +38,6 @@ class FModel
 
   //Texture Objects
   FTexture *tTexture;
-  FTexture *tOverlay;
   FTexture *tHeightMap;
   FTexture *tNormalMap;
   
@@ -46,6 +45,7 @@ class FModel
   FModel();
   ~FModel();
 
+  GLint readyDraw();
   GLint draw();
 
   GLint loadModelFormFileObj(std::string path);
