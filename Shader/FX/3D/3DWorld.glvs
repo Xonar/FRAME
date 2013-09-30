@@ -1,0 +1,24 @@
+#version 140
+
+//Input
+in vec3 pos;
+in vec3 norm;
+in vec2 tex;
+in vec3 col;
+
+//Output
+out vec2 vstex;
+out vec3 vscol;
+out vec4 vsnorm;
+out vec4 vspos;
+
+uniform mat4 ModelWorldMatrix;
+
+//Main
+void main()
+{
+  vstex = tex;
+  vscol = col;
+  vsnorm = ModelWorldMatrix * vec4(norm, 1);
+  vspos = ModelWorldMatrix * vec4(pos, 1);
+}

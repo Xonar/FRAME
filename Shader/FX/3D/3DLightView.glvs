@@ -1,0 +1,13 @@
+#version 140
+
+//Output From Previous Vertex Shader
+in vec2 vstex;
+in vec4 vsnorm;
+in vec4 vspos;
+
+uniform mat4 WorldLightViewProjectionMatrix;
+
+void main()
+{
+  gl_Position = WorldLightViewProjectionMatrix * vspos;
+}
