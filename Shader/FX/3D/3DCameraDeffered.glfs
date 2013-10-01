@@ -19,7 +19,7 @@ uniform mat4 ModelWorldMatrix;
 //Main
 void main()
 {
-  dCol = texture(tTexture, ftex) * uColour;
-  dNorm = ModelWorldMatrix * fnorm;
+  dCol = (texture(tTexture, ftex) * uColour).xyz;
+  dNorm = (ModelWorldMatrix * vec4(fnorm, 1.0f)).xyz;
   dPos = fpos;
 }
