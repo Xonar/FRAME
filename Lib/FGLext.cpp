@@ -85,18 +85,15 @@ GLvoid glVertexAttribPointers( FVertexEnum type )
     case F_VERTEX_3:
       glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) 0);
       glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 3) );
-      glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 6) );
-      glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 8) );
+      glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 5) );
       break;
     case F_VERTEX_2:
       glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) 0);
       glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 3) );
-      glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 5) );
       break;
     case F_VERTEX_TEXT:
       glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) 0);
-      glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) (sizeof(float) * 2) );
-      glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) (sizeof(float) * 4) );
+      glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) (sizeof(float) * 3) );
       break;
     default:
       std::cerr << "F_INVALID_ENUM" << std::endl;
@@ -109,12 +106,11 @@ GLvoid glEnableVertexAttribs( FVertexEnum type )
   switch( type )
   {
     case F_VERTEX_3:
-      glEnableVertexAttribArray(3);
+      glEnableVertexAttribArray(2);
     case F_VERTEX_2:
     case F_VERTEX_TEXT:
       glEnableVertexAttribArray(0);
       glEnableVertexAttribArray(1);
-      glEnableVertexAttribArray(2);
       break;
    default:
       std::cerr << "F_INVALID_ENUM" << std::endl;
@@ -126,12 +122,11 @@ GLvoid glDisableVertexAttribs( FVertexEnum type )
   switch( type )
   {
     case F_VERTEX_3:
-      glDisableVertexAttribArray(3);
+      glDisableVertexAttribArray(2);
     case F_VERTEX_2:
     case F_VERTEX_TEXT:
       glDisableVertexAttribArray(0);
       glDisableVertexAttribArray(1);
-      glDisableVertexAttribArray(2);
       break;
    default:
       std::cerr << "F_INVALID_ENUM" << std::endl;
