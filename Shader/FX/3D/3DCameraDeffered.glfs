@@ -1,0 +1,25 @@
+#version 140
+
+//Input
+in vec2 ftex;
+in vec3 fnorm;
+in vec3 fpos;
+
+//Output - Deffered Textures
+out vec3 dCol;
+out vec3 dNorm;
+out vec3 dPos;
+
+uniform sampler2D tTexture;
+uniform sampler2D tNormal;
+uniform vec4 uColour;
+
+uniform mat4 ModelWorldMatrix;
+
+//Main
+void main()
+{
+  dCol = texture(tTexture, ftex) * uColour;
+  dNorm = ModelWorldMatrix * fnorm;
+  dPos = fpos;
+}
