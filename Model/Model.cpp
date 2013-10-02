@@ -79,6 +79,11 @@ GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, const GLuint n
   return 0;
 }
 
+GLvoid FModel::readyDraw()
+{
+  glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
+}
 GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices, 
       const GLfloat *const uvs, const GLint numVertices)
 {
