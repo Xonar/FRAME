@@ -152,19 +152,19 @@ GLint FCamera::InitProjectionMatrix(float fovy, float near, float far)
   return 0;
 }
 
-GLvoid setPosition(glm::vec3 pos)
+GLvoid FCamera::setPosition(glm::vec3 pos)
 {
   this->pos = pos;
   this->updateWorldViewMatrix = true;
 }
 
-GLvoid lookAt(glm::vec3 lookAt)
+GLvoid FCamera::lookAt(glm::vec3 lookAt)
 {
   this->dir = lookAt - pos;
   this->updateWorldViewMatrix = true;
 }
 
-GLvoid setDirection(glm::vec3 dir)
+GLvoid FCamera::setDirection(glm::vec3 dir)
 {
   this->dir = dir;
   this->updateWorldViewMatrix = true;
