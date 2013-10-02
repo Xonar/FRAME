@@ -93,7 +93,7 @@ GLint FCamera::InitOrthoMatrix( float left,float right,float bottom,float top,
   this->width = right - left;
   this->y = bottom;
   this->height = top - bottom;
-  this->aspect = (float)w/h;
+  this->aspect = (float)this->width/this->height;
 
   //Create a allocate ViewScreen and WorlView Matrix
   glGenBuffers(1, &this->ubViewScreen);
@@ -119,7 +119,7 @@ GLint FCamera::InitOrthoMatrix(float left,float right,float bottom,float top)
   this->width = right - left;
   this->y = bottom;
   this->height = top - bottom;
-  this->aspect = (float)w/h;
+  this->aspect = (float)this->width/this->height;
 
   //Create a allocate View Screen Matrix
   glGenBuffers(1, &this->ubViewScreen);
