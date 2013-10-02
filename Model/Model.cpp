@@ -79,6 +79,19 @@ GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, GLuint numVert
   return 0;
 }
 
+GLint FModel::loadModelFromVertexAndTextureArray(GLfloat* vertices, GLfloat* uvs, GLint numVertices)
+{
+  this->vertices = new FVertex3[numVertices];
+
+  for(int i = 0; i<numVertices;i++)
+  {
+    this->vertices[i] = {glm::vec3(vertices[3*i+0],vertices[3*i+1], vertices[3*i+2]), 
+                   glm::vec2(uvs[i*2+0], uvs[i*2+1]),
+                   glm::vec3()}; //TODO Generate Normal Data from vertex data
+  }
+
+  return loadModelFromVertices(this->vertices, numVertices);
+}
 GLvoid FModel::attachTexture(FTexture *tex, F_MODEL_TEXTURE_ENUM type)
 {
   //TODO Use Resource Manager
