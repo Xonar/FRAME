@@ -45,7 +45,7 @@ FModel::~FModel()
   //Don't remove Textures as it is not the model's textures
 }
 
-GLint FModel::loadModelFromVertices(FVertex3 *vertices, GLuint numVertices)
+GLint FModel::loadModelFromVertices(FVertex3 *vertices, const GLuint numVertices)
 {
   //Generate Indices
   GLuint* tmpIndices = new GLuint[numVertices];
@@ -57,8 +57,8 @@ GLint FModel::loadModelFromVertices(FVertex3 *vertices, GLuint numVertices)
 
 }
 
-GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, GLuint numVertices,
-                                              GLuint* indices, GLuint numIndices)
+GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, const GLuint numVertices,
+                                              GLuint* indices, const GLuint numIndices)
 {
   //Create Vertex Buffer
   glGenBuffers(1, &this->vbo);
@@ -79,7 +79,8 @@ GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, GLuint numVert
   return 0;
 }
 
-GLint FModel::loadModelFromVertexAndTextureArray(GLfloat* vertices, GLfloat* uvs, GLint numVertices)
+GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices, 
+      const GLfloat *const uvs, const GLint numVertices)
 {
   this->vertices = new FVertex3[numVertices];
 
@@ -92,7 +93,8 @@ GLint FModel::loadModelFromVertexAndTextureArray(GLfloat* vertices, GLfloat* uvs
 
   return loadModelFromVertices(this->vertices, numVertices);
 }
-GLvoid FModel::attachTexture(FTexture *tex, F_MODEL_TEXTURE_ENUM type)
+
+GLvoid FModel::attachTexture(FTexture *const tex, const F_MODEL_TEXTURE_ENUM type)
 {
   //TODO Use Resource Manager
   switch(type)
