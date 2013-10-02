@@ -55,6 +55,10 @@ class FCamera
 
     GLint InitProjectionMatrix(float vovy, float zNear, float far);
 
+    GLvoid setPosition(glm::vec3 pos);
+    GLvoid lookAt(glm::vec3 lookAt);
+    GLvoid setDirection(glm::vec3 dir);
+
     void setMatrixUniform(GLuint worldScreen, GLuint viewScreen);
     void setMatrixUniformWorldView(GLuint uniform);
     void setMatrixUniformViewScreen(GLuint uniform);
