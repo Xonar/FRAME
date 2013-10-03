@@ -11,6 +11,7 @@
 
 #include "FGLext.h"
 #include "../Graphics/Graphics.h"
+#include "../Global.h"
 
 #include <iostream>
 
@@ -72,10 +73,16 @@ const GLchar* glDebugSeverityString(GLenum severe)
 GLvoid glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id, GLenum severity,
                                GLsizei length, const GLchar* message, GLvoid* userParam)
 {
-  std::cout << "Source:   " << glDebugSourceString(source) << std::endl;
-  std::cout << "Type:     " << glDebugTypeString(type) << std::endl;
-  std::cout << "Severity: " << glDebugSeverityString(severity) << std::endl;
-  std::cout << "Message:  " << std::endl << "\t" << message << std::endl;
+  //Set Bold Red
+  std::cerr << TERM_STATE_BOLD << TERM_COL_RED;
+
+  std::cerr << "Source:   " << glDebugSourceString(source) << std::endl;
+  std::cerr << "Type:     " << glDebugTypeString(type) << std::endl;
+  std::cerr << "Severity: " << glDebugSeverityString(severity) << std::endl;
+  std::cerr << "Message:  " << std::endl << "\t" << message << std::endl;
+  
+  //Reset Colour
+  std::cerr << TERM_STATE_RESET << TERM_COL_DEFAULT;
 }
 
 GLvoid glVertexAttribPointers( FVertexEnum type )
