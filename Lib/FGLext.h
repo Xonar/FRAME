@@ -15,6 +15,8 @@
 #include <SDL2/SDL_opengl.h>
 #include "../Container/Container.h"
 
+GLint glInitFGLext();
+
 const GLchar* glErrorString(GLenum err);
 const GLchar* glDebugSourceString(GLenum source);
 const GLchar* glDebugTypeString(GLenum type);
@@ -26,9 +28,9 @@ const GLchar* glDebugSeverityString(GLenum severe);
 #define GL_ERROR_ASSERT() /* No Assert */
 #endif //DEBUG
 
-GLvoid glVertexAttribPointers( FVertexEnum type );
 GLvoid glEnableVertexAttribs( FVertexEnum type );
 GLvoid glDisableVertexAttribs( FVertexEnum type );
+GLvoid glBindVertexArrayFGL( FVertexEnum type );
 
 GLvoid glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id, GLenum severity,
                                GLsizei lengths, const GLchar* message, GLvoid* userParam);
