@@ -84,6 +84,12 @@ GLvoid FModel::readyDraw()
   glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
 }
+
+GLvoid FModel::draw()
+{
+  glDrawElements(GL_TRIANGLES, this->numIndices, GL_UNSIGNED_INT, NULL);
+}
+
 GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices, 
       const GLfloat *const uvs, const GLint numVertices)
 {
