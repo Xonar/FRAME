@@ -35,6 +35,7 @@ class FModel
   //Buffer Objects
   GLuint vbo;
   GLuint ibo;
+  GLuint vao;
 
   //Texture Objects
   FTexture *tTexture;

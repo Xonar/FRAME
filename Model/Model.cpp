@@ -12,6 +12,7 @@
 #include "Model.h"
 
 #include "../Graphics/Graphics.h"
+#include "../Lib/FGLext.h"
 
 #include <glm/glm.hpp>
 #include <fstream>
@@ -59,34 +60,42 @@ GLint FModel::loadModelFromVertices(FVertex3 *vertices, const GLuint numVertices
 GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, const GLuint numVertices,
                                               GLuint* indices, const GLuint numIndices)
 {
-  //Create Vertex Buffer
-  glGenBuffers(1, &this->vbo);
-  glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof( FVertex3 ) * numVertices, vertices, GL_STATIC_DRAW);
-
-  //Create Index Buffer
-  glGenBuffers(1, &this->ibo);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices * sizeof(GLuint), indices, GL_STATIC_DRAW);
-
   //Set Data
   this->indices = indices;
   this->numIndices = numIndices;
   this->vertices = vertices;
   this->numVertices = numVertices;
 
+  //Create Vertex Array Object
+  glGenVertexArrays(1, &this->vao);
+  glBindVertexArray(this->vao);
+  
+  //Create Vertex Buffer Object
+  glGenBuffers(1, &this->vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof( FVertex3 ) * this->numVertices, this->vertices, GL_STATIC_DRAW);
+
+  //Enable Vertex Attrib Arrays
+  glEnableVertexAttribs( F_VERTEX_3 );
+  glVertexAttribPointers( F_VERTEX_3 );
+
+  //Create Index Buffer Object
+  glGenBuffers(1, &this->ibo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->numIndices * sizeof(GLuint), this->indices, GL_STATIC_DRAW);
+
   return 0;
 }
 
 GLvoid FModel::readyDraw()
 {
-  glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
+  glEnableVertexAttribArray(this->vao);
 }
 
 GLvoid FModel::draw()
 {
   glDrawElements(GL_TRIANGLES, this->numIndices, GL_UNSIGNED_INT, NULL);
+  //glDrawArrays(GL_TRIANGLES, 0, 12*3);
 }
 
 GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices, 
