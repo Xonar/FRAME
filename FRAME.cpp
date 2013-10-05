@@ -47,7 +47,10 @@ int main()
 
 #ifdef DEBUG
   //Start Debug Output
-  glDebugMessageCallbackARB(glDebugMessageCallbackFunction, NULL);
+  if(glIsExtensionSupported("GL_ARB_debug_output"))
+    glDebugMessageCallbackARB(glDebugMessageCallbackFunction, NULL);
+  else
+    std::cout << "GL_ARB_debug_output not supported!" << std::endl;
 #endif //DEBUG
   
   GL_ERROR_ASSERT();
