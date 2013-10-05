@@ -14,6 +14,7 @@
 #include "../Global.h"
 
 #include <iostream>
+#include <set>
 
 const GLchar* glErrorString(GLenum err)
 {
@@ -68,6 +69,50 @@ const GLchar* glDebugSeverityString(GLenum severe)
     case GL_DEBUG_SEVERITY_LOW_ARB: return "GL_DEBUG_SEVERITY_LOW";
     default: return "glDebugSeverityString: INVALID_ENUM";
   }
+}
+
+//Compexity is O(log N + M) where
+// N - Number of Extensions already looked at
+// M - Number of Extensions looked at in this run (If extension not in alraedy looked at set)
+// Note : if you sum up all invocation complexities M's total will never exceed the 
+//        number of extensions present
+GLboolean glIsExtensionSupported(const std::string ext)
+{
+  static std::set<std::string> extensions;
+  static GLint numExtensions = 0;
+  static GLint extensionsParsed = 0;
+
+  if(!numExtensions)
+  {
+    //First time this is run
+    glGetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
+  }
+
+  if(extensions.find(ext) != extensions.end())
+  {
+    //Extension found
+    return GL_TRUE;
+  }
+  else
+  {
+    //Continue searching through extensions
+    for(;numExtensions > extensionsParsed;)
+    {
+      std::string tmp((const char*)glGetStringi(GL_EXTENSIONS, extensionsParsed++));
+      
+      //Add to extensions
+      extensions.insert(tmp);
+
+      //Check if this is the extensions we are looking for
+      if(tmp.compare(ext) == 0)
+      {
+        //Yes, yes it is
+        return GL_TRUE;
+      }
+    }
+  }
+
+  return GL_FALSE;
 }
 
 GLvoid glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id, GLenum severity,
