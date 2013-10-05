@@ -90,12 +90,12 @@ GLvoid glVertexAttribPointers( FVertexEnum type )
   switch( type )
   {
     case F_VERTEX_3:
-      glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) 0);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) 0);
       glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 3) );
       glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 5) );
       break;
     case F_VERTEX_2:
-      glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) 0);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) 0);
       glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 3) );
       break;
     case F_VERTEX_TEXT:
