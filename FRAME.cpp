@@ -45,9 +45,6 @@ int main()
   //Init OpenGL
   initGLFunction();
 
-  //Init FGL
-  glInitFGLext();
-
 #ifdef DEBUG
   //Start Debug Output
   glDebugMessageCallbackARB(glDebugMessageCallbackFunction, NULL);

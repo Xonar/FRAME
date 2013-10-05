@@ -15,41 +15,6 @@
 
 #include <iostream>
 
-//Vertex Array objects
-GLuint fglVertexArrayText = 0;
-GLuint fglVertexArray2 = 0;
-GLuint fglVertexArray3 = 0;
-
-GLint glInitFGLext()
-{
-  //Init Vertex Array Objects
-  glGenVertexArrays(1, &fglVertexArray3);
-  glBindVertexArray(fglVertexArray3);
-  glEnableVertexAttribs(F_VERTEX_3);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex3), (GLvoid*) 0);
-  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex3), (GLvoid*) (sizeof(float) * 3) );
-  glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex3), (GLvoid*) (sizeof(float) * 5) );
-
-  
-
-  glGenVertexArrays(1, &fglVertexArray2);
-  glBindVertexArray(fglVertexArray2);
-  glEnableVertexAttribs(F_VERTEX_2);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) 0);
-  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 3) );
-      
-  glGenVertexArrays(1, &fglVertexArrayText);
-  glBindVertexArray(fglVertexArrayText);
-  glEnableVertexAttribs(F_VERTEX_TEXT);
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) 0);
-  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) (sizeof(float) * 2) );
-  
-  //Don't start with any binded vao
-  glBindVertexArray(0);
-
-  return 0;
-}
-
 const GLchar* glErrorString(GLenum err)
 {
   switch(err)
@@ -120,21 +85,26 @@ GLvoid glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id, GL
   std::cerr << TERM_STATE_RESET << TERM_COL_DEFAULT;
 }
 
-GLvoid glBindVertexArrayFGL( FVertexEnum type )
+GLvoid glVertexAttribPointers( FVertexEnum type )
 {
   switch( type )
   {
     case F_VERTEX_3:
-      glBindVertexArray(fglVertexArray3);
+      glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) 0);
+      glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 3) );
+      glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 5) );
       break;
     case F_VERTEX_2:
-      glBindVertexArray(fglVertexArray2);
+      glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) 0);
+      glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 3) );
       break;
     case F_VERTEX_TEXT:
-      glBindVertexArray(fglVertexArrayText);
+      glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) 0);
+      glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) (sizeof(float) * 3) );
       break;
-   default:
+    default:
       std::cerr << "F_INVALID_ENUM" << std::endl;
+
   }
 }
 
