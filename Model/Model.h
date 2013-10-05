@@ -52,7 +52,7 @@ class FModel
   GLint loadModelFromVertices(FVertex3 *vertices, const GLuint numVertices);
   GLint loadModelFromVerticesAndIndices(FVertex3 *vertices, const GLuint numVertices, 
                                         GLuint* indices, const GLuint numIndices);
-  GLint loadModelFromVertexAndTextureArray(const GLfloat * const vertices, const GLfloat * const uvs, GLint numVertices);
+  GLint loadModelFromVertexAndTextureArray(const GLfloat * const vertices, const GLfloat * const uvs, GLuint numVertices);
 
   GLvoid attachTexture(FTexture *const tex, const F_MODEL_TEXTURE_ENUM type);
 };

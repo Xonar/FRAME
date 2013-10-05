@@ -91,11 +91,11 @@ GLvoid FModel::draw()
 }
 
 GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices, 
-      const GLfloat *const uvs, const GLint numVertices)
+      const GLfloat *const uvs, const GLuint numVertices)
 {
   this->vertices = new FVertex3[numVertices];
 
-  for(int i = 0; i<numVertices;i++)
+  for(GLuint i = 0; i<numVertices;i++)
   {
     this->vertices[i] = {glm::vec3(vertices[3*i+0],vertices[3*i+1], vertices[3*i+2]), 
                    glm::vec2(uvs[i*2+0], uvs[i*2+1]),
