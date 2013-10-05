@@ -1,0 +1,21 @@
+#version 140
+
+//Input
+in vec2 vstex;
+in vec4 vsnorm;
+in vec4 vspos;
+
+//Output - Deffered Textures
+out vec4 oCol;
+
+uniform sampler2D tTexture;
+uniform sampler2D tNormal;
+uniform vec4 uColour;
+
+uniform mat4 ModelWorldMatrix;
+
+//Main
+void main()
+{
+  oCol = vec4(1.f, 1.f, 0.f, 1.f);
+}

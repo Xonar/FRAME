@@ -13,6 +13,7 @@
 #include "Game.h"
 #include "Global.h"
 #include "Texture/Texture.h"
+#include "Model/Model.h"
 #include "Camera/Camera.h"
 #include "Graphics/Graphics.h"
 #include "Lib/FGLext.h"
@@ -21,6 +22,7 @@
 #include <iostream>
 
 //TODO Temp Resources
+FModel *model;
 
 FCamera *camera;
 
@@ -32,49 +34,116 @@ GLint uniformTextureSampler = 0;
 
 FShader *shader = NULL;
 
-const FTextVertex Triangle_Vertex_Buffer_Data[] = {
-  {glm::vec2( 0.0f , 0.f), glm::vec2(0.f, 0.f), glm::vec3(1.0f,0.f,0.f) }, //Bottom Left
-  {glm::vec2( 320.0f, 480.0f), glm::vec2(1.f, 0.f), glm::vec3(0.0f,1.f,0.f) }, //Top Middle
-  {glm::vec2( 640.0f, .0f), glm::vec2(.5f, 1.f), glm::vec3(0.0f,0.f,1.f) }, //Bottom Right
+static const GLfloat g_uv_buffer_data[] = {
+    0.000059f, 1.0f-0.000004f,
+    0.000103f, 1.0f-0.336048f,
+    0.335973f, 1.0f-0.335903f,
+    1.000023f, 1.0f-0.000013f,
+    0.667979f, 1.0f-0.335851f,
+    0.999958f, 1.0f-0.336064f,
+    0.667979f, 1.0f-0.335851f,
+    0.336024f, 1.0f-0.671877f,
+    0.667969f, 1.0f-0.671889f,
+    1.000023f, 1.0f-0.000013f,
+    0.668104f, 1.0f-0.000013f,
+    0.667979f, 1.0f-0.335851f,
+    0.000059f, 1.0f-0.000004f,
+    0.335973f, 1.0f-0.335903f,
+    0.336098f, 1.0f-0.000071f,
+    0.667979f, 1.0f-0.335851f,
+    0.335973f, 1.0f-0.335903f,
+    0.336024f, 1.0f-0.671877f,
+    1.000004f, 1.0f-0.671847f,
+    0.999958f, 1.0f-0.336064f,
+    0.667979f, 1.0f-0.335851f,
+    0.668104f, 1.0f-0.000013f,
+    0.335973f, 1.0f-0.335903f,
+    0.667979f, 1.0f-0.335851f,
+    0.335973f, 1.0f-0.335903f,
+    0.668104f, 1.0f-0.000013f,
+    0.336098f, 1.0f-0.000071f,
+    0.000103f, 1.0f-0.336048f,
+    0.000004f, 1.0f-0.671870f,
+    0.336024f, 1.0f-0.671877f,
+    0.000103f, 1.0f-0.336048f,
+    0.336024f, 1.0f-0.671877f,
+    0.335973f, 1.0f-0.335903f,
+    0.667969f, 1.0f-0.671889f,
+    1.000004f, 1.0f-0.671847f,
+    0.667979f, 1.0f-0.335851f
 };
 
-GLuint triangleVertexArray = 0;
-GLuint triangleVertexBuffer = 0;
+//Vertex Data from http://www.opengl-tutorial.org/beginners-tutorials/tutorial-4-a-colored-cube/
+static const GLfloat g_vertex_buffer_data[] = { 
+    -1.0f,-1.0f,-1.0f,
+    -1.0f,-1.0f, 1.0f,
+    -1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f,-1.0f,
+    -1.0f,-1.0f,-1.0f,
+    -1.0f, 1.0f,-1.0f,
+     1.0f,-1.0f, 1.0f,
+    -1.0f,-1.0f,-1.0f,
+     1.0f,-1.0f,-1.0f,
+     1.0f, 1.0f,-1.0f,
+     1.0f,-1.0f,-1.0f,
+    -1.0f,-1.0f,-1.0f,
+    -1.0f,-1.0f,-1.0f,
+    -1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f,-1.0f,
+     1.0f,-1.0f, 1.0f,
+    -1.0f,-1.0f, 1.0f,
+    -1.0f,-1.0f,-1.0f,
+    -1.0f, 1.0f, 1.0f,
+    -1.0f,-1.0f, 1.0f,
+     1.0f,-1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+     1.0f,-1.0f,-1.0f,
+     1.0f, 1.0f,-1.0f,
+     1.0f,-1.0f,-1.0f,
+     1.0f, 1.0f, 1.0f,
+     1.0f,-1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f,-1.0f,
+    -1.0f, 1.0f,-1.0f,
+     1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f,-1.0f,
+    -1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f, 1.0f,
+     1.0f,-1.0f, 1.0f
+};
 
 GLint initializeGame()
 {
+  //Load Model
+  model = new FModel();
+ 
+  model->loadModelFromVertexAndTextureArray(g_vertex_buffer_data, g_uv_buffer_data, 36);
+
   //Create Shader
   shader = new FShader();
 
-  shader->loadShader("Shader/FX/2D/2d.glvs",GL_VERTEX_SHADER);
-  shader->loadShader("Shader/FX/2D/2d.glfs",GL_FRAGMENT_SHADER);
+  shader->loadShader("Shader/FX/3D/3DForward.glvs",GL_VERTEX_SHADER);
+  shader->loadShader("Shader/FX/3D/3DForward.glfs",GL_FRAGMENT_SHADER);
 
   shader->loadProgram();
 
   //Create Vertex Array
-  glGenVertexArrays(1, &triangleVertexArray);
-  glBindVertexArray(triangleVertexArray);
-
-  //Create Vertex Buffer
-  glGenBuffers(1, &triangleVertexBuffer);
-  glBindBuffer(GL_ARRAY_BUFFER, triangleVertexBuffer);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(Triangle_Vertex_Buffer_Data), Triangle_Vertex_Buffer_Data, GL_STATIC_DRAW);
-
-  //Create Texture
-  tex = new FTexture();
-  
-  tex->loadTextureFromFile("Assets/perlin.bmp");
-  GL_ERROR_ASSERT();
-
-  uniformTextureSampler = glGetUniformLocation(shader->getProgram(), "Texture");
 
   //Create Camera
   camera = new FCamera();
 
-  camera->setViewPort(0, 0, 640, 480);
-  camera->InitOrthoMatrix(0,640,0,480);
+  camera->setViewPort(0,0,640,480);
+  camera->setPosition(glm::vec3(4.f,3.f,-3.f));
+  camera->lookAt(glm::vec3(0.f,0.f,0.f));
+  camera->InitProjectionMatrix(45.f,0.1f,100.f);
 
-  uniformViewScreenMatrix = glGetUniformLocation(shader->getProgram(), "OrthoMatrix" );
+  uniformViewScreenMatrix = glGetUniformLocation(shader->getProgram(), "ViewScreenMatrix" );
+  uniformWorldViewMatrix = glGetUniformLocation(shader->getProgram(), "WorldViewMatrix" );
+
+  //Set OpenGL Variables
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
 
   return 0;
 }
@@ -84,24 +153,12 @@ GLvoid drawGame()
   //Bind Shader
   shader->bind();
 
-  //Setup Vertex Attributes
-  glEnableVertexAttribArray(0);
-  glEnableVertexAttribArray(1);
-  glEnableVertexAttribArray(2);
+  //Ready Model
+  model->readyDraw();
 
-  glBindBuffer(GL_ARRAY_BUFFER, triangleVertexBuffer);
-
-  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) 0);
-  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) sizeof(glm::vec2));
-  glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) sizeof(glm::vec4));
-
-  //Setup Textures
-  tex->bindTexture(GL_TEXTURE0);
-  glUniform1i(uniformTextureSampler, 0);
-  
   //Setup Ortho Matrix
-  camera->setMatrixUniformViewScreen(shader->getProgram(), uniformViewScreenMatrix);
+  camera->setMatrixUniform(uniformWorldViewMatrix, uniformViewScreenMatrix);
 
-  //Draw Arrays
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  //Draw Model
+  model->draw();
 }

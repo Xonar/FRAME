@@ -1,0 +1,21 @@
+#version 140
+
+//Output From Previous Vertex Shader
+in vec3 pos;
+in vec3 norm;
+in vec2 tex;
+
+uniform mat4 WorldViewMatrix;
+uniform mat4 ViewScreenMatrix;
+
+out vec2 vstex;
+out vec4 vsnorm;
+out vec4 vspos;
+
+void main()
+{
+  vstex = tex;
+  vsnorm = vec4(norm,1.f);
+  vspos = vec4(pos,1.f);
+  gl_Position = ViewScreenMatrix * WorldViewMatrix * vec4(pos, 1);
+}
