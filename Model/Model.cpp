@@ -48,13 +48,12 @@ FModel::~FModel()
 GLint FModel::loadModelFromVertices(FVertex3 *vertices, const GLuint numVertices)
 {
   //Generate Indices
-  GLuint* tmpIndices = new GLuint[numVertices];
+  this->indices  = new GLuint[numVertices];
 
   for(GLuint i = 0;i < numVertices; i++)
-    tmpIndices[i] = i;
+    this->indices[i] = i;
 
-  return loadModelFromVerticesAndIndices(vertices, numVertices, tmpIndices, numVertices);
-
+  return loadModelFromVerticesAndIndices(vertices, numVertices, this->indices, numVertices);
 }
 
 GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, const GLuint numVertices,
