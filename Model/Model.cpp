@@ -99,7 +99,23 @@ GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices,
   {
     this->vertices[i] = {glm::vec3(vertices[3*i+0],vertices[3*i+1], vertices[3*i+2]), 
                    glm::vec2(uvs[i*2+0], uvs[i*2+1]),
-                   glm::vec3()}; //TODO Generate Normal Data from vertex data
+                   glm::vec3(0.f)};
+  }
+
+  //Compute Normals (Only works for non-shared vertices at the moment)
+  for(GLuint i = 0;i < numVertices;i+=3)
+  {
+    glm::vec3 v0 = this->vertices[i+0].pos;
+    glm::vec3 v1 = this->vertices[i+1].pos;
+    glm::vec3 v2 = this->vertices[i+2].pos;
+
+    glm::vec3 norm, cross;
+    cross = glm::cross(v2 - v0, v1 - v0);
+    norm = glm::normalize(cross);
+
+    this->vertices[i+0].nor = norm;
+    this->vertices[i+1].nor = norm;
+    this->vertices[i+2].nor= norm;
   }
 
   return loadModelFromVertices(this->vertices, numVertices);
