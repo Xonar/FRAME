@@ -47,6 +47,7 @@ class FModel
   ~FModel();
 
   GLvoid readyDraw();
+  GLvoid readyTextures();
   GLvoid draw();
 
   GLint loadModelFormFileObj(const std::string path);

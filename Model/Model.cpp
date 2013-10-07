@@ -92,6 +92,27 @@ GLvoid FModel::readyDraw()
   glEnableVertexAttribArray(this->vao);
 }
 
+GLvoid FModel::readyTextures()
+{
+  if(this->tTexture)
+  {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, this->tTexture);
+  }
+
+  if(this->tHeightMap)
+  {
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, this->tHeightMap);
+  }
+
+  if(this->tNormalMap)
+  {
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, this->tNormalMap);
+  }
+}
+
 GLvoid FModel::draw()
 {
   glDrawElements(GL_TRIANGLES, this->numIndices, GL_UNSIGNED_INT, NULL);
