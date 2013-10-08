@@ -96,20 +96,17 @@ GLvoid FModel::readyTextures()
 {
   if(this->tTexture)
   {
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, this->tTexture);
+    this->tTexture->bindTexture(GL_TEXTURE0);
   }
 
   if(this->tHeightMap)
   {
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, this->tHeightMap);
+    tHeightMap->bindTexture(GL_TEXTURE1);
   }
 
   if(this->tNormalMap)
   {
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, this->tNormalMap);
+    tNormalMap->bindTexture(GL_TEXTURE2);
   }
 }
 
