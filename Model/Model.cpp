@@ -16,10 +16,6 @@
 
 #include <glm/glm.hpp>
 #include <fstream>
-#include <vector>
-#include <set>
-#include <tuple>
-#include <algorithm>
 #include <iostream>
 
 FModel::FModel()
