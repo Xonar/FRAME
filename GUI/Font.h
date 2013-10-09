@@ -17,6 +17,9 @@
 #include <glm/glm.hpp>
 #include <string>
 
+#include <vector>
+
+#include "../Container/Container.h"
 #include "../Texture/Texture.h"
 
 class FFont
@@ -37,13 +40,22 @@ class FFont
     TTF_Font* sdlFont;
     FTexture texture;
 
+    GLuint vao;
+    GLuint vbo;
+
+    GLfloat twidth;
+    GLfloat theight;
+
     GLuint fontSize;
   public:
     FFont();
+    ~FFont();
 
     GLint createFromTTF(std::string ttf,const unsigned int size);
+    GLint createFromDistanceFieldFile(std::string textureFile, std::string glyphFile);
 
-    GLint drawFontTexture(glm::vec2 pos);
+    std::vector<FTextVertex> generateStringVertexData(std::string text, glm::vec2 off);
+    
     GLint drawText(std::string text,glm::vec2 pos);
 };
 
