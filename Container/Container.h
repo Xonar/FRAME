@@ -19,6 +19,7 @@ struct FTextVertex
 {
   glm::vec2 pos;
   glm::vec2 tex;
+  int index;
 };
 
 //2D Vertex
