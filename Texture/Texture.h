@@ -16,9 +16,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 
-#include <glm/glm.hpp>
-
-class FTexture
+class FTexture2D
 {
   private:
     GLuint glTexture;
@@ -26,8 +24,8 @@ class FTexture
     float width;
     float height;
   public:
-    FTexture();
-    ~FTexture();
+    FTexture2D();
+    ~FTexture2D();
 
     int loadTextureFromSurface(SDL_Surface* surface);
     int loadTextureFromFile(std::string file);
@@ -37,4 +35,22 @@ class FTexture
     int freeTexture();
 };
 
+class FTexture2DArray
+{
+  private:
+    GLuint glTexture;
+    
+    float width;
+    float height;
+  public:
+    FTexture2DArray();
+    ~FTexture2DArray();
+
+    int loadTextureFromSurface(SDL_Surface** surface, int num);
+    //int loadTextureFromFile(std::string file);
+
+    void bindTexture(GLenum texture);
+
+    int freeTexture();
+};
 #endif // _F_H_TEXTURE_

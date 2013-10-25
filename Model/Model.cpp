@@ -143,7 +143,7 @@ GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices,
   return loadModelFromVertices(this->vertices, numVertices);
 }
 
-GLvoid FModel::attachTexture(FTexture *const tex, const F_MODEL_TEXTURE_ENUM type)
+GLvoid FModel::attachTexture(FTexture2D *const tex, const F_MODEL_TEXTURE_ENUM type)
 {
   //TODO Use Resource Manager
   switch(type)

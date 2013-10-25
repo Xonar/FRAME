@@ -38,9 +38,9 @@ class FModel
   GLuint vao;
 
   //Texture Objects
-  FTexture *tTexture;
-  FTexture *tHeightMap;
-  FTexture *tNormalMap;
+  FTexture2D *tTexture;
+  FTexture2D *tHeightMap;
+  FTexture2D *tNormalMap;
   
   public:
   FModel();
@@ -56,7 +56,7 @@ class FModel
                                         GLuint* indices, const GLuint numIndices);
   GLint loadModelFromVertexAndTextureArray(const GLfloat * const vertices, const GLfloat * const uvs, GLuint numVertices);
 
-  GLvoid attachTexture(FTexture *const tex, const F_MODEL_TEXTURE_ENUM type);
+  GLvoid attachTexture(FTexture2D *const tex, const F_MODEL_TEXTURE_ENUM type);
 };
 
 #endif //_F_H_MODEL_

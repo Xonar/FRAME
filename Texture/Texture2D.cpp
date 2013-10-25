@@ -16,31 +16,29 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include <glm/glm.hpp>
-
 #include <iostream>
 
-FTexture::FTexture() 
+FTexture2D::FTexture2D() 
 {
   this->glTexture = 0;
   this->width = 0;
   this->height = 0;
 }
 
-FTexture::~FTexture()
+FTexture2D::~FTexture2D()
 {
   if(glTexture)
   this->freeTexture();
 }
 
-int FTexture::freeTexture()
+int FTexture2D::freeTexture()
 {
   glDeleteTextures( 1, &this->glTexture );
   this->glTexture = 0;
   return 0;
 }
 
-int FTexture::loadTextureFromSurface(SDL_Surface* surface)
+int FTexture2D::loadTextureFromSurface(SDL_Surface* surface)
 {
   if(surface)
   {
@@ -64,7 +62,7 @@ int FTexture::loadTextureFromSurface(SDL_Surface* surface)
   return 0;
 }
 
-int FTexture::loadTextureFromFile(std::string file)
+int FTexture2D::loadTextureFromFile(std::string file)
 {
   SDL_Surface *surface;
 
@@ -85,7 +83,7 @@ int FTexture::loadTextureFromFile(std::string file)
   }
 }
 
-void FTexture::bindTexture(GLenum texture)
+void FTexture2D::bindTexture(GLenum texture)
 {
   glActiveTexture(texture);
   glBindTexture(GL_TEXTURE_2D, this->glTexture);
