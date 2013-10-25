@@ -46,8 +46,7 @@ class FTexture2DArray
     FTexture2DArray();
     ~FTexture2DArray();
 
-    int loadTextureFromSurface(SDL_Surface** surface, int num);
-    //int loadTextureFromFile(std::string file);
+    int loadTextureFromSurface(SDL_Surface *surface[], int num, int max_width, int max_height);
 
     void bindTexture(GLenum texture);
 

@@ -37,7 +37,8 @@ int FTexture2DArray::freeTexture()
   return 0;
 }
 
-int FTexture2DArray::loadTextureFromSurface(SDL_Surface** surface, int num)
+int FTexture2DArray::loadTextureFromSurface(SDL_Surface *surface[], int num,
+                                            int max_width, int max_height)
 {
   if(surface)
   {
@@ -49,12 +50,13 @@ int FTexture2DArray::loadTextureFromSurface(SDL_Surface** surface, int num)
     glGenTextures( 1, &glTexture);
     glBindTexture( GL_TEXTURE_2D_ARRAY, glTexture);
 
-    glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, width,height, num, 0, format, GL_UNSIGNED_BYTE, NULL);
+    glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA, max_width, max_height, num, 0, format, 
+                 GL_UNSIGNED_BYTE, NULL);
    
     for(int i = 0;i < num; i++)
     {
-      glTexSubImage3D( GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, width, height, 1, format, 
-                       GL_UNSIGNED_BYTE, surface[i]->pixels);
+      glTexSubImage3D( GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, surface[i]->w, surface[i]->h, 
+                       1, format, GL_UNSIGNED_BYTE, surface[i]->pixels);
     }
 
     glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
