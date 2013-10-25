@@ -6,7 +6,7 @@
  *      Xonar <Paul le Roux>
  *
  * Description:
- *      Definitions of ./Texture/Texture.h
+ *      Definitions of ./Texture/Texture.h::FTexture2D
  */
 
 #include "Texture.h"
