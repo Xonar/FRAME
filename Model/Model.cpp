@@ -65,7 +65,8 @@ GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, const GLuint n
   //Create Vertex Array Object
   glGenVertexArrays(1, &this->vao);
   glBindVertexArray(this->vao);
-  
+  glEnableVertexAttribArray(this->vao);
+
   //Create Vertex Buffer Object
   glGenBuffers(1, &this->vbo);
   glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
@@ -85,7 +86,7 @@ GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, const GLuint n
 
 GLvoid FModel::readyDraw()
 {
-  glEnableVertexAttribArray(this->vao);
+  glBindVertexArray(this->vao);
 }
 
 GLvoid FModel::readyTextures()
