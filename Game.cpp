@@ -166,7 +166,7 @@ GLint initializeGame()
 
   //FFont
   font = new FFont();
-  font->createFromTTF("Assets/TakaoPGothic.ttf", 50);
+  font->createFromTTF("Assets/TakaoPGothic.ttf", 18);
 
   //glEnable(GL_CULL_FACE);
   //glCullFace(GL_BACK);
@@ -179,6 +179,9 @@ GLint initializeGame()
 
 GLvoid drawGame()
 {
+  static GLuint start = 0, end = 1;
+  GLuint cur = SDL_GetTicks();
+
   //Bind Shader
   shader->bind();
 
@@ -197,6 +200,9 @@ GLvoid drawGame()
   //Bind Font Camera
   fontCamera->setMatrixUniformViewScreen(uniformOrthoMatrix);
 
-  //Draw Text
-  font->drawText("Hello Font!", glm::vec2(10,10) );
+  //Draw FPS Counter - Measure between draws since VSync might be on
+  font->drawText("time: " + std::to_string(end - start) + "ms", glm::vec2(5,480 - 23) );
+  end = SDL_GetTicks();
+  start = cur;
+
 }
