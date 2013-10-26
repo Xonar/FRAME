@@ -27,7 +27,6 @@ class FFont
   private:
     struct FGlyph
     {
-      glm::vec2 pos; //Position in Texture
       glm::vec2 dim; //Dimensions of Char
       glm::vec2 adv; //Cursor movement
       glm::vec2 off; //Cursor offset in texture
@@ -38,7 +37,9 @@ class FFont
     FGlyph *chars;
 
     TTF_Font* sdlFont;
-    FTexture texture;
+    FTexture2DArray* textures;
+
+    int charMap[256];
 
     GLuint vao;
     GLuint vbo;
