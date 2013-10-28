@@ -1,0 +1,18 @@
+#version 140
+
+//Input
+in vec2 vstex;
+flat in int vschar;
+
+//Output
+out vec4 pscol;
+
+//Uniform
+uniform vec4 uCol;
+uniform sampler2DArray Texture;
+
+//Main
+void main()
+{
+  pscol = texture( Texture, vec3(vstex, vschar));
+}

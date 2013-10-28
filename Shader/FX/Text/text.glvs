@@ -1,0 +1,21 @@
+#version 140
+
+//Input
+in vec2 pos;
+in vec2 tex;
+in int norm;
+
+//Output
+out vec2 vstex;
+flat out int vschar;
+
+uniform mat4 OrthoMatrix;
+
+//Main
+void main()
+{
+  vstex = tex;
+  vschar = norm;
+
+  gl_Position = OrthoMatrix * vec4(pos, 0, 1);
+}
