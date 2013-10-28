@@ -151,7 +151,7 @@ std::vector<FTextVertex> FFont::generateStringVertexData(std::string text, glm::
       cpos += chars[charMap[i]].adv;
     }
     else if(i == ' ')
-      cpos.x += fontSize /4.0f;
+      cpos.x += fontSize / 4;
   }
 
   return out;
