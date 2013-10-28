@@ -16,40 +16,39 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 
-class FTexture2D
+class FTextureBase
 {
-  private:
+  protected:
     GLuint glTexture;
-    
+
     float width;
     float height;
+
+    GLenum glTextureType;
+  public:
+    FTextureBase();
+
+    void bindTexture(GLenum texture);
+
+    void freeTexture();
+};
+
+class FTexture2D : public FTextureBase
+{
   public:
     FTexture2D();
     ~FTexture2D();
 
     int loadTextureFromSurface(SDL_Surface* surface);
     int loadTextureFromFile(std::string file);
-
-    void bindTexture(GLenum texture);
-
-    int freeTexture();
 };
 
-class FTexture2DArray
+class FTexture2DArray : public FTextureBase
 {
-  private:
-    GLuint glTexture;
-    
-    float width;
-    float height;
   public:
     FTexture2DArray();
     ~FTexture2DArray();
 
     int loadTextureFromSurface(SDL_Surface *surface[], int num, int max_width, int max_height);
-
-    void bindTexture(GLenum texture);
-
-    int freeTexture();
 };
 #endif // _F_H_TEXTURE_

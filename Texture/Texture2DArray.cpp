@@ -19,22 +19,13 @@
 
 FTexture2DArray::FTexture2DArray() 
 {
-  this->glTexture = 0;
-  this->width = 0;
-  this->height = 0;
+  this->glTextureType = GL_TEXTURE_2D_ARRAY;
 }
 
 FTexture2DArray::~FTexture2DArray()
 {
   if(glTexture)
   this->freeTexture();
-}
-
-int FTexture2DArray::freeTexture()
-{
-  glDeleteTextures( 1, &this->glTexture );
-  this->glTexture = 0;
-  return 0;
 }
 
 int FTexture2DArray::loadTextureFromSurface(SDL_Surface *surface[], int num,
@@ -69,10 +60,3 @@ int FTexture2DArray::loadTextureFromSurface(SDL_Surface *surface[], int num,
 
   return 0;
 }
-
-void FTexture2DArray::bindTexture(GLenum texture)
-{
-  glActiveTexture(texture);
-  glBindTexture(GL_TEXTURE_2D_ARRAY, this->glTexture);
-}
-

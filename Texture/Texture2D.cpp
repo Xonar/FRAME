@@ -20,22 +20,13 @@
 
 FTexture2D::FTexture2D() 
 {
-  this->glTexture = 0;
-  this->width = 0;
-  this->height = 0;
+  this->glTextureType = GL_TEXTURE_2D;
 }
 
 FTexture2D::~FTexture2D()
 {
   if(glTexture)
   this->freeTexture();
-}
-
-int FTexture2D::freeTexture()
-{
-  glDeleteTextures( 1, &this->glTexture );
-  this->glTexture = 0;
-  return 0;
 }
 
 int FTexture2D::loadTextureFromSurface(SDL_Surface* surface)
@@ -82,10 +73,4 @@ int FTexture2D::loadTextureFromFile(std::string file)
     std::cerr << "Failed loading Image from file (\"" << file << "\")" << std::endl;
     return 1;
   }
-}
-
-void FTexture2D::bindTexture(GLenum texture)
-{
-  glActiveTexture(texture);
-  glBindTexture(GL_TEXTURE_2D, this->glTexture);
 }
