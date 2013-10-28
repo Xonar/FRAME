@@ -22,12 +22,6 @@ FTexture2DArray::FTexture2DArray()
   this->glTextureType = GL_TEXTURE_2D_ARRAY;
 }
 
-FTexture2DArray::~FTexture2DArray()
-{
-  if(glTexture)
-  this->freeTexture();
-}
-
 int FTexture2DArray::loadTextureFromSurface(SDL_Surface *surface[], int num,
                                             int max_width, int max_height)
 {

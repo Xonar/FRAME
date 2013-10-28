@@ -18,6 +18,11 @@ FTextureBase::FTextureBase()
   this->height = 0;
 }
 
+FTextureBase::~FTextureBase()
+{
+    freeTexture();
+}
+
 void FTextureBase::freeTexture()
 {
   if(this->glTexture)

@@ -27,6 +27,7 @@ class FTextureBase
     GLenum glTextureType;
   public:
     FTextureBase();
+    ~FTextureBase();
 
     void bindTexture(GLenum texture);
 
@@ -37,7 +38,7 @@ class FTexture2D : public FTextureBase
 {
   public:
     FTexture2D();
-    ~FTexture2D();
+    ~FTexture2D() {};
 
     int loadTextureFromSurface(SDL_Surface* surface);
     int loadTextureFromFile(std::string file);
@@ -47,7 +48,7 @@ class FTexture2DArray : public FTextureBase
 {
   public:
     FTexture2DArray();
-    ~FTexture2DArray();
+    ~FTexture2DArray() {};
 
     int loadTextureFromSurface(SDL_Surface *surface[], int num, int max_width, int max_height);
 };

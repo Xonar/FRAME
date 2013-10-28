@@ -23,12 +23,6 @@ FTexture2D::FTexture2D()
   this->glTextureType = GL_TEXTURE_2D;
 }
 
-FTexture2D::~FTexture2D()
-{
-  if(glTexture)
-  this->freeTexture();
-}
-
 int FTexture2D::loadTextureFromSurface(SDL_Surface* surface)
 {
   if(surface)
