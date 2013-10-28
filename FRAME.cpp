@@ -20,11 +20,11 @@
 #include "Graphics/Graphics.h"
 #include "Game.h"
 #include "Lib/FGLext.h"
+#include "Time/Time.h"
 
 //Definitions of Global Variables
 bool gGameOn = true;
 FWindow *gWindow;
-
 
 int main()
 {
@@ -57,6 +57,8 @@ int main()
 
   //Init SDL Font Engine
   TTF_Init();
+
+  initTime();
 
   initializeGame();
 
