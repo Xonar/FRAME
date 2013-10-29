@@ -18,6 +18,7 @@
 #include "Graphics/Graphics.h"
 #include "Lib/FGLext.h"
 #include "Container/Container.h"
+#include "Time/Time.h"
 
 #include <iostream>
 
@@ -168,8 +169,8 @@ GLint initializeGame()
   font = new FFont();
   font->createFromTTF("Assets/TakaoPGothic.ttf", 18);
 
-  //glEnable(GL_CULL_FACE);
-  //glCullFace(GL_BACK);
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_BACK);
 
   glEnable (GL_BLEND);
   glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -179,8 +180,8 @@ GLint initializeGame()
 
 GLvoid drawGame()
 {
-  static GLuint start = 0, end = 1;
-  GLuint cur = SDL_GetTicks();
+  static FTime start,end;
+  FTime cur = FGetTime();
 
   //Bind Shader
   shader->bind();
@@ -201,8 +202,32 @@ GLvoid drawGame()
   fontCamera->setMatrixUniformViewScreen(uniformOrthoMatrix);
 
   //Draw FPS Counter - Measure between draws since VSync might be on
-  font->drawText("time: " + std::to_string(end - start) + "ms", glm::vec2(5,480 - 23) );
-  end = SDL_GetTicks();
+  font->drawText("time: " + FTimeString(end- start), glm::vec2(5,480 - 23) );
+  
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,10));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,30));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,50));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,70));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,90));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,110));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,130));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,150));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,170));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,190));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,210));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,230));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,250));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,270));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,290));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,310));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,330));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,350));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,370));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,390));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,410));
+  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,430));
+
+  end = FGetTime();
   start = cur;
 
 }
