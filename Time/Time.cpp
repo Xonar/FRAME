@@ -227,28 +227,27 @@ std::string FTimeString(const FTime &A)
 
   if(A.s != 0)
   {
-
+      out = std::to_string(A.s);
+      out.append("s ");
   }
-  else
+
+  if(A.n % 1000 == 0)
   {
-    if(A.n % 1000 == 0)
+    if(A.n % 1000000 == 0)
     {
-      if(A.n % 1000000 == 0)
-      {
-        out = std::to_string(A.n/1000000);
-        out.append(F_TIME_UNIT_MAP[F_MILI]);
-      }
-      else
-      {
-        out = std::to_string(A.n/1000);
-        out.append(F_TIME_UNIT_MAP[F_MICRO]);
-      }
+      out.append(std::to_string(A.n/1000000));
+      out.append(F_TIME_UNIT_MAP[F_MILI]);
     }
     else
     {
-      out = std::to_string(A.n);
-      out.append(F_TIME_UNIT_MAP[F_NANO]);
+      out.append(std::to_string(A.n/1000));
+      out.append(F_TIME_UNIT_MAP[F_MICRO]);
     }
+  }
+  else
+  {
+    out.append(std::to_string(A.n));
+    out.append(F_TIME_UNIT_MAP[F_NANO]);
   }
 
   return out;
