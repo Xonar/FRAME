@@ -45,6 +45,9 @@ public:
   int Render();
 
   int getOpenGLVersion() { return glMajorVersion * 10 + glMinorVersion; }
+
+  int getWindowHeight() { return height; }
+  int getWindowWidth() { return width; }
 };
 
 #endif // _F_H_WINDOW_
