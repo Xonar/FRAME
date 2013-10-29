@@ -27,7 +27,7 @@ class FFontHandler
 
     void Init(FFont *font);
 
-    void addText(const std::vector<FTextVertex> &data);
+    void addText(const std::string &text, const glm::vec2 &pos);
 
     std::vector<FTextVertex>& getCharData();
     int getCharNum();

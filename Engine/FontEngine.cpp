@@ -82,10 +82,9 @@ void FFontEngine::addFont(FFont *font)
   fontHandler.push_back(newHandler);
 }
 
-void FFontEngine::addText(const GLint &font, const std::vector<FTextVertex> &data)
+void FFontEngine::addText(const GLint &font, const std::string &text, const glm::vec2 &pos)
 {
-  numVertices += data.size();
-  fontHandler[font].addText(data);
+  fontHandler[font].addText(text,pos);
 }
 
 void FFontEngine::render()
@@ -95,7 +94,6 @@ void FFontEngine::render()
   glDisable(GL_CULL_FACE);
 
   std::vector<FTextVertex> vertices;
-  vertices.reserve(numVertices);
 
   for(FFontHandler &it : fontHandler)
   {
@@ -114,7 +112,7 @@ void FFontEngine::render()
   //Bind OrthoMatrix
   fontCamera.setMatrixUniformViewScreen(uniformOrthoMatrix);
 
-  numVertices = 0;
+  GLint numChars = 0;
 
   for(FFontHandler &it : fontHandler)
   {
@@ -127,16 +125,16 @@ void FFontEngine::render()
     for(; size > F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW;)
     {
       glDrawElementsBaseVertex(GL_TRIANGLES, F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW * 6,
-                               GL_UNSIGNED_INT, NULL, numVertices * 4);
+                               GL_UNSIGNED_INT, NULL, numChars * 4);
 
       size -= F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW;
-      numVertices += F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW;
+      numChars += F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW;
     }
 
     glDrawElementsBaseVertex(GL_TRIANGLES, size * 6,
-                             GL_UNSIGNED_INT, NULL, numVertices * 4);
+                             GL_UNSIGNED_INT, NULL, numChars * 4);
     
-    numVertices += size;
+    numChars += size;
 
     it.clearCharData();
   }

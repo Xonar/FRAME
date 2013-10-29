@@ -37,7 +37,6 @@ class FFontEngine
 
     GLuint numFonts;
     std::vector<FFontHandler> fontHandler;
-    GLint numVertices;
 
     FShader fontShader;
     FCamera fontCamera;
@@ -48,7 +47,7 @@ class FFontEngine
     FFontEngine();
 
     void addFont(FFont *font);
-    void addText(const GLint &font, const std::vector<FTextVertex> &data);
+    void addText(const GLint &font, const std::string &text, const glm::vec2 &pos);
 
     void render();
 };

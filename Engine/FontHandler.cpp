@@ -21,9 +21,9 @@ void FFontHandler::Init(FFont *font)
   this->font = font;
 }
 
-void FFontHandler::addText(const std::vector<FTextVertex> &data)
+void FFontHandler::addText(const std::string &text, const glm::vec2 &pos)
 {
-  this->charData.insert(this->charData.end(), data.begin(), data.end());
+  this->font->generateStringVertexData(text, pos, this->charData);
 }
 
 std::vector<FTextVertex>& FFontHandler::getCharData()

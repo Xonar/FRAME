@@ -54,7 +54,7 @@ FFont::~FFont()
   sdlFont = NULL;
 }
 
-GLint FFont::createFromTTF(std::string ttf, const unsigned int size)
+GLint FFont::createFromTTF(const std::string &ttf, const unsigned int size)
 {
   this->sdlFont = TTF_OpenFont(ttf.c_str(), size);
   this->fontSize = size;
@@ -113,10 +113,9 @@ GLint FFont::createFromTTF(std::string ttf, const unsigned int size)
   return 0;
 }
 
-std::vector<FTextVertex> FFont::generateStringVertexData(std::string text, glm::vec2 off)
+void FFont::generateStringVertexData(const std::string &text, 
+          const glm::vec2 &off, std::vector<FTextVertex> &out)
 {
-  std::vector<FTextVertex> out;
-
   glm::vec2 cpos = off;
 
   FTextVertex bl,br,tl,tr;
@@ -142,25 +141,15 @@ std::vector<FTextVertex> FFont::generateStringVertexData(std::string text, glm::
       br.pos.x += chars[charMap[i]].dim.x;
 
       out.push_back(bl);
+      out.push_back(br);
       out.push_back(tr);
       out.push_back(tl);
-
-      out.push_back(bl);
-      out.push_back(br);
-      out.push_back(tr);
-
-      /*out.push_back(bl);
-      out.push_back(br);
-      out.push_back(tr);
-      out.push_back(tl);*/
 
       cpos += chars[charMap[i]].adv;
     }
     else if(i == ' ')
       cpos.x += fontSize / 4;
   }
-
-  return out;
 }
 
 void FFont::bindTexture( GLenum spot)
@@ -168,25 +157,7 @@ void FFont::bindTexture( GLenum spot)
   textures->bindTexture(spot);
 }
 
-GLint FFont::drawText(std::string text,glm::vec2 pos)
+GLvoid FFont::drawText(const std::string &text,const glm::vec2 &pos)
 {
-  /*std::vector<FTextVertex> data = generateStringVertexData(text, pos);
-
-  glBindVertexArray(this->vao);
-
-  glBufferData(GL_ARRAY_BUFFER, sizeof(data[0]) * data.size(), &data[0], GL_DYNAMIC_DRAW);
-
-  textures->bindTexture(GL_TEXTURE0);
-  
-  glDrawArrays(GL_TRIANGLES, 0, data.size());
-  
-  data.clear();*/
-
-  std::vector<FTextVertex> data = generateStringVertexData(text, pos);
-
-  gFontEngine->addText(this->fontID, data);
-
-  data.clear();
-
-  return 0;
+  gFontEngine->addText(this->fontID, text, pos);
 }
