@@ -48,6 +48,10 @@ class FFont
     GLfloat theight;
 
     GLuint fontSize;
+
+    GLint fontID;
+    
+    std::vector<FTextVertex> generateStringVertexData(std::string text, glm::vec2 off);
   public:
     FFont();
     ~FFont();
@@ -55,9 +59,11 @@ class FFont
     GLint createFromTTF(std::string ttf,const unsigned int size);
     GLint createFromDistanceFieldFile(std::string textureFile, std::string glyphFile);
 
-    std::vector<FTextVertex> generateStringVertexData(std::string text, glm::vec2 off);
-    
     GLint drawText(std::string text,glm::vec2 pos);
+
+    GLvoid bindTexture(GLenum texture);
+
+    GLvoid setFontID(GLint fontID) { this->fontID = fontID; }
 };
 
 #endif //_F_H_FONT_

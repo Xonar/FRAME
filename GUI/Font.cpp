@@ -38,8 +38,16 @@ FFont::FFont()
   glGenVertexArrays(1, &this->vao);
   glGenBuffers(1, &this->vbo);
 
+  glBindVertexArray(this->vao);
+  glBindBuffer(GL_ARRAY_BUFFER,this->vbo);
+
+  glVertexAttribPointers(F_VERTEX_TEXT);
+  glEnableVertexAttribs(F_VERTEX_TEXT);
+
   for(int i = 0;i < 256; i++)
     charMap[i] = -1;
+
+  this->fontID = -1;
 }
 
 FFont::~FFont()
@@ -157,20 +165,19 @@ std::vector<FTextVertex> FFont::generateStringVertexData(std::string text, glm::
   return out;
 }
 
+void FFont::bindTexture( GLenum spot)
+{
+  textures->bindTexture(spot);
+}
+
 GLint FFont::drawText(std::string text,glm::vec2 pos)
 {
-  textures->bindTexture( GL_TEXTURE0 );
-
   std::vector<FTextVertex> data = generateStringVertexData(text, pos);
 
   glBindVertexArray(this->vao);
-  glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-
-  glVertexAttribPointers(F_VERTEX_TEXT);
-  glEnableVertexAttribs(F_VERTEX_TEXT);
 
   glBufferData(GL_ARRAY_BUFFER, sizeof(data[0]) * data.size(), &data[0], GL_DYNAMIC_DRAW);
-  
+
   textures->bindTexture(GL_TEXTURE0);
   
   glDrawArrays(GL_TRIANGLES, 0, data.size());
