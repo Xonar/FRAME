@@ -186,17 +186,18 @@ FTime FGetTime()
   FTime out = { 0, 0 };
 
   #ifdef _POSIX_SOURCE
-    struct timespec time;
+    #if _POSIX_TIMERS > 0
+      struct timespec time;
 
-    #ifdef _POSIX_MONOTONIC_CLOCK
-      clock_gettime(CLOCK_MONOTONIC, &time);
-    #else
-      clock_gettime(CLOCK_REALTIME, &time);
+      #ifdef _POSIX_MONOTONIC_CLOCK
+        clock_gettime(CLOCK_MONOTONIC, &time);
+      #else
+        clock_gettime(CLOCK_REALTIME, &time);
+      #endif
+
+      out.s = time.tv_sec;
+      out.n = time.tv_nsec;
     #endif
-
-    out.s = time.tv_sec;
-    out.n = time.tv_nsec;
-
   #endif
 
   return out;
