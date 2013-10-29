@@ -122,30 +122,31 @@ void FFont::generateStringVertexData(const std::string &text,
 
   for(const GLint &i : text)
   {
-    if(charMap[i] >= 0)
+    int index = charMap[i];
+    if(index >= 0)
     {
-      float texx = chars[charMap[i]].dim.x/this->twidth;
-      float texy = chars[charMap[i]].dim.y/this->theight;
+      float texx = chars[index].dim.x/this->twidth;
+      float texy = chars[index].dim.y/this->theight;
 
       bl.tex = glm::vec2(0.f, 1-0.f);
       tl.tex = glm::vec2(0.f, 1-texy);
       br.tex = glm::vec2(texx, 1-0.f);
       tr.tex = glm::vec2(texx, 1-texy) ;
 
-      bl.index = br.index = tr.index = tl.index = charMap[i];
+      bl.index = br.index = tr.index = tl.index = index;
 
-      bl.pos = br.pos = tl.pos = tr.pos = cpos - chars[charMap[i]].off;
+      bl.pos = br.pos = tl.pos = tr.pos = cpos - chars[index].off;
 
-      tr.pos += chars[charMap[i]].dim;
-      tl.pos.y += chars[charMap[i]].dim.y;
-      br.pos.x += chars[charMap[i]].dim.x;
+      tr.pos += chars[index].dim;
+      tl.pos.y += chars[index].dim.y;
+      br.pos.x += chars[index].dim.x;
 
       out.push_back(bl);
       out.push_back(br);
       out.push_back(tr);
       out.push_back(tl);
 
-      cpos += chars[charMap[i]].adv;
+      cpos += chars[index].adv;
     }
     else if(i == ' ')
       cpos.x += fontSize / 4;
