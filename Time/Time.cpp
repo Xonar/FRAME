@@ -13,7 +13,11 @@
 #include <SDL2/SDL.h>
 
 #ifdef _POSIX_SOURCE
+  #include <unistd.h>
   #include <ctime>
+  #if _POSIX_TIMERS <= 0
+    #warning "Current POSIX SYSTEM DOESN'T SUPPORT _POSIX_TIMERS. TIME CALLS WILL RETURN 0"
+  #endif
 #else
   #warning "TIME NOT YET IMPLEMENTED FOR CURRENT OS! ALL TIME CALLS WILL RETURN 0"
 #endif
@@ -138,17 +142,19 @@ FTimePrecision FGetTimePrecision()
   FTime fTime = {0,0};
 
   #ifdef _POSIX_SOURCE
-    struct timespec time;
+    #if _POSIX_TIMERS > 0
+      struct timespec time;
 
-    #ifdef _POSIX_MONOTONIC_CLOCK
-      clock_getres(CLOCK_MONOTONIC, &time);
-    #else
-      #warning "Using Realtime Clock, errors may occur when system time changes"
-      clock_getres(CLOCK_REALTIME, &time);
+      #ifdef _POSIX_MONOTONIC_CLOCK
+        clock_getres(CLOCK_MONOTONIC, &time);
+      #else
+        #warning "Using Realtime Clock, errors may occur when system time changes"
+        clock_getres(CLOCK_REALTIME, &time);
+      #endif
+
+      fTime.s = time.tv_sec;
+      fTime.n = time.tv_nsec;
     #endif
-
-    fTime.s = time.tv_sec;
-    fTime.n = time.tv_nsec;
   #endif
 
   FTimePrecision out;
