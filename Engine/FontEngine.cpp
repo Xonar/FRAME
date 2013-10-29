@@ -16,6 +16,8 @@
 #include "../Graphics/Graphics.h"
 #include "../Lib/FGLext.h"
 
+#include <iostream>
+
 FFontEngine::FFontEngine()
 {
   this->ibo = this->vbo = this->vao = this->numFonts = 0;
@@ -54,13 +56,13 @@ FFontEngine::FFontEngine()
   
   for(int i = 0;i < F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW; i++)
   {
-    indices[i*6 + 0] = i*3 + 0;
-    indices[i*6 + 1] = i*3 + 1;
-    indices[i*6 + 2] = i*3 + 2;
+    indices[i*6 + 0] = i*4 + 0;
+    indices[i*6 + 1] = i*4 + 1;
+    indices[i*6 + 2] = i*4 + 2;
 
-    indices[i*6 + 3] = i*3 + 2;
-    indices[i*6 + 4] = i*3 + 3;
-    indices[i*6 + 5] = i*3 + 0;
+    indices[i*6 + 3] = i*4 + 2;
+    indices[i*6 + 4] = i*4 + 3;
+    indices[i*6 + 5] = i*4 + 0;
   }
 
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW * 6 * sizeof(GLuint),
@@ -88,23 +90,21 @@ void FFontEngine::addText(GLint font, std::vector<FTextVertex> data)
 
 void FFontEngine::render()
 {
-  std::vector<FTextVertex> vertices(numVertices);
-  numVertices = 0;
+  std::vector<FTextVertex> vertices;
+  vertices.reserve(numVertices);
 
   for(FFontHandler &it : fontHandler)
   {
     std::vector<FTextVertex>& data = it.getCharData();
-
-    int size = data.size();
-    
-    memcpy(&vertices[numVertices], &data[0], sizeof(FTextVertex) * size);
-
-    numVertices += size;
+    vertices.insert(vertices.end(), data.begin(), data.end() );
   }
+
+  fontShader.bind();
 
   glBindVertexArray(vao);
 
-  glBufferData(GL_ARRAY_BUFFER, sizeof(FTextVertex) * numVertices, &vertices[0],
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(FTextVertex) * vertices.size(), &vertices[0],
                    GL_DYNAMIC_DRAW);
 
   //Bind OrthoMatrix
@@ -112,8 +112,12 @@ void FFontEngine::render()
 
   numVertices = 0;
 
+  //glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
   for(FFontHandler &it : fontHandler)
   {
+    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
     it.ready(this->uniformFontTexture);
 
     int size = it.getCharNum() * 6;

@@ -24,7 +24,7 @@
 
 #include "FontHandler.h"
 
-#define F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW 128
+#define F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW 512
 
 class FFontEngine
 {

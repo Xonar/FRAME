@@ -41,9 +41,6 @@ class FFont
 
     int charMap[256];
 
-    GLuint vao;
-    GLuint vbo;
-
     GLfloat twidth;
     GLfloat theight;
 

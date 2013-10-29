@@ -12,6 +12,7 @@
 #include "Font.h"
 #include "../Graphics/Graphics.h"
 #include "../Lib/FGLext.h"
+#include "../Global.h"
 
 #include <vector>
 
@@ -34,16 +35,6 @@ FFont::FFont()
   this->chars_end = 128;
   this->chars = NULL;
 
-  //Generate Vertex Array for Output
-  glGenVertexArrays(1, &this->vao);
-  glGenBuffers(1, &this->vbo);
-
-  glBindVertexArray(this->vao);
-  glBindBuffer(GL_ARRAY_BUFFER,this->vbo);
-
-  glVertexAttribPointers(F_VERTEX_TEXT);
-  glEnableVertexAttribs(F_VERTEX_TEXT);
-
   for(int i = 0;i < 256; i++)
     charMap[i] = -1;
 
@@ -52,9 +43,11 @@ FFont::FFont()
 
 FFont::~FFont()
 {
-  delete[] chars;
-
-  glDeleteVertexArrays(1, &this->vao);
+  if(chars)
+  {
+    delete[] chars;
+    chars = NULL;
+  }
 
   if(sdlFont)
     TTF_CloseFont(sdlFont);
@@ -156,6 +149,11 @@ std::vector<FTextVertex> FFont::generateStringVertexData(std::string text, glm::
       out.push_back(br);
       out.push_back(tr);
 
+      /*out.push_back(bl);
+      out.push_back(br);
+      out.push_back(tr);
+      out.push_back(tl);*/
+
       cpos += chars[charMap[i]].adv;
     }
     else if(i == ' ')
@@ -172,7 +170,7 @@ void FFont::bindTexture( GLenum spot)
 
 GLint FFont::drawText(std::string text,glm::vec2 pos)
 {
-  std::vector<FTextVertex> data = generateStringVertexData(text, pos);
+  /*std::vector<FTextVertex> data = generateStringVertexData(text, pos);
 
   glBindVertexArray(this->vao);
 
@@ -182,7 +180,13 @@ GLint FFont::drawText(std::string text,glm::vec2 pos)
   
   glDrawArrays(GL_TRIANGLES, 0, data.size());
   
+  data.clear();*/
+
+  std::vector<FTextVertex> data = generateStringVertexData(text, pos);
+
+  gFontEngine->addText(this->fontID, data);
+
   data.clear();
-  
+
   return 0;
 }
