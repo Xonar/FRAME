@@ -141,12 +141,12 @@ std::vector<FTextVertex> FFont::generateStringVertexData(std::string text, glm::
       br.pos.x += chars[charMap[i]].dim.x;
 
       out.push_back(bl);
-      out.push_back(tl);
       out.push_back(tr);
+      out.push_back(tl);
 
       out.push_back(bl);
-      out.push_back(tr);
       out.push_back(br);
+      out.push_back(tr);
 
       cpos += chars[charMap[i]].adv;
     }
