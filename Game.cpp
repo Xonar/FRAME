@@ -26,7 +26,6 @@
 FModel *model;
 
 FCamera *camera;
-FCamera *fontCamera;
 
 GLuint uniformViewScreenMatrix = 0;
 GLuint uniformWorldViewMatrix = 0;
@@ -37,7 +36,6 @@ FTexture2D *tex = NULL;
 GLint uniformTextureSampler = 0;
 
 FShader *shader = NULL;
-FShader *fontShader = NULL;
 
 FFont *font = NULL;
 
@@ -129,37 +127,22 @@ GLint initializeGame()
 
   //Create Shader
   shader = new FShader();
-  fontShader = new FShader();
 
   shader->loadShader("Shader/FX/3D/3DForward.glvs",GL_VERTEX_SHADER);
   shader->loadShader("Shader/FX/3D/3DForward.glfs",GL_FRAGMENT_SHADER);
 
   shader->loadProgram();
 
-  fontShader->loadShader("Shader/FX/Text/text.glvs",GL_VERTEX_SHADER);
-  fontShader->loadShader("Shader/FX/Text/text.glfs",GL_FRAGMENT_SHADER);
-
-  fontShader->loadProgram();
-
-  //Create Vertex Array
-
   //Create Camera
   camera = new FCamera();
-  fontCamera = new FCamera();
 
   camera->setViewPort(0,0,640,480);
   camera->setPosition(glm::vec3(4.f,3.f,-3.f));
   camera->lookAt(glm::vec3(0.f,0.f,0.f));
   camera->InitProjectionMatrix(45.f,0.1f,100.f);
 
-  fontCamera->InitOrthoMatrix(0,640,0,480);
-
   uniformViewScreenMatrix = glGetUniformLocation(shader->getProgram(), "ViewScreenMatrix" );
   uniformWorldViewMatrix = glGetUniformLocation(shader->getProgram(), "WorldViewMatrix" );
-
-  uniformOrthoMatrix = glGetUniformLocation(fontShader->getProgram(), "OrthoMatrix");
-
-  uniformFontSampler = glGetUniformLocation(fontShader->getProgram(), "Texture");
 
   //Set OpenGL Variables
   glEnable(GL_DEPTH_TEST);
@@ -169,6 +152,9 @@ GLint initializeGame()
   font = new FFont();
   font->createFromTTF("Assets/TakaoPGothic.ttf", 18);
 
+  gFontEngine->addFont(font);
+  
+  //Other
   glEnable(GL_CULL_FACE);
   glCullFace(GL_BACK);
 
@@ -195,15 +181,10 @@ GLvoid drawGame()
   //Draw Model
   model->draw();
 
-  //Bind Font Shader
-  fontShader->bind();
-
-  //Bind Font Camera
-  fontCamera->setMatrixUniformViewScreen(uniformOrthoMatrix);
-
   //Draw FPS Counter - Measure between draws since VSync might be on
   font->drawText("time: " + FTimeString(end- start), glm::vec2(5,480 - 23) );
-  
+ 
+  //3.6 ms
   font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,10));
   font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,30));
   font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,50));
@@ -227,7 +208,10 @@ GLvoid drawGame()
   font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,410));
   font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,430));
 
+  //font->drawText("Hello Font Engine!", glm::vec2(10,10));
+
+  gFontEngine->render();
+
   end = FGetTime();
   start = cur;
-
 }
