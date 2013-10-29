@@ -12,37 +12,45 @@
 #ifndef _F_H_ENGINE_FONT_
 #define _F_H_ENGINE_FONT_
 
-#include <SDL2\SDL_opengl.h>
+#include <SDL2/SDL_opengl.h>
 
 #include <vector>
+#include <list>
 
 #include "../GUI/Font.h"
 #include "../Shader/Shader.h"
 #include "../Camera/Camera.h"
 #include "../Container/Container.h"
 
-class FontEngine
+#include "FontHandler.h"
+
+#define F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW 128
+
+class FFontEngine
 {
   private:
     GLuint vao;
     GLuint vbo;
     GLuint ibo;
 
-    GLuint numVertices;
-    std::vector<FTextVertex> charData;
+    std::vector<GLuint> indices;
 
     GLuint numFonts;
     std::vector<FFontHandler> fontHandler;
+    GLint numVertices;
 
     FShader fontShader;
     FCamera fontCamera;
-  public:
-    FontEngine();
 
-    GLuint addFont(FFont &font);
-    void addText(GLint font, std:vector<FTextVertex> data);
+    GLuint uniformOrthoMatrix;
+    GLuint uniformFontTexture;
+  public:
+    FFontEngine();
+
+    void addFont(FFont &font);
+    void addText(GLint font, std::vector<FTextVertex> data);
 
     void render();
-}
+};
 
 #endif //_F_H_ENGINE_FONT_

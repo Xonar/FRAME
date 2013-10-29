@@ -14,11 +14,13 @@
 
 #include <SDL2/SDL_opengl.h>
 #include "Window/Window.h"
+#include "Engine/FontEngine.h"
 
 //FRAME
 extern bool gGameOn;
 
 extern FWindow *gWindow;
+extern FFontEngine *gFontEngine;
 
 //TERMINAL COLOUR CODES
 #ifdef COLOUR_TERMINAL

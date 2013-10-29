@@ -14,6 +14,9 @@
 #   Function Declerations of GL Functions can be found 
 #   from man-pages or other references
 
+#Draw
+void glDrawElementsBaseVertex(GLenum mode, GLsizei count, GLenum type, GLvoid *indices, GLint basevertex);
+
 #ARB_debug_output
 void glDebugMessageCallbackARB(GLDEBUGPROCARB callback, const GLvoid *userParam);
 

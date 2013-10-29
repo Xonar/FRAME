@@ -25,6 +25,7 @@
 //Definitions of Global Variables
 bool gGameOn = true;
 FWindow *gWindow;
+FFontEngine *gFontEngine;
 
 int main()
 {
@@ -45,6 +46,9 @@ int main()
   //Init OpenGL
   initGLFunction();
 
+  FFontEngine fontEngine = FFontEngine();
+  gFontEngine = &fontEngine;
+
 #ifdef DEBUG
   //Start Debug Output
   if(glIsExtensionSupported("GL_ARB_debug_output"))
@@ -57,7 +61,8 @@ int main()
 
   //Init SDL Font Engine
   TTF_Init();
-
+  
+  //Init FTime
   initTime();
 
   initializeGame();
