@@ -16,7 +16,7 @@ FFontHandler::FFontHandler()
   //Nothing to be done
 }
 
-void FFontHandler::Init(FFont &font)
+void FFontHandler::Init(FFont *font)
 {
   this->font = font;
 }
@@ -44,5 +44,5 @@ void FFontHandler::clearCharData()
 void FFontHandler::ready(GLuint uniformTexture)
 {
   //TODO Other Uniforms Aswel
-  font.bindTexture(GL_TEXTURE0);
+  font->bindTexture(GL_TEXTURE0);
 }

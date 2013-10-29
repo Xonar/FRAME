@@ -47,7 +47,7 @@ class FFontEngine
   public:
     FFontEngine();
 
-    void addFont(FFont &font);
+    void addFont(FFont *font);
     void addText(GLint font, std::vector<FTextVertex> data);
 
     void render();

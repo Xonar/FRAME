@@ -69,11 +69,11 @@ FFontEngine::FFontEngine()
   delete[] indices;
 }
 
-void FFontEngine::addFont(FFont &font)
+void FFontEngine::addFont(FFont *font)
 {
   FFontHandler newHandler = FFontHandler();
   
-  font.setFontID(fontHandler.size());
+  font->setFontID(fontHandler.size());
 
   newHandler.Init(font);
 

@@ -19,13 +19,13 @@
 class FFontHandler
 {
   private:
-    FFont font;
+    FFont *font;
 
     std::vector<FTextVertex> charData;
   public:
     FFontHandler();
 
-    void Init(FFont &font);
+    void Init(FFont *font);
 
     void addText(std::vector<FTextVertex> data);
 
