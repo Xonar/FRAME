@@ -16,10 +16,10 @@
   #include <unistd.h>
   #include <ctime>
   #if _POSIX_TIMERS <= 0
-    #warning "Current POSIX SYSTEM DOESN'T SUPPORT _POSIX_TIMERS. TIME CALLS WILL RETURN 0"
+    #warning "CURRENT POSIX SYSTEM DOESN'T SUPPORT _POSIX_TIMERS. TIME WILL ONLY BE MS ACCURATE"
   #endif
 #else
-  #warning "TIME NOT YET IMPLEMENTED FOR CURRENT OS! ALL TIME CALLS WILL RETURN 0"
+  #warning "FINE TIME NOT IMPLEMENTED OR SUPPORTED IN CURRENT OS. TIME WILL ONLY BE MS ACCURATE"
 #endif
 
 const char* F_TIME_UNIT_MAP[] = {"ns", "us", "ms", "s"};
@@ -155,6 +155,9 @@ FTimePrecision FGetTimePrecision()
       fTime.s = time.tv_sec;
       fTime.n = time.tv_nsec;
     #endif
+  #else
+    fTime.s = 0;
+    fTime.n = 1000000;
   #endif
 
   FTimePrecision out;
@@ -198,6 +201,11 @@ FTime FGetTime()
       out.s = time.tv_sec;
       out.n = time.tv_nsec;
     #endif
+  #else
+    GLuint time = SDL_GetTime();
+    
+    out.s = time/1000;
+    out.n = (time%1000) * 1000000;
   #endif
 
   return out;
