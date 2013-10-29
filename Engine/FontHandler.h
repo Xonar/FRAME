@@ -33,7 +33,7 @@ class FFontHandler
     int getCharNum();
     void clearCharData();
 
-    void ready(const GLuint &uniformTexture);
+    void ready(const GLuint uniformTexture);
 };
 
 #endif //_F_H_FONT_HANDLER_

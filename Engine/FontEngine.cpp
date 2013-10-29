@@ -82,7 +82,7 @@ void FFontEngine::addFont(FFont *font)
   fontHandler.push_back(newHandler);
 }
 
-void FFontEngine::addText(const GLint &font, const std::string &text, const glm::vec2 &pos)
+void FFontEngine::addText(const GLint font, const std::string &text, const glm::vec2 &pos)
 {
   fontHandler[font].addText(text,pos);
 }

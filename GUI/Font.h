@@ -56,9 +56,9 @@ class FFont
 
     GLvoid drawText(const std::string &text,const glm::vec2 &pos);
 
-    GLvoid bindTexture(GLenum texture);
+    GLvoid bindTexture(const GLenum textureUnit);
 
-    GLvoid setFontID(const GLint &fontID) { this->fontID = fontID; }
+    GLvoid setFontID(const GLint fontID) { this->fontID = fontID; }
     
     void generateStringVertexData(const std::string &text, 
           const glm::vec2 &off, std::vector<FTextVertex> &out);

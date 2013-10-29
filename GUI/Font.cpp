@@ -153,9 +153,9 @@ void FFont::generateStringVertexData(const std::string &text,
   }
 }
 
-void FFont::bindTexture( GLenum spot)
+void FFont::bindTexture(const GLenum textureUnit)
 {
-  textures->bindTexture(spot);
+  textures->bindTexture(textureUnit);
 }
 
 GLvoid FFont::drawText(const std::string &text,const glm::vec2 &pos)

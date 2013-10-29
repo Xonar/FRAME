@@ -41,7 +41,7 @@ void FFontHandler::clearCharData()
   this->charData.clear();
 }
 
-void FFontHandler::ready(const GLuint &uniformTexture)
+void FFontHandler::ready(const GLuint uniformTexture)
 {
   //TODO Other Uniforms Aswel
   font->bindTexture(GL_TEXTURE0);
