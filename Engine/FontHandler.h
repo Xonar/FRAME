@@ -27,13 +27,13 @@ class FFontHandler
 
     void Init(FFont *font);
 
-    void addText(std::vector<FTextVertex> data);
+    void addText(const std::vector<FTextVertex> &data);
 
     std::vector<FTextVertex>& getCharData();
     int getCharNum();
     void clearCharData();
 
-    void ready(GLuint uniformTexture);
+    void ready(const GLuint &uniformTexture);
 };
 
 #endif //_F_H_FONT_HANDLER_

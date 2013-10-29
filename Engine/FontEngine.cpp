@@ -60,9 +60,9 @@ FFontEngine::FFontEngine()
     indices[i*6 + 1] = i*4 + 1;
     indices[i*6 + 2] = i*4 + 2;
 
-    indices[i*6 + 3] = i*4 + 2;
+    indices[i*6 + 3] = i*4 + 0;
     indices[i*6 + 4] = i*4 + 3;
-    indices[i*6 + 5] = i*4 + 0;
+    indices[i*6 + 5] = i*4 + 2;
   }
 
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW * 6 * sizeof(GLuint),
@@ -82,7 +82,7 @@ void FFontEngine::addFont(FFont *font)
   fontHandler.push_back(newHandler);
 }
 
-void FFontEngine::addText(GLint font, std::vector<FTextVertex> data)
+void FFontEngine::addText(const GLint &font, const std::vector<FTextVertex> &data)
 {
   numVertices += data.size();
   fontHandler[font].addText(data);
@@ -90,6 +90,10 @@ void FFontEngine::addText(GLint font, std::vector<FTextVertex> data)
 
 void FFontEngine::render()
 {
+  //Disable Culling and Depth Testing
+  glDisable(GL_DEPTH_TEST);
+  glDisable(GL_CULL_FACE);
+
   std::vector<FTextVertex> vertices;
   vertices.reserve(numVertices);
 
@@ -112,27 +116,25 @@ void FFontEngine::render()
 
   numVertices = 0;
 
-  //glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-
   for(FFontHandler &it : fontHandler)
   {
-    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+    //glDrawArrays(GL_TRIANGLES, 0, vertices.size() - 1);
 
     it.ready(this->uniformFontTexture);
 
-    int size = it.getCharNum() * 6;
+    int size = it.getCharNum();
 
-    for(; size > F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW*6;)
+    for(; size > F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW;)
     {
       glDrawElementsBaseVertex(GL_TRIANGLES, F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW * 6,
-                               GL_UNSIGNED_BYTE, NULL, numVertices);
+                               GL_UNSIGNED_INT, NULL, numVertices * 4);
 
-      size -= F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW * 6;
-      numVertices += F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW * 6;
+      size -= F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW;
+      numVertices += F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW;
     }
 
-    glDrawElementsBaseVertex(GL_TRIANGLES, size,
-                             GL_UNSIGNED_BYTE, NULL, numVertices);
+    glDrawElementsBaseVertex(GL_TRIANGLES, size * 6,
+                             GL_UNSIGNED_INT, NULL, numVertices * 4);
     
     numVertices += size;
 

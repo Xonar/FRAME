@@ -21,7 +21,7 @@ void FFontHandler::Init(FFont *font)
   this->font = font;
 }
 
-void FFontHandler::addText(std::vector<FTextVertex> data)
+void FFontHandler::addText(const std::vector<FTextVertex> &data)
 {
   this->charData.insert(this->charData.end(), data.begin(), data.end());
 }
@@ -33,7 +33,7 @@ std::vector<FTextVertex>& FFontHandler::getCharData()
 
 int FFontHandler::getCharNum()
 {
-  return this->charData.size() / 6;
+  return this->charData.size() / 4;
 }
 
 void FFontHandler::clearCharData()
@@ -41,7 +41,7 @@ void FFontHandler::clearCharData()
   this->charData.clear();
 }
 
-void FFontHandler::ready(GLuint uniformTexture)
+void FFontHandler::ready(const GLuint &uniformTexture)
 {
   //TODO Other Uniforms Aswel
   font->bindTexture(GL_TEXTURE0);
