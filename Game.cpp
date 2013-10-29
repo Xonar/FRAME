@@ -136,7 +136,7 @@ GLint initializeGame()
   //Create Camera
   camera = new FCamera();
 
-  camera->setViewPort(0,0,640,480);
+  camera->setViewPort(0,0,gWindow->getWindowWidth(),gWindow->getWindowHeight());
   camera->setPosition(glm::vec3(4.f,3.f,-3.f));
   camera->lookAt(glm::vec3(0.f,0.f,0.f));
   camera->InitProjectionMatrix(45.f,0.1f,100.f);
@@ -182,34 +182,9 @@ GLvoid drawGame()
   model->draw();
 
   //Draw FPS Counter - Measure between draws since VSync might be on
+  
   font->drawText("time: " + FTimeString(end- start), glm::vec2(5,480 - 23) );
  
-  //3.6 ms
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,10));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,30));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,50));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,70));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,90));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,110));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,130));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,150));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,170));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,190));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,210));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,230));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,250));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,270));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,290));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,310));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,330));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,350));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,370));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,390));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,410));
-  font->drawText("TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT", glm::vec2(10,430));
-
-  //font->drawText("Hello Font Engine!", glm::vec2(10,10));
-
   gFontEngine->render();
 
   end = FGetTime();
