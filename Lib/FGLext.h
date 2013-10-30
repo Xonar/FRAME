@@ -17,12 +17,12 @@
 
 #include "../Container/Container.h"
 
-const GLchar* glErrorString(GLenum err);
-const GLchar* glDebugSourceString(GLenum source);
-const GLchar* glDebugTypeString(GLenum type);
-const GLchar* glDebugSeverityString(GLenum severe);
+const GLchar* glErrorString(const GLenum err);
+const GLchar* glDebugSourceString(const GLenum source);
+const GLchar* glDebugTypeString(const GLenum type);
+const GLchar* glDebugSeverityString(const GLenum severe);
 
-GLboolean glIsExtensionSupported(const std::string ext);
+GLboolean glIsExtensionSupported(const std::string &ext);
 
 #ifndef DEBUG
 #define GL_ERROR_ASSERT() { GLenum err = glGetError(); if(err) { std::cerr << "glGetError: " << glErrorString(err) << std::endl; assert(GL_FALSE); } }

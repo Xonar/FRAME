@@ -16,7 +16,7 @@
 #include <iostream>
 #include <set>
 
-const GLchar* glErrorString(GLenum err)
+const GLchar* glErrorString(const GLenum err)
 {
   switch(err)
   {
@@ -32,7 +32,7 @@ const GLchar* glErrorString(GLenum err)
   }
 }
 
-const GLchar* glDebugSourceString(GLenum source)
+const GLchar* glDebugSourceString(const GLenum source)
 {
   switch(source)
   {
@@ -46,7 +46,7 @@ const GLchar* glDebugSourceString(GLenum source)
   }
 }
 
-const GLchar* glDebugTypeString(GLenum type)
+const GLchar* glDebugTypeString(const GLenum type)
 {
   switch(type)
   {
@@ -60,7 +60,7 @@ const GLchar* glDebugTypeString(GLenum type)
   }
 }
 
-const GLchar* glDebugSeverityString(GLenum severe)
+const GLchar* glDebugSeverityString(const GLenum severe)
 {
   switch(severe)
   {
@@ -76,7 +76,7 @@ const GLchar* glDebugSeverityString(GLenum severe)
 // M - Number of Extensions looked at in this run (If extension not in alraedy looked at set)
 // Note : if you sum up all invocation complexities M's total will never exceed the 
 //        number of extensions present
-GLboolean glIsExtensionSupported(const std::string ext)
+GLboolean glIsExtensionSupported(const std::string &ext)
 {
   static std::set<std::string> extensions;
   static GLint numExtensions = 0;

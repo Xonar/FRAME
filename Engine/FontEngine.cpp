@@ -71,7 +71,7 @@ FFontEngine::FFontEngine()
   delete[] indices;
 }
 
-void FFontEngine::addFont(FFont *font)
+void FFontEngine::addFont(FFont * const font)
 {
   FFontHandler newHandler = FFontHandler();
   

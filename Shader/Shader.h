@@ -26,8 +26,8 @@ class FShader
             te, //Tesselation Evaluation
             fs; //Fragment Shader
 
-    void printProgramLog( GLuint program );
-    void printShaderLog( GLuint shader );
+    void printProgramLog(const GLuint program );
+    void printShaderLog(const  GLuint shader );
   public:
     FShader();
     ~FShader();
@@ -35,7 +35,7 @@ class FShader
     GLint bind();
     void unbind();
 
-    GLint loadShader(std::string shader, GLenum type);
+    GLint loadShader(const std::string &shader, const GLenum type);
 
     GLint loadProgram();
     void freeProgram();

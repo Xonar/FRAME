@@ -38,7 +38,7 @@ private:
   int glMinorVersion;
 
 public:
-  FWindow(std::string title);
+  FWindow(const std::string &title);
   
   int Init();
 

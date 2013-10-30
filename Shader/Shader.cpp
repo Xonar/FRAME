@@ -52,7 +52,7 @@ void FShader::unbind()
   glUseProgram(0);
 }
 
-void FShader::printProgramLog(GLuint program)
+void FShader::printProgramLog(const GLuint program)
 {
   if(program && glIsProgram(program))
   {
@@ -76,7 +76,7 @@ void FShader::printProgramLog(GLuint program)
   }
 }
 
-void FShader::printShaderLog(GLuint shader)
+void FShader::printShaderLog(const GLuint shader)
 {
   if(shader && glIsShader(shader))
   {
@@ -100,7 +100,7 @@ void FShader::printShaderLog(GLuint shader)
   }
 }
 
-GLint FShader::loadShader(std::string shader, GLenum type)
+GLint FShader::loadShader(const std::string &shader, const GLenum type)
 {
   std::cout << "Loading Shader : " << shader << std::endl;
   GLuint* pShader = NULL;

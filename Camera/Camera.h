@@ -48,20 +48,20 @@ class FCamera
     FCamera();
     ~FCamera();
 
-    GLvoid setViewPort(GLint x, GLint y, GLint w, GLint h);
+    GLvoid setViewPort(const GLint x, const GLint y, const GLint w, const GLint h);
 
     GLint InitOrthoMatrix(float left,float right,float bottom,float top, float near,float far);
     GLint InitOrthoMatrix(float left,float right,float bottom,float top);
 
     GLint InitProjectionMatrix(float vovy, float zNear, float far);
 
-    GLvoid setPosition(glm::vec3 pos);
-    GLvoid lookAt(glm::vec3 lookAt);
-    GLvoid setDirection(glm::vec3 dir);
+    GLvoid setPosition(const glm::vec3 &pos);
+    GLvoid lookAt(const glm::vec3 &lookAt);
+    GLvoid setDirection(const glm::vec3 &dir);
 
-    void setMatrixUniform(GLuint worldView, GLuint viewScreen);
-    void setMatrixUniformWorldView(GLuint uniform);
-    void setMatrixUniformViewScreen(GLuint uniform);
+    void setMatrixUniform(const GLuint worldView, const GLuint viewScreen);
+    void setMatrixUniformWorldView(const GLuint uniform);
+    void setMatrixUniformViewScreen(const GLuint uniform);
 };
 
 #endif // _F_H_CAMERA_

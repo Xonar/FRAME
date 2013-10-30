@@ -14,7 +14,7 @@
 #include <fstream>
 #include <iostream>
 
-std::string readFileIntoString(std::string path)
+std::string readFileIntoString(const std::string &path)
 {
   std::ifstream in(path, std::ios::in | std::ios::binary );
 

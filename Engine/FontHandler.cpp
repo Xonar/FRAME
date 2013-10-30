@@ -16,7 +16,7 @@ FFontHandler::FFontHandler()
   //Nothing to be done
 }
 
-void FFontHandler::Init(FFont *font)
+void FFontHandler::Init(FFont *const font)
 {
   this->font = font;
 }

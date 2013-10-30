@@ -23,7 +23,7 @@ FTexture2D::FTexture2D()
   this->glTextureType = GL_TEXTURE_2D;
 }
 
-int FTexture2D::loadTextureFromSurface(SDL_Surface* surface)
+int FTexture2D::loadTextureFromSurface(const SDL_Surface* const surface)
 {
   if(surface)
   {
@@ -48,7 +48,7 @@ int FTexture2D::loadTextureFromSurface(SDL_Surface* surface)
   return 0;
 }
 
-int FTexture2D::loadTextureFromFile(std::string file)
+int FTexture2D::loadTextureFromFile(const std::string &file)
 {
   SDL_Surface *surface;
 

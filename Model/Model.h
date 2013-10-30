@@ -50,11 +50,11 @@ class FModel
   GLvoid readyTextures();
   GLvoid draw();
 
-  GLint loadModelFormFileObj(const std::string path);
-  GLint loadModelFromVertices(FVertex3 *vertices, const GLuint numVertices);
-  GLint loadModelFromVerticesAndIndices(FVertex3 *vertices, const GLuint numVertices, 
-                                        GLuint* indices, const GLuint numIndices);
-  GLint loadModelFromVertexAndTextureArray(const GLfloat * const vertices, const GLfloat * const uvs, GLuint numVertices);
+  GLint loadModelFormFileObj(const std::string &path);
+  GLint loadModelFromVertices(FVertex3 * const vertices, const GLuint numVertices);
+  GLint loadModelFromVerticesAndIndices(FVertex3 *const vertices, const GLuint numVertices, 
+                                        GLuint* const indices, const GLuint numIndices);
+  GLint loadModelFromVertexAndTextureArray(const GLfloat * const vertices, const GLfloat * const uvs, const GLuint numVertices);
 
   GLvoid attachTexture(FTexture2D *const tex, const F_MODEL_TEXTURE_ENUM type);
 };

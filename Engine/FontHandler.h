@@ -25,7 +25,7 @@ class FFontHandler
   public:
     FFontHandler();
 
-    void Init(FFont *font);
+    void Init(FFont * const font);
 
     void addText(const std::string &text, const glm::vec2 &pos);
 

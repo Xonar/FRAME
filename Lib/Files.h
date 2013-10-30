@@ -14,6 +14,6 @@
 
 #include <string>
 
-std::string readFileIntoString(std::string path);
+std::string readFileIntoString(const std::string &path);
 
 #endif // _F_H_FILES_

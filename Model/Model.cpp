@@ -42,7 +42,7 @@ FModel::~FModel()
   //Don't remove Textures as it is not the model's textures
 }
 
-GLint FModel::loadModelFromVertices(FVertex3 *vertices, const GLuint numVertices)
+GLint FModel::loadModelFromVertices(FVertex3 * const vertices, const GLuint numVertices)
 {
   //Generate Indices
   this->indices  = new GLuint[numVertices];
@@ -53,8 +53,8 @@ GLint FModel::loadModelFromVertices(FVertex3 *vertices, const GLuint numVertices
   return loadModelFromVerticesAndIndices(vertices, numVertices, this->indices, numVertices);
 }
 
-GLint FModel::loadModelFromVerticesAndIndices(FVertex3 *vertices, const GLuint numVertices,
-                                              GLuint* indices, const GLuint numIndices)
+GLint FModel::loadModelFromVerticesAndIndices(FVertex3 * const vertices, const GLuint numVertices,
+                                              GLuint * const indices, const GLuint numIndices)
 {
   //Set Data
   this->indices = indices;
@@ -144,7 +144,7 @@ GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices,
   return loadModelFromVertices(this->vertices, numVertices);
 }
 
-GLvoid FModel::attachTexture(FTexture2D *const tex, const F_MODEL_TEXTURE_ENUM type)
+GLvoid FModel::attachTexture(FTexture2D * const tex, const F_MODEL_TEXTURE_ENUM type)
 {
   //TODO Use Resource Manager
   switch(type)

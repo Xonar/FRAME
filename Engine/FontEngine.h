@@ -46,7 +46,7 @@ class FFontEngine
   public:
     FFontEngine();
 
-    void addFont(FFont *font);
+    void addFont(FFont * const font);
     void addText(const GLint font, const std::string &text, const glm::vec2 &pos);
 
     void render();

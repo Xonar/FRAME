@@ -17,7 +17,7 @@
 #include <iostream>
 #include <cstring>
 
-FWindow::FWindow(std::string title)
+FWindow::FWindow(const std::string &title)
 {
   //Initialize Window with default settings
   this->title = title;

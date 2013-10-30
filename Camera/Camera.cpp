@@ -76,7 +76,7 @@ GLint FCamera::updateUBO()
   return 0;
 }
 
-GLvoid FCamera::setViewPort(GLint x, GLint y, GLint w, GLint h)
+GLvoid FCamera::setViewPort(const GLint x, const GLint y, const GLint w, const GLint h)
 {
   this->x = x;
   this->y = y;
@@ -86,8 +86,8 @@ GLvoid FCamera::setViewPort(GLint x, GLint y, GLint w, GLint h)
 }
 
 //Init 3D Ortho Matrix
-GLint FCamera::InitOrthoMatrix( float left,float right,float bottom,float top, 
-                                float near,float far)
+GLint FCamera::InitOrthoMatrix( const float left, const float right, const float bottom,
+                                const float top, const float near, const float far)
 {
   this->x = left;
   this->width = right - left;
@@ -113,7 +113,8 @@ GLint FCamera::InitOrthoMatrix( float left,float right,float bottom,float top,
 }
 
 //Init 2D Ortho Matrix
-GLint FCamera::InitOrthoMatrix(float left,float right,float bottom,float top)
+GLint FCamera::InitOrthoMatrix(const float left, const float right, const float bottom,
+                               const float top)
 {
   this->x = left;
   this->width = right - left;
@@ -136,7 +137,7 @@ GLint FCamera::InitOrthoMatrix(float left,float right,float bottom,float top)
 }
 
 //Init Projection Matrix
-GLint FCamera::InitProjectionMatrix(float fovy, float near, float far)
+GLint FCamera::InitProjectionMatrix(const float fovy, const float near, const float far)
 {
   //Create a allocate ViewScreen and WorlView Matrix
   glGenBuffers(1, &this->ubViewScreen);
@@ -155,26 +156,26 @@ GLint FCamera::InitProjectionMatrix(float fovy, float near, float far)
   return 0;
 }
 
-GLvoid FCamera::setPosition(glm::vec3 pos)
+GLvoid FCamera::setPosition(const glm::vec3 &pos)
 {
   this->pos = pos;
   this->updateWorldViewMatrix = true;
 }
 
-GLvoid FCamera::lookAt(glm::vec3 lookAt)
+GLvoid FCamera::lookAt(const glm::vec3 &lookAt)
 {
   this->dir = lookAt - pos;
   this->updateWorldViewMatrix = true;
 }
 
-GLvoid FCamera::setDirection(glm::vec3 dir)
+GLvoid FCamera::setDirection(const glm::vec3 &dir)
 {
   this->dir = dir;
   this->updateWorldViewMatrix = true;
 }
 
 //Use Camera
-void FCamera::setMatrixUniform(GLuint worldView, GLuint viewScreen)
+void FCamera::setMatrixUniform(const GLuint worldView, const GLuint viewScreen)
 {
   glViewport(this->x,this->y,this->width,this->height);
 
@@ -184,7 +185,7 @@ void FCamera::setMatrixUniform(GLuint worldView, GLuint viewScreen)
   glUniformMatrix4fv(viewScreen, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
 }
 
-void FCamera::setMatrixUniformWorldView(GLuint uniform)
+void FCamera::setMatrixUniformWorldView(const GLuint uniform)
 {
   glViewport(this->x,this->y,this->width,this->height);
   
@@ -193,7 +194,7 @@ void FCamera::setMatrixUniformWorldView(GLuint uniform)
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
 }
 
-void FCamera::setMatrixUniformViewScreen(GLuint uniform)
+void FCamera::setMatrixUniformViewScreen(const GLuint uniform)
 {
   glViewport(this->x,this->y,this->width,this->height);
   
