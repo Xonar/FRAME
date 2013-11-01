@@ -59,6 +59,11 @@ class FCamera
     GLvoid lookAt(const glm::vec3 &lookAt);
     GLvoid setDirection(const glm::vec3 &dir);
 
+    GLvoid use();
+
+    void bindMatrixWorldViewToUBO(const GLuint block);
+    void bindMatrixViewScreenToUBO(const GLuint block);
+
     void setMatrixUniform(const GLuint worldView, const GLuint viewScreen);
     void setMatrixUniformWorldView(const GLuint uniform);
     void setMatrixUniformViewScreen(const GLuint uniform);

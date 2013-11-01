@@ -174,31 +174,36 @@ GLvoid FCamera::setDirection(const glm::vec3 &dir)
   this->updateWorldViewMatrix = true;
 }
 
-//Use Camera
-void FCamera::setMatrixUniform(const GLuint worldView, const GLuint viewScreen)
+GLvoid FCamera::use()
 {
   glViewport(this->x,this->y,this->width,this->height);
-
+  
   this->updateUBO();
+}
 
+void FCamera::bindMatrixWorldViewToUBO(const GLuint block)
+{
+  glBindBufferBase(GL_UNIFORM_BUFFER, block, this->ubViewScreen);
+}
+
+void FCamera::bindMatrixViewScreenToUBO(const GLuint block)
+{
+  glBindBufferBase(GL_UNIFORM_BUFFER, block, this->ubViewScreen);
+}
+
+//Use Camera (No UBO)
+void FCamera::setMatrixUniform(const GLuint worldView, const GLuint viewScreen)
+{
   glUniformMatrix4fv(worldView, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
   glUniformMatrix4fv(viewScreen, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
 }
 
 void FCamera::setMatrixUniformWorldView(const GLuint uniform)
 {
-  glViewport(this->x,this->y,this->width,this->height);
-  
-  this->updateUBO();
-
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
 }
 
 void FCamera::setMatrixUniformViewScreen(const GLuint uniform)
 {
-  glViewport(this->x,this->y,this->width,this->height);
-  
-  this->updateUBO();
-
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
 }
