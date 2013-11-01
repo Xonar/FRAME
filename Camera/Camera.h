@@ -61,12 +61,12 @@ class FCamera
 
     GLvoid use();
 
-    void bindMatrixWorldViewToUBO(const GLuint block);
-    void bindMatrixViewScreenToUBO(const GLuint block);
+    void bindMatrixWorldViewToUBO(const GLuint block) const;
+    void bindMatrixViewScreenToUBO(const GLuint block) const;
 
-    void setMatrixUniform(const GLuint worldView, const GLuint viewScreen);
-    void setMatrixUniformWorldView(const GLuint uniform);
-    void setMatrixUniformViewScreen(const GLuint uniform);
+    void setMatrixUniform(const GLuint worldView, const GLuint viewScreen) const;
+    void setMatrixUniformWorldView(const GLuint uniform) const;
+    void setMatrixUniformViewScreen(const GLuint uniform) const;
 };
 
 #endif // _F_H_CAMERA_

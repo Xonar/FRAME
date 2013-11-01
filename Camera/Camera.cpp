@@ -181,29 +181,29 @@ GLvoid FCamera::use()
   this->updateUBO();
 }
 
-void FCamera::bindMatrixWorldViewToUBO(const GLuint block)
+void FCamera::bindMatrixWorldViewToUBO(const GLuint block) const
 {
   glBindBufferBase(GL_UNIFORM_BUFFER, block, this->ubViewScreen);
 }
 
-void FCamera::bindMatrixViewScreenToUBO(const GLuint block)
+void FCamera::bindMatrixViewScreenToUBO(const GLuint block) const
 {
   glBindBufferBase(GL_UNIFORM_BUFFER, block, this->ubViewScreen);
 }
 
 //Use Camera (No UBO)
-void FCamera::setMatrixUniform(const GLuint worldView, const GLuint viewScreen)
+void FCamera::setMatrixUniform(const GLuint worldView, const GLuint viewScreen) const
 {
   glUniformMatrix4fv(worldView, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
   glUniformMatrix4fv(viewScreen, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
 }
 
-void FCamera::setMatrixUniformWorldView(const GLuint uniform)
+void FCamera::setMatrixUniformWorldView(const GLuint uniform) const
 {
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
 }
 
-void FCamera::setMatrixUniformViewScreen(const GLuint uniform)
+void FCamera::setMatrixUniformViewScreen(const GLuint uniform) const
 {
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
 }

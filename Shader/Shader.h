@@ -26,14 +26,14 @@ class FShader
             te, //Tesselation Evaluation
             fs; //Fragment Shader
 
-    void printProgramLog(const GLuint program );
-    void printShaderLog(const  GLuint shader );
+    void printProgramLog(const GLuint program ) const;
+    void printShaderLog(const  GLuint shader ) const;
   public:
     FShader();
     ~FShader();
 
-    GLint bind();
-    void unbind();
+    GLint bind() const;
+    void unbind() const;
 
     GLint loadShader(const std::string &shader, const GLenum type);
 
@@ -41,7 +41,7 @@ class FShader
     void freeProgram();
 
     //ACCESSOR METHODS
-    GLuint getProgram() { return glProg; };
+    GLuint getProgram() const { return glProg; };
 };
 
 #endif // _F_H_SHADER

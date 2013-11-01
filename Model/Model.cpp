@@ -84,12 +84,12 @@ GLint FModel::loadModelFromVerticesAndIndices(FVertex3 * const vertices, const G
   return 0;
 }
 
-GLvoid FModel::readyDraw()
+GLvoid FModel::readyDraw() const
 {
   glBindVertexArray(this->vao);
 }
 
-GLvoid FModel::readyTextures()
+GLvoid FModel::readyTextures() const
 {
   if(this->tTexture)
   {
@@ -107,10 +107,9 @@ GLvoid FModel::readyTextures()
   }
 }
 
-GLvoid FModel::draw()
+GLvoid FModel::draw() const
 {
   glDrawElements(GL_TRIANGLES, this->numIndices, GL_UNSIGNED_INT, NULL);
-  //glDrawArrays(GL_TRIANGLES, 0, 12*3);
 }
 
 GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices, 

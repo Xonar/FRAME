@@ -23,17 +23,17 @@
 #endif
 
 const char* F_TIME_UNIT_MAP[] = {"ns", "us", "ms", "s"};
-bool FTime::operator<(const FTime &B)
+bool FTime::operator<(const FTime &B) const
 {
   return (this->s < B.s)?true:(this->n < B.n);
 }
 
-bool FTime::operator>(const FTime &B)
+bool FTime::operator>(const FTime &B) const
 {
   return (this->s > B.s)?true:(this->n > B.n);
 }
 
-bool FTime::operator==(const FTime &B)
+bool FTime::operator==(const FTime &B) const
 {
   return (this->s == B.s)?(this->n == B.n):false;
 }
@@ -88,17 +88,17 @@ FTime FTime::operator-=(const FTime &B)
   return *this;
 }
 
-bool FTime::operator>=(const FTime &B)
+bool FTime::operator>=(const FTime &B) const
 {
   return (this->s > B.s)?true:((this->s == B.s)?(this->n >= B.n):false);
 }
 
-bool FTime::operator<=(const FTime &B)
+bool FTime::operator<=(const FTime &B) const
 {
   return (this->s < B.s)?true:((this->s == B.s)?(this->n <= B.n):false);
 }
 
-bool FTime::operator!=(const FTime &B)
+bool FTime::operator!=(const FTime &B) const
 {
   return (this->s != B.s)?true:(this->n != B.n);
 }

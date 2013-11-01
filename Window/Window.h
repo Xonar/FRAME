@@ -42,12 +42,12 @@ public:
   
   int Init();
 
-  int Render();
+  int Render() const;
 
-  int getOpenGLVersion() { return glMajorVersion * 10 + glMinorVersion; }
+  int getOpenGLVersion() const { return glMajorVersion * 10 + glMinorVersion; }
 
-  int getWindowHeight() { return height; }
-  int getWindowWidth() { return width; }
+  int getWindowHeight() const { return height; }
+  int getWindowWidth() const { return width; }
 };
 
 #endif // _F_H_WINDOW_

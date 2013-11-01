@@ -34,7 +34,7 @@ void FShader::freeProgram()
     glDeleteProgram(this->glProg);
 }
 
-GLint FShader::bind()
+GLint FShader::bind() const
 {
   glUseProgram(this->glProg);
 
@@ -47,12 +47,12 @@ GLint FShader::bind()
   return 0;
 }
 
-void FShader::unbind()
+void FShader::unbind() const
 {
   glUseProgram(0);
 }
 
-void FShader::printProgramLog(const GLuint program)
+void FShader::printProgramLog(const GLuint program) const
 {
   if(program && glIsProgram(program))
   {
@@ -76,7 +76,7 @@ void FShader::printProgramLog(const GLuint program)
   }
 }
 
-void FShader::printShaderLog(const GLuint shader)
+void FShader::printShaderLog(const GLuint shader) const
 {
   if(shader && glIsShader(shader))
   {

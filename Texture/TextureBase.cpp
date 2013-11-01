@@ -30,7 +30,7 @@ void FTextureBase::freeTexture()
   this->glTexture = 0;
 }
 
-void FTextureBase::bindTexture(const GLenum texture)
+void FTextureBase::bindTexture(const GLenum texture) const
 {
   glActiveTexture(texture);
   glBindTexture(this->glTextureType, this->glTexture);

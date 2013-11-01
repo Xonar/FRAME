@@ -46,9 +46,9 @@ class FModel
   FModel();
   ~FModel();
 
-  GLvoid readyDraw();
-  GLvoid readyTextures();
-  GLvoid draw();
+  GLvoid readyDraw() const;
+  GLvoid readyTextures() const;
+  GLvoid draw() const;
 
   GLint loadModelFormFileObj(const std::string &path);
   GLint loadModelFromVertices(FVertex3 * const vertices, const GLuint numVertices);

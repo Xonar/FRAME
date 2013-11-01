@@ -20,17 +20,17 @@ struct FTime
   GLuint s,n; //Seconds and Nanoseconds
 
   //Operators
-  bool operator<( const FTime &B); 
-  bool operator>( const FTime &B); 
-  bool operator==( const FTime &B); 
+  bool operator<( const FTime &B) const; 
+  bool operator>( const FTime &B) const; 
+  bool operator==( const FTime &B) const; 
   FTime operator=( const FTime &B); 
   FTime operator+( const FTime &B); 
   FTime operator-( const FTime &B); 
   FTime operator+=( const FTime &B); 
   FTime operator-=( const FTime &B); 
-  bool operator>=( const FTime &B); 
-  bool operator<=( const FTime &B); 
-  bool operator!=( const FTime &B);
+  bool operator>=( const FTime &B) const; 
+  bool operator<=( const FTime &B) const; 
+  bool operator!=( const FTime &B) const;
 
   void normalize();
 };

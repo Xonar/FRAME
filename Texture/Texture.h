@@ -29,7 +29,7 @@ class FTextureBase
     FTextureBase();
     ~FTextureBase();
 
-    void bindTexture(const GLenum texture);
+    void bindTexture(const GLenum texture) const;
 
     void freeTexture();
 };
@@ -50,7 +50,7 @@ class FTexture2DArray : public FTextureBase
     FTexture2DArray();
     ~FTexture2DArray() {};
 
-    int loadTextureFromSurface(const SDL_Surface * const surface[], const int num, const int max_width,
-                               const int max_height);
+    int loadTextureFromSurface(const SDL_Surface * const surface[], const int num,
+                               const int max_width, const int max_height);
 };
 #endif // _F_H_TEXTURE_

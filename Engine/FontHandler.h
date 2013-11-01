@@ -29,11 +29,11 @@ class FFontHandler
 
     void addText(const std::string &text, const glm::vec2 &pos);
 
-    std::vector<FTextVertex>& getCharData();
-    int getCharNum();
+    const std::vector<FTextVertex>& getCharData() const;
+    int getCharNum() const;
     void clearCharData();
 
-    void ready(const GLuint uniformTexture);
+    void ready(const GLuint uniformTexture) const;
 };
 
 #endif //_F_H_FONT_HANDLER_

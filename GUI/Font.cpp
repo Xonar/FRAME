@@ -114,7 +114,7 @@ GLint FFont::createFromTTF(const std::string &ttf, const unsigned int size)
 }
 
 void FFont::generateStringVertexData(const std::string &text, 
-          const glm::vec2 &off, std::vector<FTextVertex> &out)
+          const glm::vec2 &off, std::vector<FTextVertex> &out) const
 {
   glm::vec2 cpos = off;
 
@@ -153,12 +153,12 @@ void FFont::generateStringVertexData(const std::string &text,
   }
 }
 
-void FFont::bindTexture(const GLenum textureUnit)
+void FFont::bindTexture(const GLenum textureUnit) const
 {
   textures->bindTexture(textureUnit);
 }
 
-GLvoid FFont::drawText(const std::string &text,const glm::vec2 &pos)
+GLvoid FFont::drawText(const std::string &text,const glm::vec2 &pos) const
 {
   gFontEngine->addText(this->fontID, text, pos);
 }

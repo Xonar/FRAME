@@ -148,7 +148,7 @@ int FWindow::Init()
   return 0;
 }
 
-int FWindow::Render()
+int FWindow::Render() const
 {
   static FTime minTime = { 1000, 0}, maxTime = {0,0};
   static int counter = 0;

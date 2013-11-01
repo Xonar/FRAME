@@ -98,9 +98,9 @@ void FFontEngine::render()
 
   std::vector<FTextVertex> vertices;
 
-  for(FFontHandler &it : fontHandler)
+  for(const FFontHandler &it : fontHandler)
   {
-    std::vector<FTextVertex>& data = it.getCharData();
+    const std::vector<FTextVertex>& data = it.getCharData();
     vertices.insert(vertices.end(), data.begin(), data.end() );
   }
 
