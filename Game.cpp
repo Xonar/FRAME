@@ -143,6 +143,11 @@ GLint initializeGame()
 
   uniformViewScreenMatrix = glGetUniformLocation(shader->getProgram(), "ViewScreenMatrix" );
   uniformWorldViewMatrix = glGetUniformLocation(shader->getProgram(), "WorldViewMatrix" );
+ 
+  //Set Model Uniform Matrices
+  shader->bind();
+  camera->use();
+  camera->setMatrixUniform(uniformWorldViewMatrix, uniformViewScreenMatrix);
 
   //Set OpenGL Variables
   glEnable(GL_DEPTH_TEST);
@@ -166,6 +171,10 @@ GLint initializeGame()
 
 GLvoid drawGame()
 {
+  //ENABLE Depth Test and Cull
+  glEnable(GL_CULL_FACE);
+  glEnable(GL_DEPTH_TEST);
+
   //Bind Shader
   shader->bind();
 
@@ -174,7 +183,6 @@ GLvoid drawGame()
 
   //Setup Ortho Matrix
   camera->use();
-  camera->setMatrixUniform(uniformWorldViewMatrix, uniformViewScreenMatrix);
 
   //Draw Model
   model->draw();
