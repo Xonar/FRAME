@@ -26,6 +26,8 @@
 bool gGameOn = true;
 FWindow *gWindow;
 FFontEngine *gFontEngine;
+FFont *gFontConsole;
+bool gDisplayFrameStats = true;
 
 int main()
 {
@@ -46,8 +48,16 @@ int main()
   //Init OpenGL
   initGLFunction();
 
-  FFontEngine fontEngine = FFontEngine();
-  gFontEngine = &fontEngine;
+  //Init SDL Font Engine
+  TTF_Init();
+  
+  //Init FontEngine
+  gFontEngine = new FFontEngine();
+
+  gFontConsole = new FFont();
+  gFontConsole->createFromTTF("Assets/UbuntuMono-R.ttf", 14);
+
+  gFontEngine->addFont(gFontConsole);
 
 #ifdef DEBUG
   //Start Debug Output
@@ -59,9 +69,6 @@ int main()
   
   GL_ERROR_ASSERT();
 
-  //Init SDL Font Engine
-  TTF_Init();
-  
   //Init FTime
   initTime();
 
@@ -84,6 +91,7 @@ int main()
       }
     }
     
+    //Render
     window.Render();
 
     //All GL Error should be handled immediately and the GL error flag set to GL_NO_ERROR

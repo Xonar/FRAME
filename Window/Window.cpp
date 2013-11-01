@@ -11,11 +11,14 @@
 
 #include "Window.h"
 #include "../Game.h"
+#include "../Global.h"
+#include "../Time/Time.h"
 
 #include <SDL2/SDL_opengl.h>
 
 #include <iostream>
 #include <cstring>
+#include <algorithm>
 
 FWindow::FWindow(const std::string &title)
 {
@@ -147,9 +150,43 @@ int FWindow::Init()
 
 int FWindow::Render()
 {
+  static FTime minTime = { 1000, 0}, maxTime = {0,0};
+  static int counter = 0;
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  //Render Game
+  FTime startTime = FGetTime();
   drawGame();
+  FTime endTime = FGetTime();
+
+  FTime diffTime = endTime - startTime;
+  minTime = std::min(minTime, diffTime);
+  maxTime = std::max(diffTime, maxTime);
+
+  //Draw FPS
+  if(gDisplayFrameStats)
+  {
+    gFontConsole->drawText("TIME:", glm::vec2( 5, this->height - 5 - 14 - 0 ) );   
+    gFontConsole->drawText("cur : " +  FTimeString(diffTime) , 
+                            glm::vec2( 15, this->height - 5 - 14 - 12) );   
+    gFontConsole->drawText("max : " + FTimeString(maxTime), 
+                            glm::vec2( 15, this->height - 5 - 14 - 24) );   
+    gFontConsole->drawText("min : " + FTimeString(minTime), 
+                            glm::vec2( 15, this->height - 5 - 14 - 36) );
+
+    if(counter>120)
+    {
+      counter = 0;
+      maxTime = {0, 0};
+      minTime = {1000, 0};
+    }
+    else
+      counter++;
+  }
+
+  //Render Text
+  gFontEngine->render();
 
   SDL_GL_SwapWindow(this->window);
 

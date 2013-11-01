@@ -18,9 +18,12 @@
 
 //FRAME
 extern bool gGameOn;
+extern bool gDisplayFrameStats;
 
 extern FWindow *gWindow;
+
 extern FFontEngine *gFontEngine;
+extern FFont *gFontConsole;
 
 //TERMINAL COLOUR CODES
 #ifdef COLOUR_TERMINAL

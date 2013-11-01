@@ -166,9 +166,6 @@ GLint initializeGame()
 
 GLvoid drawGame()
 {
-  static FTime start,end;
-  FTime cur = FGetTime();
-
   //Bind Shader
   shader->bind();
 
@@ -176,17 +173,12 @@ GLvoid drawGame()
   model->readyDraw();
 
   //Setup Ortho Matrix
+  camera->use();
   camera->setMatrixUniform(uniformWorldViewMatrix, uniformViewScreenMatrix);
 
   //Draw Model
   model->draw();
 
   //Draw FPS Counter - Measure between draws since VSync might be on
-  
-  font->drawText("time: " + FTimeString(end- start), glm::vec2(5,480 - 23) );
- 
-  gFontEngine->render();
-
-  end = FGetTime();
-  start = cur;
+  font->drawText("HELLO FONT!", glm::vec2( 10, 10) );
 }
