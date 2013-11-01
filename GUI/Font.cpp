@@ -84,14 +84,15 @@ GLint FFont::createFromTTF(const std::string &ttf, const unsigned int size)
 
       surfaces[index] = TTF_RenderText_Blended(this->sdlFont, tmpString, {255, 255, 255, 255});
       
-      chars[index].adv.x = adv - minx;
+      chars[index].adv.x = adv;
       chars[index].adv.y = 0.f;
 
       chars[index].dim.x = surfaces[index]->w;
       chars[index].dim.y = surfaces[index]->h;
-
+      
+      //Offset is alreadt applied
       chars[index].off.y = 0/*- miny*/;
-      chars[index].off.x = minx;
+      chars[index].off.x = 0/*  minx*/;
 
       charMap[i] = index;
       max_height = std::max(max_height, surfaces[index]->h);
