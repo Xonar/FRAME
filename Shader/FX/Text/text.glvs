@@ -9,7 +9,10 @@ in int norm;
 out vec2 vstex;
 flat out int vschar;
 
-uniform mat4 OrthoMatrix;
+uniform Matrix
+{
+  uniform mat4 Ortho;
+};
 
 //Main
 void main()
@@ -17,5 +20,5 @@ void main()
   vstex = tex;
   vschar = norm;
 
-  gl_Position = OrthoMatrix * vec4(pos, 0, 1);
+  gl_Position = Ortho * vec4(pos, 0, 1);
 }

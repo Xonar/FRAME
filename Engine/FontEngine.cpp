@@ -30,13 +30,16 @@ FFontEngine::FFontEngine()
 
   this->fontShader.loadProgram();
 
-  this->uniformOrthoMatrix = glGetUniformLocation(this->fontShader.getProgram(), "OrthoMatrix");
   this->uniformFontTexture = glGetUniformLocation(this->fontShader.getProgram(), "Texture");
   
   //Init Font Ortho Matrix
   fontCamera = FCamera();
 
   fontCamera.InitOrthoMatrix(0,gWindow->getWindowWidth(),0,gWindow->getWindowHeight());
+
+  this->uniformOrthoMatrix = glGetUniformBlockIndex(this->fontShader.getProgram(), "Matrix");
+
+  fontCamera.bindMatrixViewScreenToUBO(uniformOrthoMatrix);
 
   //OpenGL Buffers
   glGenVertexArrays(1, &this->vao);
@@ -110,7 +113,7 @@ void FFontEngine::render()
                    GL_DYNAMIC_DRAW);
 
   //Bind OrthoMatrix
-  fontCamera.setMatrixUniformViewScreen(uniformOrthoMatrix);
+  fontCamera.use();
 
   GLint numChars = 0;
 
