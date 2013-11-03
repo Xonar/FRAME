@@ -41,8 +41,6 @@ GLvoid FModelPart::releaseIndices()
   indices.clear();
 }
 
-//GLint FModelPart::loadModelPartFromObjFile(const std::string &path);
-
 GLint FModelPart::loadModelPartFromVertices(FVertex3* const vertices,const GLuint numVertices)
 {
   GLuint* indicesBuffer = new GLuint[numVertices];

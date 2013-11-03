@@ -40,7 +40,6 @@ class FModelPart
     GLvoid releaseVertices();
     GLvoid releaseIndices();
 
-    GLint loadModelPartFromObjFile(const std::string &path);
     GLint loadModelPartFromVertices(FVertex3* const vertices,const GLuint numVertices);
     GLint loadModelPartFromVerticesAndIndices(FVertex3 *const vertices, const GLuint numVertices,
                                               GLuint* const indices, const GLuint numIndices);
