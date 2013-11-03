@@ -17,7 +17,7 @@ CFLAGS = -std=c++11 -Wall -g -D DEBUG=1 -D COLOUR_TERMINAL=1
 CDEPFLAGS = -std=gnu++11
 
 LD = g++
-LDFLAGS = -lGL -lSDL2 -lSDL2_ttf -lSDL2_image
+LDFLAGS = -lGL -lSDL2 -lSDL2_ttf -lSDL2_image -lassimp
 
 ifdef DEPENDANCIES_GENERATED
 include $(DEPENDANCIES)
