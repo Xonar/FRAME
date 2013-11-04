@@ -119,25 +119,44 @@ void FFontEngine::render()
 
   for(FFontHandler &it : fontHandler)
   {
-    //glDrawArrays(GL_TRIANGLES, 0, vertices.size() - 1);
-
     it.ready(this->uniformFontTexture);
 
     int size = it.getCharNum();
 
-    for(; size > F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW;)
+    GLint count = size / F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW + 
+                    (size % F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW)?1:0;
+
+    GLsizei* pCount = new GLsizei[count];
+    const GLvoid** pIndices = new const GLvoid*[count];
+    GLint* pBaseVertex = new GLint[count];
+
+    int i = 0;
+
+    for(; size > F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW; i++)
     {
-      glDrawElementsBaseVertex(GL_TRIANGLES, F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW * 6,
-                               GL_UNSIGNED_INT, NULL, numChars * 4);
+      pCount[i] = F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW * 6;
+      pBaseVertex[i] = numChars * 4;
+      pIndices[i] = NULL;
 
       size -= F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW;
       numChars += F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW;
     }
 
-    glDrawElementsBaseVertex(GL_TRIANGLES, size * 6,
-                             GL_UNSIGNED_INT, NULL, numChars * 4);
-    
-    numChars += size;
+    if(size > 0)
+    {
+      pCount[i] = size * 6;
+      pBaseVertex[i] = numChars * 4;
+      pIndices[i] = NULL;
+
+      numChars += size;
+    }
+
+    glMultiDrawElementsBaseVertex(GL_TRIANGLES, pCount, GL_UNSIGNED_INT, 
+                                  pIndices, count, pBaseVertex);
+
+    delete[] pCount;
+    delete[] pIndices;
+    delete[] pBaseVertex;
 
     it.clearCharData();
   }
