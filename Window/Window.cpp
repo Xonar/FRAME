@@ -63,9 +63,6 @@ int FWindow::Init()
   //Create Dummy Context
   this->context = SDL_GL_CreateContext(this->window);
 
-  glGetIntegerv(GL_MAJOR_VERSION, &this->glMajorVersion);
-  glGetIntegerv(GL_MINOR_VERSION, &this->glMinorVersion);
-
   //Check if Context was created succesfully
   if(!this->context)
   {
@@ -78,6 +75,9 @@ int FWindow::Init()
     
     return 1;
   }
+
+  glGetIntegerv(GL_MAJOR_VERSION, &this->glMajorVersion);
+  glGetIntegerv(GL_MINOR_VERSION, &this->glMinorVersion);
  
   //Get OpenGL Version
   const GLubyte* sGLVersion =  glGetString(GL_VERSION);
