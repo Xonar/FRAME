@@ -50,16 +50,6 @@ int FWindow::Init()
     return 1;
   }
   
-  //Profile Mask
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-  //Context Flags
-  SDL_GL_SetAttribute( SDL_GL_CONTEXT_FLAGS, 0
-#ifdef DEBUG
-        | SDL_GL_CONTEXT_DEBUG_FLAG
-#endif
-        );
-
   //Create Dummy Context
   this->context = SDL_GL_CreateContext(this->window);
 
@@ -116,6 +106,16 @@ int FWindow::Init()
     this->glMajorVersion = 3;
     this->glMinorVersion = 1;
   }
+
+  //Profile Mask
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+  //Context Flags
+  SDL_GL_SetAttribute( SDL_GL_CONTEXT_FLAGS, 0
+#ifdef DEBUG
+        | SDL_GL_CONTEXT_DEBUG_FLAG
+#endif
+        );
 
   //Create Context
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, this->glMajorVersion );
