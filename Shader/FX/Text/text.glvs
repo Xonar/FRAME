@@ -9,7 +9,7 @@ in int norm;
 out vec2 vstex;
 flat out int vschar;
 
-uniform Matrix
+uniform Matrices
 {
   uniform mat4 Ortho;
 };

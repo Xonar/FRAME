@@ -37,7 +37,7 @@ FFontEngine::FFontEngine()
 
   fontCamera.InitOrthoMatrix(0,gWindow->getWindowWidth(),0,gWindow->getWindowHeight());
 
-  this->uniformOrthoMatrix = glGetUniformBlockIndex(this->fontShader.getProgram(), "Matrix");
+  this->uniformOrthoMatrix = glGetUniformBlockIndex(this->fontShader.getProgram(), "Matrices");
 
   fontCamera.bindMatrixViewScreenToUBO(uniformOrthoMatrix);
 
