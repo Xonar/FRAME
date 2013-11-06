@@ -49,6 +49,9 @@ int FWindow::Init()
     
     return 1;
   }
+  
+  //Profile Mask
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
   //Context Flags
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_FLAGS, 0
