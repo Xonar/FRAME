@@ -22,16 +22,16 @@ class FMaterial
 {
   private:
     //Phong-Blinn Properties
-    glm::vec4 diffuse;
-    glm::vec4 ambiant;
-    glm::vec4 specular;
-    glm::vec4 emissive;
+    glm::vec3 diffuse;
+    glm::vec3 ambiant;
+    glm::vec3 specular;
+    glm::vec3 emissive;
     GLfloat shininess;
   public:
-    FMaterial(aiMaterial material);
+    FMaterial(aiMaterial *material);
     ~FMaterial();
 
-    bindMaterial(GLint index);
-}
+    GLvoid bindMaterial(GLint index);
+};
 
 #endif //_F_H_MATERIAL_
