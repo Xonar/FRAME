@@ -16,6 +16,7 @@
 #include <assimp/mesh.h>
 #include <assimp/anim.h>
 #include <assimp/material.h>
+#include <assimp/Importer.hpp>
 
 #include <glm/glm.hpp>
 
@@ -34,9 +35,12 @@ template <typename T> glm::mat4 aiGLM(aiMatrix4x4t<T> mat);
 class FModelLoader
 {
   private:
+    //Import
+    static Assimp::Importer aiImporter;
+
     //Cached variables for easier access
-    static aiScene* scene;
-    static aiMesh* mesh;
+    static const aiScene* scene;
+    static const aiMesh* mesh;
 
   public:
     //Constructor/Deconstructor
@@ -44,25 +48,24 @@ class FModelLoader
     ~FModelLoader();
     
     //Loads Scene and caches scene
-    aiScene* loadScene(const std::string path);
+    const aiScene* loadScene(const std::string &path);
 
     //Get Animation[Count]
-    GLint getAnimationCount(const aiScene *s = scene);
-    aiAnimation* getAnimation(const GLint i,const aiScene *s = scene);
+    const GLuint getAnimationCount(const aiScene *s = scene);
+    const aiAnimation* getAnimation(const GLuint i,const aiScene *s = scene);
 
     //Get Mesh[Count]
-    GLint getMeshCount(const aiScene *s = scene);
-    aiMesh* getMeshCount(const GLint i, const aiScene *s = scene);
+    const GLuint getMeshCount(const aiScene *s = scene);
+    const aiMesh* getMeshCount(const GLuint i, const aiScene *s = scene);
 
     //Get Bone[Count]
-    GLint getBoneCount(const aiMesh *m = mesh);
-    aiBone* getBone(const GLint i, const aiMesh *m = mesh);
+    const GLuint getBoneCount(const aiMesh *m = mesh);
+    const aiBone* getBone(const GLuint i, const aiMesh *m = mesh);
 
     //Get Material[Count]
-    GLint getMaterialCount(const aiScene *s = scene);
-    aiBone* getMaterial(const aiScene *s = scene);
+    const GLuint getMaterialCount(const aiScene *s = scene);
+    const aiMaterial* getMaterial(const GLuint i, const aiScene *s = scene);
 };
 
 #endif //_F_H_MODEL_LOADER_
-
 
