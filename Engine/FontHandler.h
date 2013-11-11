@@ -21,7 +21,7 @@ class FFontHandler
   private:
     FFont *font;
 
-    std::vector<FTextVertex> charData;
+    std::vector<FVertexText> charData;
   public:
     FFontHandler();
 
@@ -29,7 +29,7 @@ class FFontHandler
 
     void addText(const std::string &text, const glm::vec2 &pos);
 
-    const std::vector<FTextVertex>& getCharData() const;
+    const std::vector<FVertexText>& getCharData() const;
     int getCharNum() const;
     void clearCharData();
 

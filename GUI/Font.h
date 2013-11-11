@@ -61,7 +61,7 @@ class FFont
     GLvoid setFontID(const GLint fontID) { this->fontID = fontID; }
     
     void generateStringVertexData(const std::string &text, 
-          const glm::vec2 &off, std::vector<FTextVertex> &out) const;
+          const glm::vec2 &off, std::vector<FVertexText> &out) const;
 };
 
 #endif //_F_H_FONT_

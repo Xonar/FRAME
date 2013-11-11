@@ -144,9 +144,9 @@ GLvoid glVertexAttribPointers( FVertexEnum type )
       glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertex2), (GLvoid*) (sizeof(float) * 3) );
       break;
     case F_VERTEX_TEXT:
-      glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) 0);
-      glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FTextVertex), (GLvoid*) (sizeof(float) * 2) );
-      glVertexAttribIPointer(2, 1, GL_INT, sizeof(FTextVertex), (GLvoid*) (sizeof(float) * 4) );
+      glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FVertexText), (GLvoid*) 0);
+      glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertexText), (GLvoid*) (sizeof(float) * 2) );
+      glVertexAttribIPointer(2, 1, GL_INT, sizeof(FVertexText), (GLvoid*) (sizeof(float) * 4) );
       break;
     default:
       std::cerr << "F_INVALID_ENUM" << std::endl;

@@ -115,11 +115,11 @@ GLint FFont::createFromTTF(const std::string &ttf, const unsigned int size)
 }
 
 void FFont::generateStringVertexData(const std::string &text, 
-          const glm::vec2 &off, std::vector<FTextVertex> &out) const
+          const glm::vec2 &off, std::vector<FVertexText> &out) const
 {
   glm::vec2 cpos = off;
 
-  FTextVertex bl,br,tl,tr;
+  FVertexText bl,br,tl,tr;
 
   for(const GLint &i : text)
   {

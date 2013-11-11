@@ -15,7 +15,7 @@
 #include <glm/glm.hpp>
 
 //Text Vertex
-struct FTextVertex
+struct FVertexText
 {
   glm::vec2 pos;
   glm::vec2 tex;

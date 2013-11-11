@@ -96,11 +96,11 @@ void FFontEngine::render()
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_CULL_FACE);
 
-  std::vector<FTextVertex> vertices;
+  std::vector<FVertexText> vertices;
 
   for(const FFontHandler &it : fontHandler)
   {
-    const std::vector<FTextVertex>& data = it.getCharData();
+    const std::vector<FVertexText>& data = it.getCharData();
     vertices.insert(vertices.end(), data.begin(), data.end() );
   }
 
@@ -109,7 +109,7 @@ void FFontEngine::render()
   glBindVertexArray(vao);
 
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(FTextVertex) * vertices.size(), &vertices[0],
+  glBufferData(GL_ARRAY_BUFFER, sizeof(FVertexText) * vertices.size(), &vertices[0],
                    GL_DYNAMIC_DRAW);
 
   //Bind OrthoMatrix
