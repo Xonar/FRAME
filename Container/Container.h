@@ -22,6 +22,12 @@ struct FVertexText
   int index;
 };
 
+//Struct thats used for bone weight
+struct FVertexBoneWeight
+{
+  glm::vec4 weight;
+};
+
 //2D Vertex
 struct FVertex2
 {
