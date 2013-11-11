@@ -13,6 +13,7 @@
 #define _F_H_CONTAINER_
 
 #include <glm/glm.hpp>
+#include <SDL2/SDL_opengl.h>
 
 //Text Vertex
 struct FVertexText
@@ -22,10 +23,13 @@ struct FVertexText
   int index;
 };
 
+#define NUM_BONES_PER_VERTEX 4
+
 //Struct thats used for bone weight
-struct FVertexBoneWeight
+struct FVertexBoneData
 {
-  glm::vec4 weight;
+  GLfloat weight[NUM_BONES_PER_VERTEX];
+  GLuint boneID[NUM_BONES_PER_VERTEX];
 };
 
 //2D Vertex
