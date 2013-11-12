@@ -10,9 +10,9 @@
  */
 
 #include "Files.h"
+#include "Log.h"
 
 #include <fstream>
-#include <iostream>
 
 std::string readFileIntoString(const std::string &path)
 {
@@ -34,7 +34,7 @@ std::string readFileIntoString(const std::string &path)
   }
   else
   {
-    std::cerr << "Failed reading file : \"" << path << "\"" << std::endl;
+    gLoge << "Failed reading file : \"" << path << "\"" << std::endl;
     return "";
   }
 }

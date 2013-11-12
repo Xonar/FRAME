@@ -21,6 +21,7 @@
 #include "Game.h"
 #include "Lib/FGLext.h"
 #include "Time/Time.h"
+#include "Lib/Log.h"
 
 //Definitions of Global Variables
 bool gGameOn = true;
@@ -64,7 +65,7 @@ int main()
   if(glIsExtensionSupported("GL_ARB_debug_output"))
     glDebugMessageCallbackARB(glDebugMessageCallbackFunction, NULL);
   else
-    std::cout << "GL_ARB_debug_output not supported!" << std::endl;
+    gLogw << "GL_ARB_debug_output not supported!" << std::endl;
 #endif //DEBUG
   
   GL_ERROR_ASSERT();

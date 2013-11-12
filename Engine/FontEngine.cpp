@@ -16,8 +16,6 @@
 #include "../Graphics/Graphics.h"
 #include "../Lib/FGLext.h"
 
-#include <iostream>
-
 FFontEngine::FFontEngine()
 {
   this->ibo = this->vbo = this->vao = this->numFonts = 0;

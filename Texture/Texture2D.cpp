@@ -12,11 +12,10 @@
 #include "Texture.h"
 #include "../Container/Container.h"
 #include "../Graphics/Graphics.h"
+#include "../Lib/Log.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
-#include <iostream>
 
 FTexture2D::FTexture2D() 
 {
@@ -42,7 +41,7 @@ int FTexture2D::loadTextureFromSurface(const SDL_Surface* const surface)
   }
   else
   {
-    std::cerr << "Tried creating texture from a empty surface!" << std::endl;
+    gLogw << "Tried creating texture from a empty surface!" << std::endl;
   }
 
   return 0;
@@ -64,7 +63,7 @@ int FTexture2D::loadTextureFromFile(const std::string &file)
   }
   else
   {
-    std::cerr << "Failed loading Image from file (\"" << file << "\")" << std::endl;
+    gLoge << "Failed loading Image from file (\"" << file << "\")" << std::endl;
     return 1;
   }
 }

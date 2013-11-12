@@ -10,10 +10,9 @@
  */
 
 #include "Texture.h"
+#include "../Lib/Log.h"
 
 #include <SDL2/SDL.h>
-
-#include <iostream>
 
 #include "../Graphics/Graphics.h"
 
@@ -49,8 +48,9 @@ int FTexture2DArray::loadTextureFromSurface(const SDL_Surface * const surface[],
   }
   else
   {
-    std::cerr << "Tried creating texture from a empty surface!" << std::endl;
+    gLogw << "Tried creating texture from a empty surface!" << std::endl;
   }
 
   return 0;
+
 }

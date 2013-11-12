@@ -19,8 +19,7 @@
 #include "Lib/FGLext.h"
 #include "Container/Container.h"
 #include "Time/Time.h"
-
-#include <iostream>
+#include "Lib/Log.h"
 
 //TODO Temp Resources
 FModel *model;

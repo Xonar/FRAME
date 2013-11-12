@@ -14,8 +14,8 @@
 #include "../Graphics/Graphics.h"
 #include "../Lib/Files.h"
 #include "../Global.h"
+#include "../Lib/Log.h"
 
-#include <iostream>
 
 FShader::FShader()
 {
@@ -72,7 +72,7 @@ void FShader::printProgramLog(const GLuint program) const
   }
   else
   {
-    std::cerr << "Invalid Program : " << program << std::endl;
+    gLogw << "Invalid Program : " << program << std::endl;
   }
 }
 
@@ -96,13 +96,13 @@ void FShader::printShaderLog(const GLuint shader) const
   }
   else
   {
-    std::cerr << "Invalid Shader : " << shader << std::endl;
+    gLoge << "Invalid Shader : " << shader << std::endl;
   }
 }
 
 GLint FShader::loadShader(const std::string &shader, const GLenum type)
 {
-  std::cout << "Loading Shader : " << shader << std::endl;
+  gLogv << "Loading Shader : " << shader << std::endl;
   GLuint* pShader = NULL;
 
   switch(type)
@@ -110,7 +110,7 @@ GLint FShader::loadShader(const std::string &shader, const GLenum type)
     case GL_VERTEX_SHADER:
       if(vs)
       {
-        std::cerr << "Vertex Shader Already Exists!" << std::endl;
+        gLogw << "Vertex Shader Already Exists!" << std::endl;
         return 1;
       }
       pShader = &vs;
@@ -118,7 +118,7 @@ GLint FShader::loadShader(const std::string &shader, const GLenum type)
     case GL_GEOMETRY_SHADER:
       if(gs)
       {
-        std::cerr << "Geometry Shader Already Exists!" << std::endl;
+        gLogw << "Geometry Shader Already Exists!" << std::endl;
         return 1;
       }
       pShader = &gs;
@@ -126,7 +126,7 @@ GLint FShader::loadShader(const std::string &shader, const GLenum type)
     case GL_TESS_EVALUATION_SHADER:
       if(te)
       {
-        std::cerr << "Tesselation Evaluation Shader Already Exists!" << std::endl;
+        gLogw << "Tesselation Evaluation Shader Already Exists!" << std::endl;
         return 1;
       }
       pShader = &te;
@@ -134,7 +134,7 @@ GLint FShader::loadShader(const std::string &shader, const GLenum type)
     case GL_TESS_CONTROL_SHADER:
       if(tc)
       {
-        std::cerr << "Tesselation Control Shader Already Exists!" << std::endl;
+        gLogw << "Tesselation Control Shader Already Exists!" << std::endl;
         return 1;
       }
       pShader = &tc;
@@ -142,7 +142,7 @@ GLint FShader::loadShader(const std::string &shader, const GLenum type)
     case GL_FRAGMENT_SHADER:
       if(fs)
       {
-        std::cerr << "Fragment Shader Already Exists!" << std::endl;
+        gLogw << "Fragment Shader Already Exists!" << std::endl;
         return 1;
       }
       pShader = &fs;
@@ -152,7 +152,7 @@ GLint FShader::loadShader(const std::string &shader, const GLenum type)
   std::string shaderSrc = readFileIntoString(shader);
   if(shaderSrc.compare("") == 0)
   {
-    std::cerr << "Cant compile shader without source!" << std::endl;
+    gLoge << "Cant compile shader without source!" << std::endl;
     return 1;
   }
 
@@ -186,9 +186,9 @@ GLint FShader::loadProgram()
 
   if(!glProg)
   {
-    std::cerr << "Failed Creating a Shader Program Object!" << std::endl;
+    gLoge << "Failed Creating a Shader Program Object!" << std::endl;
 
-    std::cerr << "GL Error: " << glGetError() << std::endl;
+    gLoge << "GL Error: " << glGetError() << std::endl;
 
     return 1;
   }
@@ -245,7 +245,7 @@ GLint FShader::loadProgram()
     glGetProgramiv (this->glProg, GL_LINK_STATUS, &linkStatus);
     if(linkStatus != GL_TRUE)
     {
-      std::cerr << "Failed linking program : " << std::endl;
+      gLoge << "Failed linking program : " << std::endl;
       this->printProgramLog(this->glProg);
     }
   }

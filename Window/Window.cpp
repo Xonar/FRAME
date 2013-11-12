@@ -14,6 +14,8 @@
 #include "../Global.h"
 #include "../Time/Time.h"
 
+#include "../Lib/Log.h"
+
 #include <SDL2/SDL_opengl.h>
 
 #include <iostream>
@@ -40,9 +42,9 @@ int FWindow::Init()
   //Check if Window was created succesfully
   if(!this->window)
   {
-    std::cerr << "Couldn't create SDL Window!" << std::endl;
+    gLoge << "Couldn't create SDL Window!" << std::endl;
 
-    std::cerr << "SDL Error : " << SDL_GetError() << std::endl;
+    gLoge << "SDL Error : " << SDL_GetError() << std::endl;
 
     //Exit
     SDL_DestroyWindow( this->window);
@@ -56,9 +58,9 @@ int FWindow::Init()
   //Check if Context was created succesfully
   if(!this->context)
   {
-    std::cerr << "Couldn't create OpenGL Context!" << std::endl;
+    gLoge << "Couldn't create OpenGL Context!" << std::endl;
 
-    std::cerr << "SDL Error : " << SDL_GetError() << std::endl;
+    gLoge << "SDL Error : " << SDL_GetError() << std::endl;
 
     //Exit
     SDL_DestroyWindow( this->window);
@@ -72,7 +74,7 @@ int FWindow::Init()
   //Get OpenGL Version
   const GLubyte* sGLVersion =  glGetString(GL_VERSION);
 
-  std::cout << "OpenGL Version String : " << sGLVersion << std::endl;
+  gLogv << "OpenGL Version String : " << sGLVersion << std::endl;
 
   //Desotry Context as it's not needed any more
   SDL_GL_DeleteContext(this->context);
@@ -94,14 +96,14 @@ int FWindow::Init()
   {
     validGLVersion = false;
 
-    std::cerr << "Can't create OpenGL 3.1+ Context! (Reported Version :  " 
-              << glMajorVersion << "." << glMinorVersion << " )" << std::endl;
+    gLogw << "Can't create OpenGL 3.1+ Context! (Reported Version :  " 
+              << glMajorVersion << "." << glMinorVersion << ")" << std::endl;
 
     //MESA 9.0 to 9.2 often has the ability to create a 3.1 context, but reports
     //a lower version due to a technicallity of the specification
 
     //Might be a bug on MESA's part, but report 3.0 and working 3.1 on test machine
-    std::cout << "Try and Create OpenGL 3.1 Context Anyway" << std::endl;
+    gLogi << "Try and Create OpenGL 3.1 Context Anyway" << std::endl;
 
     this->glMajorVersion = 3;
     this->glMinorVersion = 1;
@@ -125,7 +127,7 @@ int FWindow::Init()
 
   if(!this->context)
   {
-    std::cerr << "Failed creating OpenGL Context!" << std::endl;
+    gLoge << "Failed creating OpenGL Context!" << std::endl;
 
     //Exit
     SDL_DestroyWindow(this->window);
@@ -134,7 +136,7 @@ int FWindow::Init()
   }
   else if(!validGLVersion)
   {
-    std::cout << "Context Creation reported succesful creation of 3.1 Context! Yay!" << std::endl;
+    gLogi << "Context Creation reported succesful creation of 3.1 Context! Yay!" << std::endl;
   }
 
   //Set Default Viewport
@@ -144,9 +146,9 @@ int FWindow::Init()
   glClearColor( 0.f, 0.f, 0.f, 1.f );
 
   //Start Message
-  std::cout << "Intialized Window : \"" << title << "\"" << std::endl;
-  std::cout << "\tOpengl Major Version : " << this->glMajorVersion << std::endl; 
-  std::cout << "\tOpengl Minor Version : " << this->glMinorVersion << std::endl; 
+  gLogi << "Intialized Window : \"" << title << "\"" << std::endl;
+  gLogi << "\tOpengl Major Version : " << this->glMajorVersion << std::endl; 
+  gLogi << "\tOpengl Minor Version : " << this->glMinorVersion << std::endl; 
 
   return 0;
 }

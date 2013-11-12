@@ -12,8 +12,8 @@
 #include "FGLext.h"
 #include "../Graphics/Graphics.h"
 #include "../Global.h"
+#include "Log.h"
 
-#include <iostream>
 #include <set>
 
 const GLchar* glErrorString(const GLenum err)
@@ -118,16 +118,10 @@ GLboolean glIsExtensionSupported(const std::string &ext)
 GLvoid glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id, GLenum severity,
                                GLsizei length, const GLchar* message, GLvoid* userParam)
 {
-  //Set Bold Red
-  std::cerr << TERM_STATE_BOLD << TERM_COL_RED;
-
-  std::cerr << "Source:   " << glDebugSourceString(source) << std::endl;
-  std::cerr << "Type:     " << glDebugTypeString(type) << std::endl;
-  std::cerr << "Severity: " << glDebugSeverityString(severity) << std::endl;
-  std::cerr << "Message:  " << std::endl << "\t" << message << std::endl;
-  
-  //Reset Colour
-  std::cerr << TERM_STATE_RESET << TERM_COL_DEFAULT;
+  gLoge << "Source:   " << glDebugSourceString(source) << std::endl;
+  gLoge << "Type:     " << glDebugTypeString(type) << std::endl;
+  gLoge << "Severity: " << glDebugSeverityString(severity) << std::endl;
+  gLoge << "Message:  " << std::endl << "\t" << message << std::endl;
 }
 
 GLvoid glVertexAttribPointers( FVertexEnum type )

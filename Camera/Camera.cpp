@@ -12,10 +12,10 @@
 #include "Camera.h"
 #include "../Graphics/Graphics.h"
 #include "../Global.h"
+#include "../Lib/Log.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <iostream>
 
 FCamera::FCamera()
 {
@@ -69,7 +69,7 @@ GLint FCamera::updateUBO()
   }
   else
   {
-    std::cerr << "Trying to use Camera before it's ready!" << std::endl;
+    gLogw << "Trying to use Camera before it's ready!" << std::endl;
     return 1;
   }
 

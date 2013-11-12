@@ -15,8 +15,6 @@
 #include "../Lib/FGLext.h"
 
 #include <glm/glm.hpp>
-#include <fstream>
-#include <iostream>
 
 FModel::FModel()
 {

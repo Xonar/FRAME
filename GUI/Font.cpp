@@ -13,10 +13,9 @@
 #include "../Graphics/Graphics.h"
 #include "../Lib/FGLext.h"
 #include "../Global.h"
+#include "../Lib/Log.h"
 
 #include <vector>
-
-#include <iostream>
 
 #include <algorithm>
 
@@ -61,7 +60,8 @@ GLint FFont::createFromTTF(const std::string &ttf, const unsigned int size)
   
   if(!sdlFont)
   {
-    std::cerr << "Failed loading Font (\"" << ttf << "\")" << std::endl;
+    gLogw << "Failed loading Font (\"" << ttf << "\")" << std::endl;
+    return 1;
   }
 
   chars = new FGlyph[chars_end - chars_start];

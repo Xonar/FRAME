@@ -10,9 +10,10 @@
  */
 
 #include "ModelLoader.h"
+#include "../Lib/Log.h"
+
 #include <glm/gtc/type_ptr.hpp>
 #include <assimp/postprocess.h>
-#include <iostream>
 
 //Define FModelLoader static variables
 Assimp::Importer FModelLoader::aiImporter;
@@ -73,7 +74,7 @@ const aiScene* FModelLoader::loadScene(const std::string &path)
 
   if(!scene)
   {
-    std::cerr << "Failed loading scene : \"" << path << "\"" << std::endl;
+    gLoge << "Failed loading scene : \"" << path << "\"" << std::endl;
   }
 
   return scene;
@@ -85,7 +86,7 @@ const GLuint FModelLoader::getAnimationCount(const aiScene* s)
     return s->mNumAnimations;
   else
   {
-    std::cerr << "No active scene!" << std::endl;
+    gLogw << "No active scene!" << std::endl;
     return 0;
   }
 }
@@ -98,13 +99,13 @@ const aiAnimation* FModelLoader::getAnimation(const GLuint i,const aiScene* s)
       return s->mAnimations[i];
     else
     {
-      std::cerr << "Animation at index " << i << " doesn\'t exist" << std::endl;
+      gLogw << "Animation at index " << i << " doesn\'t exist" << std::endl;
       return NULL;
     }
   }
   else
   {
-    std::cerr << "No active scene!" << std::endl;
+    gLogw << "No active scene!" << std::endl;
     return NULL;
   }
 }
@@ -116,7 +117,7 @@ const GLuint FModelLoader::getMeshCount(const aiScene *s)
     return s->mNumMeshes;
   else
   {
-    std::cerr << "No active scene!" << std::endl;
+    gLogw << "No active scene!" << std::endl;
     return 0;
   }
 }
@@ -129,7 +130,7 @@ const aiMesh* FModelLoader::getMeshCount(const GLuint i, const aiScene *s)
       return s->mMeshes[i];
     else
     {
-      std::cerr << "Mesh at index " << i << " doesn\'t exist" << std::endl;
+      gLogw << "Mesh at index " << i << " doesn\'t exist" << std::endl;
       return NULL;
     }
   }
@@ -146,7 +147,7 @@ const GLuint FModelLoader::getBoneCount(const aiMesh *m)
     return m->mNumBones;
   else
   {
-    std::cerr << "No active scene!" << std::endl;
+    gLogw << "No active scene!" << std::endl;
     return 0;
   }
 }
@@ -159,13 +160,13 @@ const aiBone* FModelLoader::getBone(const GLuint i, const aiMesh *m)
       return m->mBones[i];
     else
     {
-      std::cerr << "Bone at index " << i << " doesn\'t exist" << std::endl;
+      gLogw << "Bone at index " << i << " doesn\'t exist" << std::endl;
       return NULL;
     }
   }
   else
   {
-    std::cerr << "No active scene!" << std::endl;
+    gLogw << "No active scene!" << std::endl;
     return NULL;
   }
 }
@@ -176,7 +177,7 @@ const GLuint FModelLoader::getMaterialCount(const aiScene *s)
     return s->mNumMaterials;
   else
   {
-    std::cerr << "No active scene!" << std::endl;
+    gLogw << "No active scene!" << std::endl;
     return 0;
   }
 }
@@ -189,13 +190,13 @@ const aiMaterial* FModelLoader::getMaterial(const GLuint i, const aiScene *s)
       return s->mMaterials[i];
     else
     {
-      std::cerr << "Material at index " << i << " doesn\'t exist" << std::endl;
+      gLogw << "Material at index " << i << " doesn\'t exist" << std::endl;
       return NULL;
     }
   }
   else
   {
-    std::cerr << "No active scene!" << std::endl;
+    gLogw << "No active scene!" << std::endl;
     return NULL;
   }
 }
