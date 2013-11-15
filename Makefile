@@ -51,7 +51,7 @@ $(DIRECTORIES):
 #Clean
 clean:
 	rm -f -r $(BUILD_DIR)
-	rm -f ./Graphics/GLFunctions.{h,cpp}
+	rm -f ./Graphics/GLFunctions.cpp ./Graphics/GLFunctions.h
 
 #Executable : Objects
 $(EXECUTABLE) : $(OBJ_FILES)
