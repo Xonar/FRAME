@@ -15,6 +15,7 @@
 #include "../Lib/FGLext.h"
 
 #include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 FModel::FModel()
 {
@@ -133,9 +134,9 @@ GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices,
     cross = glm::cross(v2 - v0, v1 - v0);
     norm = glm::normalize(cross);
 
-    this->vertices[i+0].nor += norm * glm::dot(v1 - v0, v2 - v0) / glm::length(v1) / glm::length(v2);
-    this->vertices[i+1].nor += norm * glm::dot(v0 - v1, v2 - v1) / glm::length(v0) / glm::length(v2);
-    this->vertices[i+2].nor += norm * glm::dot(v0 - v2, v1 - v2) / glm::length(v0) / glm::length(v1);
+    this->vertices[i+0].nor += norm * glm::angle(v1 - v0, v2 - v0);
+    this->vertices[i+1].nor += norm * glm::angle(v0 - v1, v2 - v1);
+    this->vertices[i+2].nor += norm * glm::angle(v0 - v2, v1 - v2);
   }
 
   for(GLuint i =0; i < numVertices;i++)
