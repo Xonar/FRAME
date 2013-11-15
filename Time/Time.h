@@ -17,7 +17,7 @@
 
 struct FTime
 {
-  GLuint s,n; //Seconds and Nanoseconds
+  GLint s,n; //Seconds and Nanoseconds
 
   //Operators
   bool operator<( const FTime &B) const; 
