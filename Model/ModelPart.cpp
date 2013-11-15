@@ -11,6 +11,8 @@
 
 #include "ModelPart.h"
 
+#include <glm/gtx/vector_angle.hpp>
+
 FModelPart::FModelPart()
 {
   this->baseVertex = this->indicesCount = this->indicesStart = 0;
@@ -75,11 +77,27 @@ GLint FModelPart::loadModelPartFromVertexAndTextureArray(const GLfloat* const ve
     vertexBuffer[i] = { 
                         glm::vec3(vertices[i*3], vertices[i*3 + 1], vertices[i*3 + 2]), //Pos
                         glm::vec2(uvs[i*2], uvs[i*2 + 1]), //Tex
-                        glm::vec3() //Compute Norm Later
+                        glm::vec3(0.f) //Zero Initail Normals
                       };
 
-  //Compute Normal
-  //TODO
+  //Compute Normals
+  for(GLuint i = 0;i < numVertices;i+=3)
+  {
+    glm::vec3 v0 = vertexBuffer[i+0].pos;
+    glm::vec3 v1 = vertexBuffer[i+1].pos;
+    glm::vec3 v2 = vertexBuffer[i+2].pos;
+
+    glm::vec3 norm, cross;
+    cross = glm::cross(v2 - v0, v1 - v0);
+    norm = glm::normalize(cross);
+
+    vertexBuffer[i+0].nor += norm * glm::angle(glm::normalize(v1 - v0), glm::normalize(v2 - v0));
+    vertexBuffer[i+1].nor += norm * glm::angle(glm::normalize(v0 - v1), glm::normalize(v2 - v1));
+    vertexBuffer[i+2].nor += norm * glm::angle(glm::normalize(v0 - v2), glm::normalize(v1 - v2));
+  }
+
+  for(GLuint i =0; i < numVertices;i++)
+    vertexBuffer[i].nor = glm::normalize(vertexBuffer[i].nor);
 
   GLint ret = this->loadModelPartFromVertices(vertexBuffer, numVertices);
 
