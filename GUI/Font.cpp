@@ -65,7 +65,7 @@ GLint FFont::createFromTTF(const std::string &ttf, const unsigned int size)
   }
 
   chars = new FGlyph[chars_end - chars_start];
-  SDL_Surface *surfaces[chars_end - chars_start];
+  SDL_Surface **surfaces = new SDL_Surface*[chars_end - chars_start];
 
   int index = 0;
   char tmpString[2] = {0};
