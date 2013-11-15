@@ -126,8 +126,10 @@ void FFont::generateStringVertexData(const std::string &text,
     int index = charMap[i];
     if(index >= 0)
     {
-      float texx = chars[index].dim.x/this->twidth;
-      float texy = chars[index].dim.y/this->theight;
+      FGlyph &curChar = chars[index];
+
+      float texx = curChar.dim.x/this->twidth;
+      float texy = curChar.dim.y/this->theight;
 
       bl.tex = glm::vec2(0.f, 1-0.f);
       tl.tex = glm::vec2(0.f, 1-texy);
@@ -136,18 +138,18 @@ void FFont::generateStringVertexData(const std::string &text,
 
       bl.index = br.index = tr.index = tl.index = index;
 
-      bl.pos = br.pos = tl.pos = tr.pos = cpos - chars[index].off;
+      bl.pos = br.pos = tl.pos = tr.pos = cpos - curChar.off;
 
-      tr.pos += chars[index].dim;
-      tl.pos.y += chars[index].dim.y;
-      br.pos.x += chars[index].dim.x;
+      tr.pos += curChar.dim;
+      tl.pos.y += curChar.dim.y;
+      br.pos.x += curChar.dim.x;
 
       out.push_back(bl);
       out.push_back(br);
       out.push_back(tr);
       out.push_back(tl);
 
-      cpos += chars[index].adv;
+      cpos += curChar.adv;
     }
     else if(i == ' ')
       cpos.x += fontSize / 4;
