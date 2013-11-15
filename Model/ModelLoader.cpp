@@ -80,7 +80,7 @@ const aiScene* FModelLoader::loadScene(const std::string &path)
   return scene;
 }
 
-const GLuint FModelLoader::getAnimationCount(const aiScene* s)
+GLuint FModelLoader::getAnimationCount(const aiScene* s)
 {
   if(s != NULL)
     return s->mNumAnimations;
@@ -111,7 +111,7 @@ const aiAnimation* FModelLoader::getAnimation(const GLuint i,const aiScene* s)
 }
 
 
-const GLuint FModelLoader::getMeshCount(const aiScene *s)
+GLuint FModelLoader::getMeshCount(const aiScene *s)
 {
   if(s != NULL)
     return s->mNumMeshes;
@@ -141,7 +141,7 @@ const aiMesh* FModelLoader::getMeshCount(const GLuint i, const aiScene *s)
   }
 }
 
-const GLuint FModelLoader::getBoneCount(const aiMesh *m)
+GLuint FModelLoader::getBoneCount(const aiMesh *m)
 {
   if(m != NULL)
     return m->mNumBones;
@@ -171,7 +171,7 @@ const aiBone* FModelLoader::getBone(const GLuint i, const aiMesh *m)
   }
 }
 
-const GLuint FModelLoader::getMaterialCount(const aiScene *s)
+GLuint FModelLoader::getMaterialCount(const aiScene *s)
 {
   if(s != NULL)
     return s->mNumMaterials;

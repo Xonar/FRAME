@@ -51,19 +51,19 @@ class FModelLoader
     const aiScene* loadScene(const std::string &path);
 
     //Get Animation[Count]
-    const GLuint getAnimationCount(const aiScene *s = scene);
+    GLuint getAnimationCount(const aiScene *s = scene);
     const aiAnimation* getAnimation(const GLuint i,const aiScene *s = scene);
 
     //Get Mesh[Count]
-    const GLuint getMeshCount(const aiScene *s = scene);
+    GLuint getMeshCount(const aiScene *s = scene);
     const aiMesh* getMeshCount(const GLuint i, const aiScene *s = scene);
 
     //Get Bone[Count]
-    const GLuint getBoneCount(const aiMesh *m = mesh);
+    GLuint getBoneCount(const aiMesh *m = mesh);
     const aiBone* getBone(const GLuint i, const aiMesh *m = mesh);
 
     //Get Material[Count]
-    const GLuint getMaterialCount(const aiScene *s = scene);
+    GLuint getMaterialCount(const aiScene *s = scene);
     const aiMaterial* getMaterial(const GLuint i, const aiScene *s = scene);
 };
 
