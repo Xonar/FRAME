@@ -13,7 +13,7 @@ DIRECTORIES = $(patsubst .%,./$(BUILD_DIR)%,$(shell find . -not -iwholename "./$
 GENERATED = ./Graphics/GLFunctions.h
 
 CC = g++
-CFLAGS = -std=c++11 -Wall -fno-exceptions -fno-rtti -g -D DEBUG=1 -D COLOUR_TERMINAL=1
+CFLAGS = -std=c++11 -Wall -Wextra -fno-exceptions -fno-rtti -g -D DEBUG=1 -D COLOUR_TERMINAL=1
 
 LD = g++
 LDFLAGS = -lGL -lSDL2 -lSDL2_ttf -lSDL2_image -lassimp
