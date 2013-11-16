@@ -86,7 +86,7 @@ int FWindow::Init()
     this->glMajorVersion = 4;
     this->glMinorVersion = 2;
   }
-  else if(this->glMajorVersion == 3 && this->glMinorVersion >= 1)
+  else if( this->glMajorVersion == 4 || (this->glMajorVersion == 3 && this->glMinorVersion >= 1) )
   {
     //Target highest version of the form 3.x which MESA supports
     this->glMajorVersion = 3;
