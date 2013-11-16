@@ -110,6 +110,7 @@ GLint FFont::createFromTTF(const std::string &ttf, const unsigned int size)
   
   for(int i = 0;i < index;i++)
     SDL_FreeSurface(surfaces[i]);
+  delete[] surfaces;
   
   return 0;
 }
