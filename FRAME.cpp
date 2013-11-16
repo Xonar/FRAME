@@ -30,7 +30,7 @@ FFontEngine *gFontEngine;
 FFont *gFontConsole;
 bool gDisplayFrameStats = true;
 
-int main()
+int main(int argc, char *argv[])
 {
   //Init SDL
   FWindow window("FRAME Engine Test");
