@@ -202,7 +202,7 @@ FTime FGetTime()
       out.n = time.tv_nsec;
     #endif
   #else
-    GLuint time = SDL_GetTime();
+    GLuint time = SDL_GetTicks();
     
     out.s = time/1000;
     out.n = (time%1000) * 1000000;
