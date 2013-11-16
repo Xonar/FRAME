@@ -115,8 +115,8 @@ GLboolean glIsExtensionSupported(const std::string &ext)
   return GL_FALSE;
 }
 
-GLvoid glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id, GLenum severity,
-                               GLsizei length, const GLchar* message, GLvoid* userParam)
+GLvoid APIENTRY glDebugMessageCallbackFunction( GLenum source, GLenum type, GLuint id,
+                  GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam)
 {
   gLoge << "Source:   " << glDebugSourceString(source) << std::endl;
   gLoge << "Type:     " << glDebugTypeString(type) << std::endl;
