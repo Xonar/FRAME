@@ -19,7 +19,7 @@ class GLFunction:
 
   #Return Function Decleration
   def decl(self):
-    return self.glReturn + " (*" + self.glFunction + ")(" + self.glParameters + ");"
+    return self.glReturn + " (APIENTRY *" + self.glFunction + ")(" + self.glParameters + ");"
   
   #Return Function Definition
   def defi(self):
