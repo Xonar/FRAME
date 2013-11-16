@@ -50,10 +50,10 @@ class FCamera
 
     GLvoid setViewPort(const GLint x, const GLint y, const GLint w, const GLint h);
 
-    GLint InitOrthoMatrix(float left,float right,float bottom,float top, float near,float far);
+    GLint InitOrthoMatrix(float left,float right,float bottom,float top, float zNear,float zFar);
     GLint InitOrthoMatrix(float left,float right,float bottom,float top);
 
-    GLint InitProjectionMatrix(float vovy, float zNear, float far);
+    GLint InitProjectionMatrix(float vovy, float zNear, float zFar);
 
     GLvoid setPosition(const glm::vec3 &pos);
     GLvoid lookAt(const glm::vec3 &lookAt);

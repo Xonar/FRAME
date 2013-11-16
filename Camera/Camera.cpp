@@ -87,7 +87,7 @@ GLvoid FCamera::setViewPort(const GLint x, const GLint y, const GLint w, const G
 
 //Init 3D Ortho Matrix
 GLint FCamera::InitOrthoMatrix( const float left, const float right, const float bottom,
-                                const float top, const float near, const float far)
+                                const float top, const float zNear, const float zFar)
 {
   this->x = left;
   this->width = right - left;
@@ -106,7 +106,7 @@ GLint FCamera::InitOrthoMatrix( const float left, const float right, const float
 
   this->updateViewScreenMatrix = true;
 
-  this->ViewScreenMatrix = glm::ortho(left,right,bottom,top,near,far);
+  this->ViewScreenMatrix = glm::ortho(left,right,bottom,top,zNear,zFar);
 
   this->ready = true;
   return 0;
@@ -137,7 +137,7 @@ GLint FCamera::InitOrthoMatrix(const float left, const float right, const float 
 }
 
 //Init Projection Matrix
-GLint FCamera::InitProjectionMatrix(const float fovy, const float near, const float far)
+GLint FCamera::InitProjectionMatrix(const float fovy, const float zNear, const float zFar)
 {
   //Create a allocate ViewScreen and WorlView Matrix
   glGenBuffers(1, &this->ubViewScreen);
@@ -150,7 +150,7 @@ GLint FCamera::InitProjectionMatrix(const float fovy, const float near, const fl
 
   this->updateViewScreenMatrix = true;
 
-  this->ViewScreenMatrix = glm::perspective(fovy, this->aspect, near, far);
+  this->ViewScreenMatrix = glm::perspective(fovy, this->aspect, zNear, zFar);
 
   this->ready = true;
   return 0;
