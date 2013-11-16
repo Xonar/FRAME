@@ -48,6 +48,12 @@ FFont::~FFont()
     chars = NULL;
   }
 
+  if(this->textures)
+  {
+    delete textures;
+    textures = NULL;
+  }
+
   if(sdlFont)
     TTF_CloseFont(sdlFont);
   sdlFont = NULL;
