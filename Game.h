@@ -15,7 +15,6 @@
 #include <SDL2/SDL_opengl.h>
 
 #include "Model/Model.h"
-#include "Room/Room.h"
 #include "GUI/Font.h"
 #include "Shader/Shader.h"
 
