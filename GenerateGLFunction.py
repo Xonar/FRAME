@@ -89,10 +89,21 @@ def main():
   #Write initGlFunction decleration
   f.write("\nint initGLFunction();\n\n")
 
+  #Write Namespace
+  f.write("//NAMESPACE\
+\n namespace FGL\
+\n{\n\n");
 
   #Write Function Declerations
   for i in glFunctions:
-    f.write("extern " + i.decl() + "\n")
+    f.write("  extern " + i.decl() + "\n")
+
+  #Write Endof namespace
+  f.write("} // ENDOF NAMESPACE FGL\n")
+
+  #Write defines
+  for i in glFunctions:
+    f.write("#define " + i.glFunction + " FGL::" + i.glFunction + "\n")
 
   #Write Header #endif
   f.write("\n#endif // _F_H_GLFUNCTIONS_")
