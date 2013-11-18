@@ -46,6 +46,22 @@ const GLchar* glDebugSourceString(const GLenum source)
   }
 }
 
+const GLchar* glDebugCategoryAMDString(const GLenum category)
+{
+  switch(category)
+  {
+    case GL_DEBUG_CATEGORY_API_ERROR_AMD: return "GL_DEBUG_CATEGORY_API_ERROR";
+    case GL_DEBUG_CATEGORY_WINDOW_SYSTEM_AMD: return "GL_DEBUG_CATEGORY_WINDOW_SYSTEM";
+    case GL_DEBUG_CATEGORY_DEPRECATION_AMD: return "GL_DEBUG_CATEGORY_DEPRECATION";
+    case GL_DEBUG_CATEGORY_UNDEFINED_BEHAVIOR_AMD: return "GL_DEBUG_CATEGORY_UNDEFINED_BEHAVIOR";
+    case GL_DEBUG_CATEGORY_PERFORMANCE_AMD: return "GL_DEBUG_CATEGORY_PERFORMANCE";
+    case GL_DEBUG_CATEGORY_SHADER_COMPILER_AMD: return "GL_DEBUG_CATEGORY_SHADER_COMPILER";
+    case GL_DEBUG_CATEGORY_APPLICATION_AMD: return "GL_DEBUG_CATEGORY_APPLICATION";
+    case GL_DEBUG_CATEGORY_OTHER_AMD: return "GL_DEBUG_CATEGORY_OTHER";
+    default: return "gldebugCategoryAMDString: INVALID ENUM";
+  }
+}
+
 const GLchar* glDebugTypeString(const GLenum type)
 {
   switch(type)
@@ -120,6 +136,14 @@ GLvoid APIENTRY glDebugMessageCallbackFunction( GLenum source, GLenum type, GLui
 {
   gLoge << "Source:   " << glDebugSourceString(source) << std::endl;
   gLoge << "Type:     " << glDebugTypeString(type) << std::endl;
+  gLoge << "Severity: " << glDebugSeverityString(severity) << std::endl;
+  gLoge << "Message:  " << std::endl << "\t" << message << std::endl;
+}
+
+GLvoid APIENTRY glDebugMessageCallbackFunctionAMD( GLuint id, GLenum category,
+                  GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam)
+{
+  gLoge << "Category: " << glDebugCategoryAMDString(category) << std::endl;
   gLoge << "Severity: " << glDebugSeverityString(severity) << std::endl;
   gLoge << "Message:  " << std::endl << "\t" << message << std::endl;
 }

@@ -62,10 +62,26 @@ int main(int argc, char *argv[])
 
 #ifdef DEBUG
   //Start Debug Output
-  if(glIsExtensionSupported("GL_ARB_debug_output"))
+  if(glIsExtensionSupported("GL_KHR_debug"))
+  {
+    gLogv << "Using GL_KHR_debug to log GL error messages" << std::endl;
+    glDebugMessageCallback(glDebugMessageCallbackFunction, NULL);
+  }
+  else if(glIsExtensionSupported("GL_ARB_debug_output"))
+  {
+    gLogv << "Using GL_ARB_debug_output to log GL error messages" << std::endl;
     glDebugMessageCallbackARB(glDebugMessageCallbackFunction, NULL);
+  }
+  else if(glIsExtensionSupported("GL_AMD_debug_output"))
+  {
+    gLogv << "Using GL_AMD_debug_output to log GL error messages" << std::endl;
+    glDebugMessageCallbackAMD(glDebugMessageCallbackFunctionAMD, NULL);
+  }
   else
-    gLogw << "GL_ARB_debug_output not supported!" << std::endl;
+  {
+    gLogw << "GL_KHR_debug,GL_ARB_debug_output and GL_AMD_debug_output not supported!" << std::endl;
+    gLogw << "No GL Error messages will be displayed!" << std::endl;
+  }
 #endif //DEBUG
   
   GL_ERROR_ASSERT();
