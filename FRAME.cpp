@@ -111,5 +111,11 @@ int main(int argc, char *argv[])
     GL_ERROR_ASSERT();
   }
 
+  //Reset Terminal Colours
+#ifdef COLOUR_TERMINAL
+  std::cout << TERM_STATE_RESET << std::flush;
+  std::cerr << TERM_STATE_RESET << std::flush;
+#endif //COLOUR_TERMINAL
+
   return 0;
 }
