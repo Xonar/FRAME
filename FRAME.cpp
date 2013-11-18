@@ -49,17 +49,6 @@ int main(int argc, char *argv[])
   //Init OpenGL
   initGLFunction();
 
-  //Init SDL Font Engine
-  TTF_Init();
-  
-  //Init FontEngine
-  gFontEngine = new FFontEngine();
-
-  gFontConsole = new FFont();
-  gFontConsole->createFromTTF("Assets/UbuntuMono-R.ttf", 14);
-
-  gFontEngine->addFont(gFontConsole);
-
 #ifdef DEBUG
   //Start Debug Output
   if(glIsExtensionSupported("GL_KHR_debug"))
@@ -84,14 +73,21 @@ int main(int argc, char *argv[])
   }
 #endif //DEBUG
   
-  GL_ERROR_ASSERT();
+  //Init SDL Font Engine
+  TTF_Init();
+  
+  //Init FontEngine
+  gFontEngine = new FFontEngine();
+
+  gFontConsole = new FFont();
+  gFontConsole->createFromTTF("Assets/UbuntuMono-R.ttf", 14);
+
+  gFontEngine->addFont(gFontConsole);
 
   //Init FTime
   initTime();
 
   initializeGame();
-
-  GL_ERROR_ASSERT();
 
   //Game Loop
   while(gGameOn)
