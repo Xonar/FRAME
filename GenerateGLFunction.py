@@ -11,6 +11,9 @@
 #      Generates Graphics/GLFunctions.h and Graphics/GLFunctions.cpp
 ##
 
+#imports
+import os
+
 #Class that handles GL Functions
 class GLFunction:
   glReturn="NULL"
@@ -24,7 +27,7 @@ class GLFunction:
   #Return Function Definition
   def defi(self):
     return self.glFunction + " = (__typeof__("+self.glFunction+"))SDL_GL_GetProcAddress(\"" + self.glFunction + "\");"
-  
+   
   #Read Function Line
   def read(self,n):
     c1 = n.find('(');
@@ -33,27 +36,38 @@ class GLFunction:
     self.glReturn = n[:c3];
     self.glFunction = n[c3+1:c1];
     self.glParameters = n[c1+1:c2];
+    if self.glParameters == "GLvoid":
+      self.glParameters = ""
+    return self
 
 #MAIN LOOP
 def main():
   #Open File for reading
   f = open("GLFunctions.list","r")
 
-  #Define list to hold functions
-  glFunctions = []
+  #Define dictionary to hold functions groups
+  glFunctions = {}
 
-  #Read functions from file
+  #Read core functions
+  glFunctions["Core"] = []
   for i in f.readlines():
-    i = i.strip()
-    if(len(i)<3 or i[0]=='#'):
-      continue #Skip line
-    tmp = GLFunction()
-    tmp.read(i)
-    glFunctions.append(tmp)
-    del tmp
+    if(len(i)>3 and i[0]!='#'):
+      glFunctions["Core"].append(GLFunction().read(i.strip()))
 
   #Close file
   f.close()
+
+  #Read extension functions
+  for l in os.listdir("./Graphics/GLFunctions/"):
+    if l.endswith(".list"):
+      f = open("./Graphics/GLFunctions/" + l) 
+      filedata = ""
+      for i in f.readlines():
+        if(len(i)>4 and i[0] != '#'):
+          filedata+=i.strip()
+      filedata=filedata[:-1]
+      glFunctions[l[:-5]] = [GLFunction().read(i) for i in [i+";" for i in filedata.split(";")]]
+      f.close()
 
   #Write Function Definitions and Declerations to file
 
@@ -61,8 +75,8 @@ def main():
   #Write GLFunctions.h
   #-------------------
 
-  f = open("./Graphics/GLFunctions.h","w")
-  
+  f = open("./Graphics/GLFunctions.h", "w")
+
   #Write Comment Block
   f.write("/*\
 \n * File :\
@@ -75,7 +89,8 @@ def main():
 \n *      This file contains the GL Function declerations\
 \n *\
 \n * NOTE:\
-\n *      This file is generated from GLFunctions.list and will be overwritten at compile time\
+\n *      This file is generated from ./Graphics/GLFunctions.list and\
+\n *      will be overwritten at compile time!\
 \n */\n")
 
   #Write Header #ifndef
@@ -86,24 +101,32 @@ def main():
   #Write Header Includes
   f.write("\n#include <SDL2/SDL_opengl.h>\n")
 
-  #Write initGlFunction decleration
-  f.write("\nint initGLFunction();\n\n")
-
   #Write Namespace
-  f.write("//NAMESPACE\
+  f.write("\n//NAMESPACE\
 \n namespace FGL\
 \n{\n\n");
 
+  #Write Load GL Functions decleration
+  f.write("//Load Functions\n")
+  for key, val in glFunctions.iteritems():
+    f.write("  GLint Load_GL_" + key + "();\n")
+
+  f.write("\n")
+
   #Write Function Declerations
-  for i in glFunctions:
-    f.write("  extern " + i.decl() + "\n")
+  for key, val in glFunctions.iteritems():
+    for i in val:
+      f.write("  extern " + i.decl() + "\n")
+
+  #Write Extension loaded namespace
 
   #Write Endof namespace
-  f.write("} // ENDOF NAMESPACE FGL\n")
+  f.write("} // ENDOF NAMESPACE FGL\n\n")
 
   #Write defines
-  for i in glFunctions:
-    f.write("#define " + i.glFunction + " FGL::" + i.glFunction + "\n")
+  for key, val in glFunctions.iteritems():
+    for i in val:
+      f.write("#define " + i.glFunction + " FGL::" + i.glFunction + "\n")
 
   #Write Header #endif
   f.write("\n#endif // _F_H_GLFUNCTIONS_")
@@ -138,21 +161,22 @@ def main():
 
   #Write Declerations
   f.write("\n// DECLERATIONS\n")
-  for i in glFunctions:
-    f.write(i.decl() + "\n")
+  for key, val in glFunctions.iteritems():
+    for i in val:
+      f.write(i.decl() + "\n")
 
-  #Write initGLFunction()
-  f.write("\n// INITIALIZATION\
-\nint initGLFunction()\
+  #Write Load GL Functions definitions
+  f.write("\n//Load Functions")
+  for key, val in glFunctions.iteritems():
+    f.write("\nGLint FGL::Load_GL_" + key + "()\
 \n{\
 \n")
+    #Write Definitions
+    for i in val:
+      f.write("  " + i.defi() + "\n")
 
-  #Write Definitions
-  for i in glFunctions:
-    f.write("  " + i.defi() + "\n")
-
-  #Write end of initGLFunction
-  f.write("\n  return 0;\n}\n")
+    #ENDOF
+    f.write("\n  return 0;\n}\n")
 
   #Finish
   return 0

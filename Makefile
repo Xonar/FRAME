@@ -30,7 +30,7 @@ all: $(DIRECTORIES) $(GENERATED) $(DEPENDANCIES)
 	@$(MAKE) DEPENDANCIES_GENERATED=1 CFLAGS='$(CFLAGS)' BUILD_DIR='$(BUILD_DIR)' $(EXECUTABLE)
 
 #Generated Files
-./Graphics/GLFunctions.h: GLFunctions.list GenerateGLFunction.py
+./Graphics/GLFunctions.h: GLFunctions.list ./Graphics/GLFunctions/*.list GenerateGLFunction.py
 	@echo "Generating GLFunctions.{h,cpp}"
 	@python GenerateGLFunction.py
 
