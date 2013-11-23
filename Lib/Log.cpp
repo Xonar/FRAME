@@ -19,6 +19,10 @@ Logger gLogw(std::cerr, TERM_COL_YELLOW TERM_STATE_BOLD);
 Logger gLogi(std::cout, TERM_STATE_RESET);
 Logger gLogv(std::cout, TERM_STATE_RESET);
 
+#ifdef COLOUR_TERMINAL
+std::string FGL_HIDDEN::lastCol;
+#endif
+
 Logger& operator<< (Logger& log, std::ostream& (*manipulator) (std::ostream&))
 {
   if(log.getLogging())

@@ -1,16 +1,22 @@
 
+#ifdef COLOUR_TERMINAL
+namespace FGL_HIDDEN 
+{
+  extern  std::string lastCol;
+}
+#endif
+
 //Need Functions in headers so templates can be instantiated
 //Still need to think of a neater solution
 template <typename T> static void _handleCol(const std::string &col, std::ostream& out)
 {
   //Already check for correct type in Logger::operator<<
   #ifdef COLOUR_TERMINAL
-    static std::string lastCol = "";
 
-    if(col != lastCol)
+    if(col != FGL_HIDDEN::lastCol)
     {
-      lastCol = col;
-      out << lastCol;
+      FGL_HIDDEN::lastCol = col;
+      out << FGL_HIDDEN::lastCol;
     }
   #endif //COLOUR_TERMINAL
 }
