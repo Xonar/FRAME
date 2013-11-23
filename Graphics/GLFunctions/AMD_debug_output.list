@@ -1,0 +1,31 @@
+# File:
+#       ./Graphics/GLFunctions/ARB_debug_output.list
+#
+# Author :
+#      Xonar <Paul le Roux>
+#
+# Description:
+#      AMD_debug_output GL function list
+
+GLvoid glDebugMessageEnableAMD(GLenum category,
+                           GLenum severity,
+                           GLsizei count,
+                           const GLuint* ids,
+                           GLboolean enabled);
+
+GLvoid glDebugMessageInsertAMD(GLenum category,
+                           GLenum severity,
+                           GLuint id,
+                           GLsizei length, 
+                           const GLchar* buf);
+
+GLvoid glDebugMessageCallbackAMD(GLDEBUGPROCAMD callback,
+                             GLvoid* userParam);
+
+GLuint glGetDebugMessageLogAMD(GLuint count,
+                           GLsizei bufsize,
+                           GLenum* categories,
+                           GLuint* severities,
+                           GLuint* ids,
+                           GLsizei* lengths, 
+                           GLchar* message);

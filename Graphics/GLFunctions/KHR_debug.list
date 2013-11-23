@@ -1,0 +1,54 @@
+# File:
+#       ./Graphics/GLFunctions/KHR_debug.list
+#
+# Author :
+#      Xonar <Paul le Roux>
+#
+# Description:
+#      KHR_debug GL function list
+
+GLvoid glDebugMessageControl(GLenum source,
+                         GLenum type,
+                         GLenum severity,
+                         GLsizei count,
+                         const GLuint* ids,
+                         GLboolean enabled);
+
+GLvoid glDebugMessageInsert(GLenum source,
+                        GLenum type,
+                        GLuint id,
+                        GLenum severity,
+                        GLsizei length, 
+                        const GLchar* buf);
+
+GLvoid glDebugMessageCallback(GLDEBUGPROCARB callback,
+                          const GLvoid* userParam);
+
+GLuint glGetDebugMessageLog(GLuint count,
+                        GLsizei bufSize,
+                        GLenum* sources,
+                        GLenum* types,
+                        GLuint* ids,
+                        GLenum* severities,
+                        GLsizei* lengths, 
+                        GLchar* messageLog);
+
+#GLvoid glGetPointerv(GLenum pname,
+#                 GLvoid** params);
+
+GLvoid glPushDebugGroup(GLenum source, GLuint id, GLsizei length, 
+    const GLchar * message);
+
+GLvoid glPopDebugGroup(GLvoid);
+
+GLvoid glObjectLabel(GLenum identifier, GLuint name, GLsizei length, 
+    const GLchar *label);
+
+GLvoid glGetObjectLabel(GLenum identifier, GLuint name, GLsizei bufSize, 
+    GLsizei *length, GLchar *label);
+
+GLvoid glObjectPtrLabel(GLvoid* ptr, GLsizei length, 
+    const GLchar *label);
+
+GLvoid glGetObjectPtrLabel(GLvoid* ptr, GLsizei bufSize, 
+    GLsizei *length, GLchar *label);
