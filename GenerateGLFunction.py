@@ -40,6 +40,14 @@ class GLFunction:
       self.glParameters = ""
     return self
 
+  #Hash function to implement set
+  def __hash__(self):
+    return hash(self.glFunction)
+
+  #Equals function to implement set
+  def __eq__(self,other):
+    return self.glFunction == other.glFunction
+
 #MAIN LOOP
 def main():
   #Open File for reading
@@ -57,6 +65,9 @@ def main():
   #Close file
   f.close()
 
+  #Create a set of functions (To not define function defined in multiple extensions multiple times)
+  functionSet = set(glFunctions["Core"])
+
   #Read extension functions
   for l in os.listdir("./Graphics/GLFunctions/"):
     if l.endswith(".list"):
@@ -67,6 +78,7 @@ def main():
           filedata+=i.strip()
       filedata=filedata[:-1]
       glFunctions[l[:-5]] = [GLFunction().read(i) for i in [i+";" for i in filedata.split(";")]]
+      functionSet = functionSet.union(glFunctions[l[:-5]])
       f.close()
 
   #Write Function Definitions and Declerations to file
@@ -114,9 +126,8 @@ def main():
   f.write("\n")
 
   #Write Function Declerations
-  for key, val in glFunctions.iteritems():
-    for i in val:
-      f.write("  extern " + i.decl() + "\n")
+  for i in functionSet:
+    f.write("  extern " + i.decl() + "\n")
 
   #Write Extension loaded namespace
 
@@ -124,9 +135,8 @@ def main():
   f.write("} // ENDOF NAMESPACE FGL\n\n")
 
   #Write defines
-  for key, val in glFunctions.iteritems():
-    for i in val:
-      f.write("#define " + i.glFunction + " FGL::" + i.glFunction + "\n")
+  for i in functionSet:
+    f.write("#define " + i.glFunction + " FGL::" + i.glFunction + "\n")
 
   #Write Header #endif
   f.write("\n#endif // _F_H_GLFUNCTIONS_")
@@ -161,9 +171,8 @@ def main():
 
   #Write Declerations
   f.write("\n// DECLERATIONS\n")
-  for key, val in glFunctions.iteritems():
-    for i in val:
-      f.write(i.decl() + "\n")
+  for i in functionSet:
+    f.write(i.decl() + "\n")
 
   #Write Load GL Functions definitions
   f.write("\n//Load Functions")
