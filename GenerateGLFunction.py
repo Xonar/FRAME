@@ -46,6 +46,12 @@ class GLFunction:
 
   #Equals function to implement set
   def __eq__(self,other):
+    if(self.glFunction ==  other.glFunction and 
+       self.glReturn != other.glReturn and 
+       self.glParameters != other.glParameters):
+      print "WARNING FUNCTION DECLERATIONS DON'T MATCH!"
+      print "  " + self.glReturn + " " + self.glFunction + "(" + self.glParameters + ");"
+      print "  " + other.glReturn + " " + other.glFunction + "(" + other.glParameters + ");"
     return self.glFunction == other.glFunction
 
 #MAIN LOOP
