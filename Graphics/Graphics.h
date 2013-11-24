@@ -14,4 +14,6 @@
 
 #include "GLFunctions.h"
 
+int initGLFunction();
+
 #endif // _F_H_GRAPHICS_
