@@ -86,27 +86,23 @@ int FWindow::Init()
     this->glMajorVersion = 4;
     this->glMinorVersion = 2;
   }
-  else if( this->glMajorVersion == 4 || (this->glMajorVersion == 3 && this->glMinorVersion >= 1) )
+  else if( this->glMajorVersion == 4 || (this->glMajorVersion == 3 && this->glMinorVersion >= 3) )
   {
     //Target highest version of the form 3.x which MESA supports
     this->glMajorVersion = 3;
-    this->glMinorVersion = 1;
+    this->glMinorVersion = 3;
   }
   else
   {
     validGLVersion = false;
 
-    gLogw << "Can't create OpenGL 3.1+ Context! (Reported Version :  " 
+    gLogw << "Can't create OpenGL 3.3+ Context! (Reported Version :  " 
               << glMajorVersion << "." << glMinorVersion << ")" << std::endl;
 
-    //MESA 9.0 to 9.2 often has the ability to create a 3.1 context, but reports
-    //a lower version due to a technicallity of the specification
-
-    //Might be a bug on MESA's part, but report 3.0 and working 3.1 on test machine
-    gLogi << "Try and Create OpenGL 3.1 Context Anyway" << std::endl;
+    gLogi << "Try and Create OpenGL 3.3 Context Anyway" << std::endl;
 
     this->glMajorVersion = 3;
-    this->glMinorVersion = 1;
+    this->glMinorVersion = 3;
   }
 
   //Profile Mask
@@ -136,7 +132,7 @@ int FWindow::Init()
   }
   else if(!validGLVersion)
   {
-    gLogi << "Context Creation reported succesful creation of 3.1 Context! Yay!" << std::endl;
+    gLogi << "Context Creation reported succesful creation of 3.3 Context! Yay!" << std::endl;
   }
 
   //Set Default Viewport

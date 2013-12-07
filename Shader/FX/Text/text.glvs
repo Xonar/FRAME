@@ -1,9 +1,9 @@
-#version 140
+#version 330
 
 //Input
-in vec2 pos;
-in vec2 tex;
-in int norm;
+layout(location = 0) in vec2 pos;
+layout(location = 1) in vec2 tex;
+layout(location = 2) in int ch;
 
 //Output
 out vec2 vstex;
@@ -18,7 +18,7 @@ uniform Matrices
 void main()
 {
   vstex = tex;
-  vschar = norm;
+  vschar = ch;
 
   gl_Position = Ortho * vec4(pos, 0, 1);
 }

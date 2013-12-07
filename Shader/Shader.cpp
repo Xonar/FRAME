@@ -229,11 +229,6 @@ GLint FShader::loadProgram()
     this->fs = 0;
   }
 
-  //If OpenGL version < 33 then bind Attribute Location
-  glBindAttribLocation(this->glProg, 0, "pos");
-  glBindAttribLocation(this->glProg, 1, "tex");
-  glBindAttribLocation(this->glProg, 2, "norm");
-
   glLinkProgram(this->glProg);
 
   //Check if it linked succesfully
