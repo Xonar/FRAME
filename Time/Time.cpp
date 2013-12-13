@@ -10,6 +10,7 @@
  */
 
 #include "Time.h"
+#include "../Lib/FString.h"
 #include <SDL2/SDL.h>
 
 #ifdef _POSIX_SOURCE
@@ -227,7 +228,7 @@ std::string FTimeString(const FTime &A)
 
   if(A.s != 0)
   {
-      out = std::to_string(A.s);
+      out = FL::to_string(A.s);
       out.append("s ");
   }
 
@@ -235,18 +236,18 @@ std::string FTimeString(const FTime &A)
   {
     if(A.n % 1000000 == 0)
     {
-      out.append(std::to_string(A.n/1000000));
+      out.append(FL::to_string(A.n/1000000));
       out.append(F_TIME_UNIT_MAP[F_MILI]);
     }
     else
     {
-      out.append(std::to_string(A.n/1000));
+      out.append(FL::to_string(A.n/1000));
       out.append(F_TIME_UNIT_MAP[F_MICRO]);
     }
   }
   else
   {
-    out.append(std::to_string(A.n));
+    out.append(FL::to_string(A.n));
     out.append(F_TIME_UNIT_MAP[F_NANO]);
   }
 
@@ -255,7 +256,7 @@ std::string FTimeString(const FTime &A)
 
 std::string FTimePrecisionString(const FTimePrecision &A)
 {
-  std::string out = std::to_string(A.amount);
+  std::string out = FL::to_string(A.amount);
   out.append(F_TIME_UNIT_MAP[A.unit]);
   return out;
 }
