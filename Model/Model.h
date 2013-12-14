@@ -14,8 +14,8 @@
 
 #include "../Container/Container.h"
 #include "../Texture/Texture.h"
+#include "../Graphics/Graphics.h"
 
-#include <SDL2/SDL_opengl.h>
 #include <string>
 
 enum F_MODEL_TEXTURE_ENUM { F_MODEL_TEXTURE_TEXTURE, 

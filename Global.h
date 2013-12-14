@@ -12,9 +12,9 @@
 #ifndef _F_H_GLOBAL_
 #define _F_H_GLOBAL_
 
-#include <SDL2/SDL_opengl.h>
 #include "Window/Window.h"
 #include "Engine/FontEngine.h"
+#include "Graphics/Graphics.h"
 
 //FRAME
 extern bool gGameOn;

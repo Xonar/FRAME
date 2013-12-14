@@ -15,8 +15,7 @@
 #include "../Time/Time.h"
 
 #include "../Lib/Log.h"
-
-#include <SDL2/SDL_opengl.h>
+#include "../Graphics/Graphics.h"
 
 #include <iostream>
 #include <cstring>

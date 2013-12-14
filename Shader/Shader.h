@@ -12,7 +12,7 @@
 #ifndef _F_H_SHADER_
 #define _F_H_SHADER_
 
-#include <SDL2/SDL_opengl.h>
+#include "../Graphics/Graphics.h"
 #include <string>
 
 class FShader

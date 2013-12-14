@@ -15,8 +15,8 @@
 
 #include "../Container/Container.h"
 #include "../Texture/Texture.h"
+#include "../Graphics/Graphics.h"
 
-#include <SDL2/SDL_opengl.h>
 #include <string>
 
 class FModelInstance

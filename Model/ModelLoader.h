@@ -20,7 +20,7 @@
 
 #include <glm/glm.hpp>
 
-#include <SDL2/SDL_opengl.h>
+#include "../Graphics/Graphics.h"
 
 //Functions that convert between assimp classes and glm structs
 glm::vec3 aiGLM(aiColor3D col);

@@ -12,11 +12,10 @@
 #ifndef _F_H_GAME_
 #define _F_H_GAME_
 
-#include <SDL2/SDL_opengl.h>
-
 #include "Model/Model.h"
 #include "GUI/Font.h"
 #include "Shader/Shader.h"
+#include "Graphics/Graphics.h"
 
 GLint initializeGame();
 

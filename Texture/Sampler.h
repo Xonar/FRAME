@@ -12,7 +12,7 @@
 #ifndef _F_H_SAMPLER_
 #define _F_H_SAMPLER_
 
-#include <SDL2/SDL_opengl.h>
+#include "../Graphics/Graphics.h"
 
 class FSampler
 {

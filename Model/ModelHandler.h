@@ -15,8 +15,8 @@
 #include "ModelPart.h"
 #include "Model.h"
 #include "../Texture/Texture.h"
+#include "../Graphics/Graphics.h"
 
-#include <SDL2/SDL_opengl.h>
 #include <vector>
 
 class FModelHandler

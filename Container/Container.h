@@ -13,7 +13,8 @@
 #define _F_H_CONTAINER_
 
 #include <glm/glm.hpp>
-#include <SDL2/SDL_opengl.h>
+
+#include "../Graphics/Graphics.h"
 
 //Text Vertex
 struct FVertexText

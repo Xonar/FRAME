@@ -12,10 +12,10 @@
 #ifndef _F_H_FGLEXT_
 #define _F_H_FGLEXT_
 
-#include <SDL2/SDL_opengl.h>
 #include <string>
 
 #include "../Container/Container.h"
+#include "../Graphics/Graphics.h"
 
 const GLchar* glErrorString(const GLenum err);
 const GLchar* glDebugSourceString(const GLenum source);

@@ -14,9 +14,10 @@
 #ifndef _F_H_MATERIAL_
 #define _F_H_MATERIAL_
 
-#include <SDL2/SDL_opengl.h>
 #include <glm/glm.hpp>
 #include <assimp/material.h>
+
+#include "../Graphics/Graphics.h"
 
 class FMaterial
 {

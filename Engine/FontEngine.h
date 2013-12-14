@@ -12,8 +12,6 @@
 #ifndef _F_H_ENGINE_FONT_
 #define _F_H_ENGINE_FONT_
 
-#include <SDL2/SDL_opengl.h>
-
 #include <vector>
 #include <list>
 
@@ -21,6 +19,7 @@
 #include "../Shader/Shader.h"
 #include "../Camera/Camera.h"
 #include "../Container/Container.h"
+#include "../Graphics/Graphics.h"
 
 #include "FontHandler.h"
 

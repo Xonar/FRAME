@@ -15,7 +15,7 @@
 
 #include <glm/glm.hpp>
 
-#include <SDL2/SDL_opengl.h>
+#include "../Graphics/Graphics.h"
 
 class FCamera
 {
