@@ -106,4 +106,9 @@ void glVertexAttribLPointer(GLuint index,  GLint size,  GLenum type,  GLsizei st
 #Other
 const GLubyte* glGetStringi(GLenum name, GLuint index);
 
+#Functions not present in windows
+void glActiveTexture(GLenum texture);
+void glTexSubImage3D(GLenum target,  GLint level,  GLint xoffset,  GLint yoffset,  GLint zoffset,  GLsizei width,  GLsizei height,  GLsizei depth,  GLenum format,  GLenum type,  const GLvoid * data);
+void glTexImage3D(GLenum target,  GLint level,  GLint internalFormat,  GLsizei width,  GLsizei height,  GLsizei depth,  GLint border,  GLenum format,  GLenum type,  const GLvoid * data);
+
 #EOF
