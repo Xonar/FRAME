@@ -18,10 +18,12 @@
 #include <assimp/material.h>
 #include <assimp/Importer.hpp>
 
+#define GLM_SWIZZLE
 #include <glm/glm.hpp>
 
 #include "../Graphics/Graphics.h"
 #include "../Camera/Camera.h"
+#include "../Model/ModelPart.h"
 
 //Functions that convert between assimp classes and glm structs
 glm::vec3 aiGLM(aiColor3D col);
@@ -55,7 +57,7 @@ class FModelLoader
 
     //Get Mesh[Count]
     GLuint getMeshCount(const aiScene *s = scene);
-    const aiMesh* getMeshCount(const GLuint i, const aiScene *s = scene);
+    FModelPart* getMesh(const GLuint i, const aiScene *s = scene);
 
     //Get Bone[Count]
     GLuint getBoneCount(const aiMesh *m = mesh);

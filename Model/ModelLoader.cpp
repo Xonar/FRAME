@@ -146,12 +146,52 @@ GLuint FModelLoader::getMeshCount(const aiScene *s)
   }
 }
 
-const aiMesh* FModelLoader::getMeshCount(const GLuint i, const aiScene *s)
+FModelPart* FModelLoader::getMesh(const GLuint i, const aiScene *s)
 {
   if(s != NULL)
   {
     if(s->mNumMeshes > i)
-      return s->mMeshes[i];
+    {
+      const aiMesh* mesh = s->mMeshes[i];
+      FModelPart* part = new FModelPart();
+      GLuint numIndices = mesh->mNumFaces * 3;
+      GLuint* indices = new GLuint[numIndices];
+      GLuint numVertices = mesh->mNumVertices;
+      FVertex3* vertices = new FVertex3[numVertices];
+
+      //Populate Vertices
+
+      //Positions
+      if(mesh->HasPositions())
+        for(GLuint i = 0;i < numVertices; i++)
+          vertices[i].pos = aiGLM(mesh->mVertices[i]);
+      else
+      {
+        gLogw << "Mesh Doesn't Contain Positions! Can't create Part." << std::endl;
+        delete[] vertices;
+        delete[] indices;
+        return NULL;
+      }
+
+      //Normals
+      if(mesh->HasNormals())
+        for(GLuint i = 0; i < numVertices; i++)
+          vertices[i].nor = aiGLM(mesh->mNormals[i]);
+      
+      //UV
+      if(mesh->HasTextureCoords(0))
+        for(GLuint i = 0;i < numVertices; i++)
+          vertices[i].tex = aiGLM(mesh->mTextureCoords[0][i]).xy();
+
+      //Create Model Part
+      part->loadModelPartFromVerticesAndIndices(vertices, numVertices, indices, numIndices);
+
+      //Free Memory
+      delete[] vertices;
+      delete[] indices;
+
+      return part;
+    }
     else
     {
       gLogw << "Mesh at index " << i << " doesn\'t exist" << std::endl;
