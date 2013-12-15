@@ -21,6 +21,7 @@
 #include <glm/glm.hpp>
 
 #include "../Graphics/Graphics.h"
+#include "../Camera/Camera.h"
 
 //Functions that convert between assimp classes and glm structs
 glm::vec3 aiGLM(aiColor3D col);
@@ -47,6 +48,10 @@ class FModelLoader
     //Get Animation[Count]
     GLuint getAnimationCount(const aiScene *s = scene);
     const aiAnimation* getAnimation(const GLuint i,const aiScene *s = scene);
+
+    //Get Camera[Count]
+    GLuint getCameraCount(const aiScene *s = scene);
+    FCamera* getCamera(const GLuint i, const aiScene *s = scene);
 
     //Get Mesh[Count]
     GLuint getMeshCount(const aiScene *s = scene);

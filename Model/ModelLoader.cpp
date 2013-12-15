@@ -11,6 +11,7 @@
 
 #include "ModelLoader.h"
 #include "../Lib/Log.h"
+#include "../Global.h"
 
 #include <assimp/postprocess.h>
 
@@ -83,6 +84,56 @@ const aiAnimation* FModelLoader::getAnimation(const GLuint i,const aiScene* s)
   }
 }
 
+GLuint FModelLoader::getCameraCount(const aiScene* s)
+{
+  if(s != NULL)
+    return s->mNumCameras;
+  else
+  {
+    gLogw << "No active scene!" << std::endl;
+    return 0;
+  }
+}
+
+FCamera* FModelLoader::getCamera(const GLuint i,const aiScene* s)
+{
+  if(s != NULL)
+  {
+    if(s->mNumCameras > i)
+    {
+      const aiCamera* cam = s->mCameras[i];
+      FCamera *camera = new FCamera;
+
+      //Set with default viewport
+      camera->setViewPort(0,0,gWindow->getWindowWidth(),gWindow->getWindowHeight());
+      
+      //Get Camera Attributes
+      glm::vec3 pos = aiGLM(cam->mPosition);
+      glm::vec3 lookAt = aiGLM(cam->mLookAt);
+      //glm::vec3 up = aiGLM(cam->mUp); - UNUSED BY CAMERA
+      float cpnear = cam->mClipPlaneNear;
+      float cpfar = cam->mClipPlaneFar;
+      float fov = cam->mHorizontalFOV;
+
+      //Set Camera Attributes
+      camera->setPosition(pos);
+      camera->setDirection(lookAt);
+      camera->InitProjectionMatrix(fov*180/M_PI, cpnear, cpfar);
+
+      return camera;
+    }
+    else
+    {
+      gLogw << "Camera at index " << i << " doesn\'t exist" << std::endl;
+      return NULL;
+    }
+  }
+  else
+  {
+    gLogw << "No active scene!" << std::endl;
+    return NULL;
+  }
+}
 
 GLuint FModelLoader::getMeshCount(const aiScene *s)
 {
