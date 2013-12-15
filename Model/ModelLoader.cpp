@@ -12,7 +12,6 @@
 #include "ModelLoader.h"
 #include "../Lib/Log.h"
 
-#include <glm/gtc/type_ptr.hpp>
 #include <assimp/postprocess.h>
 
 //Define FModelLoader static variables
@@ -24,32 +23,6 @@ glm::vec3 aiGLM(aiColor3D col)
 {
   return glm::vec3(col.r, col.g, col.b);
 }
-
-template <typename T> glm::vec2 aiGLM(aiVector2t<T> vec)
-{
-  return glm::vec2(vec.x, vec.y);
-}
-
-template <typename T> glm::vec3 aiGLM(aiVector3t<T> vec)
-{
-  return glm::vec3(vec.x, vec.y, vec.z);
-}
-
-template <typename T> glm::vec4 aiGLM(aiColor4t<T> col)
-{
-  return glm::vec4(col.r, col.g, col.b, col.a);
-}
-
-template <typename T> glm::mat3 aiGLM(aiMatrix3x3t<T> mat)
-{
-  return glm::make_mat3(&mat).transpose();
-}
-
-template <typename T> glm::mat4 aiGLM(aiMatrix4x4t<T> mat)
-{
-  return glm::make_mat4(&mat).transpose();
-}
-
 
 FModelLoader::FModelLoader()
 {

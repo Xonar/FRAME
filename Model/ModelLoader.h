@@ -24,13 +24,7 @@
 
 //Functions that convert between assimp classes and glm structs
 glm::vec3 aiGLM(aiColor3D col);
-
-template <typename T> glm::vec2 aiGLM(aiVector2t<T> vec);
-template <typename T> glm::vec3 aiGLM(aiVector3t<T> vec);
-template <typename T> glm::vec4 aiGLM(aiColor4t<T> col);
-
-template <typename T> glm::mat3 aiGLM(aiMatrix3x3t<T> mat);
-template <typename T> glm::mat4 aiGLM(aiMatrix4x4t<T> mat);
+#include "ModelLoader.template.h"
 
 class FModelLoader
 {
