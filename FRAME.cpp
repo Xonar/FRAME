@@ -38,8 +38,14 @@ int main(int argc, char *argv[])
   //If SDL/OpenGL Init Failed
   if(window.Init())
   {
-    std::cerr << "Failed startup!" << std::endl;
+    gLoge << "Failed startup!" << std::endl;
     
+    //Reset Terminal Colours
+    #ifdef COLOUR_TERMINAL
+      std::cout << TERM_STATE_RESET << std::flush;
+      std::cerr << TERM_STATE_RESET << std::flush;
+    #endif //COLOUR_TERMINAL
+
     //Failed
     return 1; 
   }
