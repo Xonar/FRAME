@@ -33,7 +33,8 @@ FModelLoader::FModelLoader()
 
 FModelLoader::~FModelLoader()
 {
-  //TODO
+  scene = NULL;
+  mesh = NULL;
 }
     
 const aiScene* FModelLoader::loadScene(const std::string &path)
