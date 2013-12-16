@@ -14,6 +14,7 @@
 
 
 #include <iostream>
+#include <glm/glm.hpp>
 
 class Logger
 {
@@ -38,6 +39,10 @@ class Logger
 #include "Log.template.h"
 
 Logger& operator<< (Logger& log, std::ostream& (*manipulator) (std::ostream&));
+
+Logger& operator<< (Logger& log, const glm::vec2& v);
+Logger& operator<< (Logger& log, const glm::vec3& v);
+Logger& operator<< (Logger& log, const glm::vec4& v);
 
 //Loggers
 extern Logger gLoge; //Error Logger

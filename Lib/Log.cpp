@@ -33,6 +33,24 @@ Logger& operator<< (Logger& log, std::ostream& (*manipulator) (std::ostream&))
   return log;
 }
 
+
+Logger& operator<< (Logger& log, const glm::vec2& v)
+{
+  return log << "(" << v.x << ", " << v.y << ")";
+}
+
+Logger& operator<< (Logger& log, const glm::vec3& v)
+{
+  return log << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+}
+
+Logger& operator<< (Logger& log, const glm::vec4& v)
+{
+  return log << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")";
+}
+
+
+
 Logger::Logger(std::ostream &out, const std::string &col)
 {
   this->col = col;
