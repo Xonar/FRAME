@@ -108,9 +108,17 @@ FCamera* FModelLoader::getCamera(const GLuint i,const aiScene* s)
       //Set with default viewport
       camera->setViewPort(0,0,gWindow->getWindowWidth(),gWindow->getWindowHeight());
       
-      //Get Camera Attributes
-      glm::vec3 pos = aiGLM(cam->mPosition);
-      glm::vec3 lookAt = aiGLM(cam->mLookAt);
+      //Get Camera Matrix
+      aiMatrix4x4 aiMat;
+      cam->GetCameraMatrix(aiMat);
+
+      //Work out final Camera Node Transformation
+      glm::mat4 nodeTransform = this->getNodeTransformation(cam->mName.C_Str());
+      glm::mat4 mat = nodeTransform * aiGLM(aiMat);
+
+      //Get Camera
+      glm::vec3 pos = (mat * glm::vec4(aiGLM(cam->mPosition), 1.f)).xyz();
+      glm::vec3 lookAt = (mat * glm::vec4(aiGLM(cam->mLookAt), 1.f)).xyz();
       //glm::vec3 up = aiGLM(cam->mUp); - UNUSED BY CAMERA
       float cpnear = cam->mClipPlaneNear;
       float cpfar = cam->mClipPlaneFar;
@@ -118,7 +126,7 @@ FCamera* FModelLoader::getCamera(const GLuint i,const aiScene* s)
 
       //Set Camera Attributes
       camera->setPosition(pos);
-      camera->setDirection(lookAt);
+      camera->lookAt(lookAt);
       camera->InitProjectionMatrix(fov*180/M_PI, cpnear, cpfar);
 
       return camera;
