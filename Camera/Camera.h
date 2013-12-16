@@ -37,6 +37,7 @@ class FCamera
     bool ready;
     glm::vec3 pos;
     glm::vec3 dir;
+    glm::vec3 up;
 
     //GL Buffers
     GLuint ubViewScreen;
@@ -58,6 +59,7 @@ class FCamera
     GLvoid setPosition(const glm::vec3 &pos);
     GLvoid lookAt(const glm::vec3 &lookAt);
     GLvoid setDirection(const glm::vec3 &dir);
+    GLvoid setUp(const glm::vec3 &up);
 
     GLvoid use();
 

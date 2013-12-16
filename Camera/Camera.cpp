@@ -27,6 +27,7 @@ FCamera::FCamera()
 
   this->pos = glm::vec3(0,0,0);
   this->dir = glm::vec3(0,0,1);
+  this->up  = glm::vec3(0,1,0);
 
   this->ubViewScreen = this->ubWorldView = 0;
 }
@@ -49,7 +50,7 @@ GLint FCamera::updateUBO()
     //Only Update if it's neccesary
     if(this->updateWorldViewMatrix)
     {
-      this->WorldViewMatrix = glm::lookAt(pos,pos+dir,glm::vec3(0,1,0));
+      this->WorldViewMatrix = glm::lookAt(pos, pos+dir, up);
       this->updateWorldViewMatrix = false;
       
       glBindBuffer(GL_UNIFORM_BUFFER, this->ubWorldView);
@@ -171,6 +172,12 @@ GLvoid FCamera::lookAt(const glm::vec3 &lookAt)
 GLvoid FCamera::setDirection(const glm::vec3 &dir)
 {
   this->dir = dir;
+  this->updateWorldViewMatrix = true;
+}
+
+GLvoid FCamera::setUp(const glm::vec3 &up)
+{
+  this->up = up;
   this->updateWorldViewMatrix = true;
 }
 
