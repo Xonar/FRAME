@@ -33,6 +33,20 @@ const std::vector<GLuint>& FModelPart::getIndices() const
   return this->indices;
 }
 
+FVertex3* FModelPart::getVerticesCopy() const
+{
+  FVertex3* tmp = new FVertex3[this->vertices.size()];
+  std::copy(this->vertices.begin(), this->vertices.end(), tmp);
+  return tmp;
+}
+
+GLuint* FModelPart::getIndicesCopy() const
+{
+  GLuint* tmp = new GLuint[this->indices.size()];
+  std::copy(this->indices.begin(), this->indices.end(), tmp);
+  return tmp;
+}
+
 GLvoid FModelPart::releaseVertices()
 {
   vertices.clear();

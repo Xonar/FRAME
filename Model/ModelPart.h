@@ -37,6 +37,9 @@ class FModelPart
     const std::vector<FVertex3>& getVertices() const;
     const std::vector<GLuint>& getIndices() const;
 
+    FVertex3* getVerticesCopy() const;
+    GLuint* getIndicesCopy() const;
+
     GLvoid releaseVertices();
     GLvoid releaseIndices();
 
