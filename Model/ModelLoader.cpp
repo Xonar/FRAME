@@ -265,3 +265,22 @@ const aiMaterial* FModelLoader::getMaterial(const GLuint i, const aiScene *s)
     return NULL;
   }
 }
+
+glm::mat4 FModelLoader::getNodeTransformation(const std::string& name, aiNode *root)
+{
+  aiString aiName = aiString(name);
+  const aiNode* child = root->FindNode(aiName);
+  
+  //Start with identity matrix
+  glm::mat4 transform = glm::mat4();
+
+  //Iterate upwards to get final matrix
+  while(child->mName != root->mName)
+  {
+    transform = aiGLM(child->mTransformation) * transform;
+    child = child->mParent;
+  }
+
+  //Return Tranformation Matrix
+  return transform;
+}

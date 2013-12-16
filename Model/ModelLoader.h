@@ -66,6 +66,9 @@ class FModelLoader
     //Get Material[Count]
     GLuint getMaterialCount(const aiScene *s = scene);
     const aiMaterial* getMaterial(const GLuint i, const aiScene *s = scene);
+
+    //Get Node Transformation
+    glm::mat4 getNodeTransformation(const std::string& name, aiNode *root = scene->mRootNode);
 };
 
 #endif //_F_H_MODEL_LOADER_
