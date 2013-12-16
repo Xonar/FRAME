@@ -17,5 +17,6 @@ uniform mat4 ModelWorldMatrix;
 //Main
 void main()
 {
-  oCol = vec4(1.f, 1.f, 0.f, 1.f) * dot(normalize(vsnorm.xyz), normalize(vec3(-2,-3,1)));
+  oCol = vec4(1.f, 1.f, 1.f, 1.f) * dot(normalize(vsnorm.xyz), normalize(vec3(4,1,5)));
+  oCol.w = 1;
 }
