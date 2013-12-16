@@ -166,12 +166,16 @@ FModelPart* FModelLoader::getMesh(const GLuint i, const aiScene *s)
       GLuint numVertices = mesh->mNumVertices;
       FVertex3* vertices = new FVertex3[numVertices];
 
+      //Node Transformation
+      aiNode* meshNode = this->getCorrospondingNode(i, s->mRootNode);
+      glm::mat4 nodeTransform = this->getNodeTransformation(meshNode, s->mRootNode);
+
       //Populate Vertices
 
       //Positions
       if(mesh->HasPositions())
         for(GLuint i = 0;i < numVertices; i++)
-          vertices[i].pos = aiGLM(mesh->mVertices[i]);
+          vertices[i].pos = (nodeTransform * glm::vec4(aiGLM(mesh->mVertices[i]),1.f)).xyz();
       else
       {
         gLogw << "Mesh Doesn't Contain Positions! Can't create Part." << std::endl;
