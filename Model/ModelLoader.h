@@ -69,6 +69,8 @@ class FModelLoader
 
     //Get Node Transformation
     glm::mat4 getNodeTransformation(const std::string& name, aiNode *root = scene->mRootNode);
+    glm::mat4 getNodeTransformation(aiNode *leaf, aiNode *root);
+    aiNode* getCorrospondingNode(const unsigned int mesh, aiNode *root);
 };
 
 #endif //_F_H_MODEL_LOADER_

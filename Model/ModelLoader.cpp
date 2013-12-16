@@ -288,8 +288,7 @@ const aiMaterial* FModelLoader::getMaterial(const GLuint i, const aiScene *s)
 
 glm::mat4 FModelLoader::getNodeTransformation(const std::string& name, aiNode *root)
 {
-  aiString aiName = aiString(name);
-  const aiNode* child = root->FindNode(aiName);
+  const aiNode* child = root->FindNode(name.c_str());
   
   //Start with identity matrix
   glm::mat4 transform = glm::mat4();
@@ -303,4 +302,41 @@ glm::mat4 FModelLoader::getNodeTransformation(const std::string& name, aiNode *r
 
   //Return Tranformation Matrix
   return transform;
+}
+
+glm::mat4 FModelLoader::getNodeTransformation(aiNode *leaf, aiNode *root)
+{
+  //Start with identity matrix
+  glm::mat4 transform = glm::mat4();
+
+  //Iterate upwards to get final matrix
+  while(leaf->mName != root->mName)
+  {
+    transform = aiGLM(leaf->mTransformation) * transform;
+    leaf = leaf->mParent;
+  }
+
+  //Return Tranformation Matrix
+  return transform;
+}
+
+aiNode* FModelLoader::getCorrospondingNode(const unsigned int mesh, aiNode *root)
+{
+  //DFS to find corrosponding node
+  //TODO create lookup structure when loading scene for faster searching
+  
+  //Check if mesh is in current node
+  for(GLuint i = 0; i < root->mNumMeshes; i++)
+    if(mesh == root->mMeshes[i])
+      return root;
+
+  //Search children nodes
+  for(GLuint i = 0; i < root->mNumChildren; i++)
+  {
+    aiNode* ret = getCorrospondingNode(mesh, root->mChildren[i]);
+    if(ret)
+      return ret;
+  }
+
+  return NULL;
 }
