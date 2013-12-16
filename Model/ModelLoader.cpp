@@ -116,7 +116,7 @@ FCamera* FModelLoader::getCamera(const GLuint i,const aiScene* s)
       //Get Camera
       glm::vec3 pos = (mat * glm::vec4(aiGLM(cam->mPosition), 1.f)).xyz();
       glm::vec3 lookAt = (mat * glm::vec4(aiGLM(cam->mLookAt), 1.f)).xyz();
-      //glm::vec3 up = aiGLM(cam->mUp); - UNUSED BY CAMERA
+      glm::vec3 up = (mat * glm::vec4(aiGLM(cam->mUp),0.f)).xyz();
       float cpnear = cam->mClipPlaneNear;
       float cpfar = cam->mClipPlaneFar;
       //Convert from Horizontal Radians to Vertical Degrees
@@ -124,6 +124,7 @@ FCamera* FModelLoader::getCamera(const GLuint i,const aiScene* s)
 
       //Set Camera Attributes
       camera->setPosition(pos);
+      camera->setUp(up);
       camera->lookAt(lookAt);
       camera->InitProjectionMatrix(fov, cpnear, cpfar);
 
@@ -202,7 +203,6 @@ FModelPart* FModelLoader::getMesh(const GLuint i, const aiScene *s)
         indices[i*3 + 2] = mesh->mFaces[i].mIndices[2];
   
       }
-
 
       //Create Model Part
       part->loadModelPartFromVerticesAndIndices(vertices, numVertices, indices, numIndices);
