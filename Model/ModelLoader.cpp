@@ -192,6 +192,16 @@ FModelPart* FModelLoader::getMesh(const GLuint i, const aiScene *s)
         for(GLuint i = 0;i < numVertices; i++)
           vertices[i].tex = aiGLM(mesh->mTextureCoords[0][i]).xy();
 
+      //Populate Indices
+      for(GLuint i = 0;i < mesh->mNumFaces; i++)
+      {
+        indices[i*3 + 0] = mesh->mFaces[i].mIndices[0];
+        indices[i*3 + 1] = mesh->mFaces[i].mIndices[1];
+        indices[i*3 + 2] = mesh->mFaces[i].mIndices[2];
+  
+      }
+
+
       //Create Model Part
       part->loadModelPartFromVerticesAndIndices(vertices, numVertices, indices, numIndices);
 
