@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
   gFontEngine = new FFontEngine();
 
   gFontConsole = new FFont();
-  gFontConsole->createFromTTF("Assets/UbuntuMono-R.ttf", 14);
+  gFontConsole->createFromTTF("Assets/CosmicSansNeueMono.ttf", 14);
 
   gFontEngine->addFont(gFontConsole);
 

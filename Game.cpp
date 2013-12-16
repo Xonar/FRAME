@@ -115,7 +115,7 @@ GLint initializeGame()
 
   //FFont
   font = new FFont();
-  font->createFromTTF("Assets/TakaoPGothic.ttf", 18);
+  font->createFromTTF("Assets/newscycle-regular.ttf", 18);
 
   gFontEngine->addFont(font);
   
