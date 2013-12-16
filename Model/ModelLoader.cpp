@@ -106,15 +106,12 @@ FCamera* FModelLoader::getCamera(const GLuint i,const aiScene* s)
       FCamera *camera = new FCamera;
 
       //Set with default viewport
-      camera->setViewPort(0,0,gWindow->getWindowWidth(),gWindow->getWindowHeight());
+      GLuint width = gWindow->getWindowWidth();
+      GLuint height = gWindow->getWindowHeight();
+      camera->setViewPort(0, 0, width, height);
       
-      //Get Camera Matrix
-      aiMatrix4x4 aiMat;
-      cam->GetCameraMatrix(aiMat);
-
       //Work out final Camera Node Transformation
-      glm::mat4 nodeTransform = this->getNodeTransformation(cam->mName.C_Str());
-      glm::mat4 mat = nodeTransform * aiGLM(aiMat);
+      glm::mat4 mat = this->getNodeTransformation(cam->mName.C_Str());
 
       //Get Camera
       glm::vec3 pos = (mat * glm::vec4(aiGLM(cam->mPosition), 1.f)).xyz();
