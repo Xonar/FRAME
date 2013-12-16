@@ -119,12 +119,13 @@ FCamera* FModelLoader::getCamera(const GLuint i,const aiScene* s)
       //glm::vec3 up = aiGLM(cam->mUp); - UNUSED BY CAMERA
       float cpnear = cam->mClipPlaneNear;
       float cpfar = cam->mClipPlaneFar;
-      float fov = cam->mHorizontalFOV;
+      //Convert from Horizontal Radians to Vertical Degrees
+      float fov = cam->mHorizontalFOV * 57.2957795 / width * height;
 
       //Set Camera Attributes
       camera->setPosition(pos);
       camera->lookAt(lookAt);
-      camera->InitProjectionMatrix(fov*180/M_PI, cpnear, cpfar);
+      camera->InitProjectionMatrix(fov, cpnear, cpfar);
 
       return camera;
     }
