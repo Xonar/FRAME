@@ -17,10 +17,10 @@ template <typename T> glm::vec4 aiGLM(aiColor4t<T> col)
 
 template <typename T> glm::mat3 aiGLM(aiMatrix3x3t<T> mat)
 {
-  return glm::make_mat3(&mat).transpose();
+  return glm::transpose(glm::make_mat3(&mat[0][0]));
 }
 
 template <typename T> glm::mat4 aiGLM(aiMatrix4x4t<T> mat)
 {
-  return glm::make_mat4(&mat).transpose();
+  return glm::transpose(glm::make_mat4(&mat[0][0]));
 }
