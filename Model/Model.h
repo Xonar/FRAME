@@ -16,6 +16,8 @@
 #include "../Texture/Texture.h"
 #include "../Graphics/Graphics.h"
 
+#include "ModelPart.h"
+
 #include <string>
 
 enum F_MODEL_TEXTURE_ENUM { F_MODEL_TEXTURE_TEXTURE, 
@@ -24,7 +26,6 @@ enum F_MODEL_TEXTURE_ENUM { F_MODEL_TEXTURE_TEXTURE,
 class FModel
 {
   private:
-  
   //Model Data:
   FVertex3 *vertices;
   GLuint numVertices;
@@ -55,6 +56,7 @@ class FModel
   GLint loadModelFromVerticesAndIndices(FVertex3 *const vertices, const GLuint numVertices, 
                                         GLuint* const indices, const GLuint numIndices);
   GLint loadModelFromVertexAndTextureArray(const GLfloat * const vertices, const GLfloat * const uvs, const GLuint numVertices);
+  GLint loadModelFromPart(const FModelPart* part);
 
   GLvoid attachTexture(FTexture2D *const tex, const F_MODEL_TEXTURE_ENUM type);
 };

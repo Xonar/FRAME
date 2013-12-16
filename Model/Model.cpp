@@ -65,7 +65,6 @@ GLint FModel::loadModelFromVerticesAndIndices(FVertex3 * const vertices, const G
   //Create Vertex Array Object
   glGenVertexArrays(1, &this->vao);
   glBindVertexArray(this->vao);
-  glEnableVertexAttribArray(this->vao);
 
   //Create Vertex Buffer Object
   glGenBuffers(1, &this->vbo);
@@ -144,6 +143,14 @@ GLint FModel::loadModelFromVertexAndTextureArray(const GLfloat *const vertices,
     this->vertices[i].nor = glm::normalize(this->vertices[i].nor);
 
   return loadModelFromVertices(this->vertices, numVertices);
+}
+
+GLint FModel::loadModelFromPart(const FModelPart* part)
+{
+  const std::vector<GLuint>& ind = part->getIndices();
+  const std::vector<FVertex3>& vert = part->getVertices();
+  return loadModelFromVerticesAndIndices(part->getVerticesCopy(), vert.size(), 
+                                         part->getIndicesCopy(), ind.size());
 }
 
 GLvoid FModel::attachTexture(FTexture2D * const tex, const F_MODEL_TEXTURE_ENUM type)
