@@ -22,6 +22,11 @@
 class FMaterial
 {
   private:
+    //Textures
+    FTexture diffuse;
+    FTexture heightmap;
+    FTexture normal;
+
     //Phong-Blinn Properties
     glm::vec3 diffuse;
     glm::vec3 ambient;
