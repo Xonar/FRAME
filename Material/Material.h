@@ -18,14 +18,15 @@
 #include <assimp/material.h>
 
 #include "../Graphics/Graphics.h"
+#include "../Texture/Texture.h"
 
 class FMaterial
 {
   private:
     //Textures
-    FTexture diffuse;
-    FTexture heightmap;
-    FTexture normal;
+    FTexture2D *tDiffuse;
+    FTexture2D *tHeight;
+    FTexture2D *tNormal;
 
     //Phong-Blinn Properties
     glm::vec3 diffuse;
