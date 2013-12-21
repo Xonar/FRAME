@@ -24,6 +24,7 @@
 #include "../Graphics/Graphics.h"
 #include "../Camera/Camera.h"
 #include "../Model/ModelPart.h"
+#include "../Material/Material.h"
 
 //Functions that convert between assimp classes and glm structs
 glm::vec3 aiGLM(aiColor3D col);
@@ -65,7 +66,7 @@ class FModelLoader
 
     //Get Material[Count]
     GLuint getMaterialCount(const aiScene *s = scene);
-    const aiMaterial* getMaterial(const GLuint i, const aiScene *s = scene);
+    FMaterial* getMaterial(const GLuint i, const aiScene *s = scene);
 
     //Get Node Transformation
     glm::mat4 getNodeTransformation(const std::string& name, aiNode *root = scene->mRootNode);

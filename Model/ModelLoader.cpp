@@ -267,12 +267,14 @@ GLuint FModelLoader::getMaterialCount(const aiScene *s)
   }
 }
 
-const aiMaterial* FModelLoader::getMaterial(const GLuint i, const aiScene *s)
+FMaterial* FModelLoader::getMaterial(const GLuint i, const aiScene *s)
 {
   if(s != NULL)
   {
     if(s->mNumMaterials > i)
-      return s->mMaterials[i];
+    {
+      return new FMaterial(s->mMaterials[i]);
+    }
     else
     {
       gLogw << "Material at index " << i << " doesn\'t exist" << std::endl;
