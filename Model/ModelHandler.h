@@ -16,6 +16,7 @@
 #include "Model.h"
 #include "../Texture/Texture.h"
 #include "../Graphics/Graphics.h"
+#include "../Material/Material.h"
 
 #include <vector>
 
@@ -26,11 +27,8 @@ class FModelHandler
     //Going from high detail to low detail
     std::vector<FModelPart> lodModels;
 
-    //Textures - to be freed on FModelGroup::finalizeModelGroup()
-    //           and condensed to an FTexture2DArray
-    FTexture2D* tTexture;
-    FTexture2D* tHeightMap;
-    FTexture2D* tNormalMap;
+    //Material
+    GLuint materialIndex;
 
     GLuint modelIndex; //Used by ModelInstance
 
