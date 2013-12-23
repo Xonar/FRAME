@@ -21,14 +21,14 @@ FMaterial::FMaterial(aiMaterial *material)
   material->Get(AI_MATKEY_SHININESS, this->shininess);
 
   //Get Texture
-  
+
   //Diffuse
   if(material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
   {
     this->tDiffuse = new FTexture2D();
     aiString path;
     material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
-    this->tDiffuse->loadTextureFromFile(path.C_Str());
+    this->tDiffuse->loadTextureFromFile("Assets/" + std::string(path.C_Str()));
   }
 
   //Normals
@@ -37,7 +37,7 @@ FMaterial::FMaterial(aiMaterial *material)
     this->tNormal = new FTexture2D();
     aiString path;
     material->GetTexture(aiTextureType_NORMALS, 0, &path);
-    this->tNormal->loadTextureFromFile(path.C_Str());
+    this->tNormal->loadTextureFromFile("Assets/" + std::string(path.C_Str()));
   }
 
   //Height Map
@@ -46,7 +46,7 @@ FMaterial::FMaterial(aiMaterial *material)
     this->tHeight = new FTexture2D();
     aiString path;
     material->GetTexture(aiTextureType_HEIGHT, 0, &path);
-    this->tHeight->loadTextureFromFile(path.C_Str());
+    this->tHeight->loadTextureFromFile("Assets/" + std::string(path.C_Str()));
   }
 }
 
