@@ -14,7 +14,10 @@
 
 #include "Window/Window.h"
 #include "Engine/FontEngine.h"
+#include "Engine/ModelEngine.h"
+#include "Engine/RenderEngine.h"
 #include "Graphics/Graphics.h"
+#include "Camera/Camera.h"
 
 //FRAME
 extern bool gGameOn;
@@ -22,8 +25,16 @@ extern bool gDisplayFrameStats;
 
 extern FWindow *gWindow;
 
+//Engines
 extern FFontEngine *gFontEngine;
+extern FModelEngine *gModelEngine;
+extern FRenderEngine *gRenderEngine;
+
+//Console Font
 extern FFont *gFontConsole;
+
+//Player Camera
+extern FCamera *gCamera;
 
 //TERMINAL COLOUR CODES
 #ifdef COLOUR_TERMINAL

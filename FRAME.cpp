@@ -27,6 +27,8 @@
 bool gGameOn = true;
 FWindow *gWindow;
 FFontEngine *gFontEngine;
+FRenderEngine* gRenderEngine;
+FModelEngine* gModelEngine;
 FFont *gFontConsole;
 bool gDisplayFrameStats = true;
 
@@ -89,11 +91,19 @@ int main(int argc, char *argv[])
   gFontConsole->createFromTTF("Assets/CosmicSansNeueMono.ttf", 14);
 
   gFontEngine->addFont(gFontConsole);
+  
+  //Init ModelEngine
+  gModelEngine = new FModelEngine();
+
+  //Init RenderEngine
+  gRenderEngine = new FRenderEngine();
 
   //Init FTime
   initTime();
 
   initializeGame();
+
+  gRenderEngine->Init();
 
   //Game Loop
   while(gGameOn)
@@ -110,6 +120,9 @@ int main(int argc, char *argv[])
       }
     }
     
+    //Update
+    updateGame();
+
     //Render
     window.Render();
 
