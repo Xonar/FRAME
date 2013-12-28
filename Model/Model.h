@@ -6,59 +6,37 @@
  *      Xonar <Paul le Roux>
  *
  * Description:
- *      The FModel class is a handler for Model Objects
+ *      The FModel handles FModelParts and acts as a singular Model
  */
 
 #ifndef _F_H_MODEL_
 #define _F_H_MODEL_
 
-#include "../Container/Container.h"
+#include "ModelPart.h"
+#include "Model.h"
 #include "../Texture/Texture.h"
 #include "../Graphics/Graphics.h"
+#include "../Material/Material.h"
 
-#include "ModelPart.h"
-
-#include <string>
-
-enum F_MODEL_TEXTURE_ENUM { F_MODEL_TEXTURE_TEXTURE, 
-  F_MODEL_TEXTURE_HEIGHT, F_MODEL_TEXTURE_NORMAL };
+#include <vector>
 
 class FModel
 {
   private:
-  //Model Data:
-  FVertex3 *vertices;
-  GLuint numVertices;
+    //Model Parts - Will be used for lod models
+    std::vector<FModelPart*> parts;
 
-  GLuint *indices;
-  GLuint numIndices;
-
-  //Buffer Objects
-  GLuint vbo;
-  GLuint ibo;
-  GLuint vao;
-
-  //Texture Objects
-  FTexture2D *tTexture;
-  FTexture2D *tHeightMap;
-  FTexture2D *tNormalMap;
-  
+    //Material
+    GLuint materialIndex;
   public:
-  FModel();
-  ~FModel();
+    FModel();
+    ~FModel();
 
-  GLvoid readyDraw() const;
-  GLvoid readyTextures() const;
-  GLvoid draw() const;
+    void createModelFromPartsAndMaterial(FModelPart **parts, GLuint numParts, GLuint material);
+    
+    std::vector<FModelPart*>& getParts() { return parts; }
 
-  GLint loadModelFormFileObj(const std::string &path);
-  GLint loadModelFromVertices(FVertex3 * const vertices, const GLuint numVertices);
-  GLint loadModelFromVerticesAndIndices(FVertex3 *const vertices, const GLuint numVertices, 
-                                        GLuint* const indices, const GLuint numIndices);
-  GLint loadModelFromVertexAndTextureArray(const GLfloat * const vertices, const GLfloat * const uvs, const GLuint numVertices);
-  GLint loadModelFromPart(const FModelPart* part);
-
-  GLvoid attachTexture(FTexture2D *const tex, const F_MODEL_TEXTURE_ENUM type);
+    void drawModel() const;
 };
 
-#endif //_F_H_MODEL_
+#endif // _F_H_MODEL_

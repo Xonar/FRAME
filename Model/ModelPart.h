@@ -40,8 +40,12 @@ class FModelPart
     FVertex3* getVerticesCopy() const;
     GLuint* getIndicesCopy() const;
 
+    void setupPart(GLuint baseVertex, GLuint indicesStart);
+
     GLvoid releaseVertices();
     GLvoid releaseIndices();
+
+    void drawPart() const;
 
     GLint loadModelPartFromVertices(FVertex3* const vertices,const GLuint numVertices);
     GLint loadModelPartFromVerticesAndIndices(FVertex3 *const vertices, const GLuint numVertices,

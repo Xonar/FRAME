@@ -47,6 +47,14 @@ GLuint* FModelPart::getIndicesCopy() const
   return tmp;
 }
 
+
+void FModelPart::drawPart() const
+{
+  glDrawElementsBaseVertex(GL_TRIANGLES, this->indicesCount, GL_UNSIGNED_INT, 
+      (void*)(this->indicesStart * sizeof(GLuint)), this->baseVertex);
+  //glDrawElements(GL_POINTS, 2916, GL_UNSIGNED_INT, NULL);
+}
+
 GLvoid FModelPart::releaseVertices()
 {
   vertices.clear();
@@ -138,4 +146,11 @@ GLint FModelPart::loadModelPartFromVertexTextureAndNormalArray(const GLfloat* co
   delete[] vertexBuffer;
 
   return ret;
+}
+
+void FModelPart::setupPart(GLuint baseVertex, GLuint indicesStart)
+{
+  this->baseVertex = baseVertex;
+  this->indicesStart = indicesStart;
+  this->indicesCount = indices.size();
 }
