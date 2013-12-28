@@ -1,18 +1,18 @@
 # File:
-#       ./GLFunctions.list
+#    ./GLFunctions.list
 #
 # Author :
-#      Xonar <Paul le Roux>
+#   Xonar <Paul le Roux>
 #
 # Description:
-#      List from which GLFunctions and Appropriate Headers are generated
+#   List from which GLFunctions and Appropriate Headers are generated
 
 #Instructions:
-#   '#' indicates the start of a comment
-#   All blank lines will be ignored
+#  '#' indicates the start of a comment
+#  All blank lines will be ignored
 #
-#   Function Declerations of GL Functions can be found 
-#   from man-pages or other references
+#  Function Declerations of GL Functions can be found 
+#  from man-pages or other references
 
 #Draw
 void glDrawElementsBaseVertex(GLenum mode, GLsizei count, GLenum type, GLvoid *indices, GLint basevertex);
@@ -49,11 +49,13 @@ void glBufferData(GLenum target, GLsizeiptrARB size, const GLvoid * data, GLenum
 void glBufferSubData(GLenum target, GLintptr offset, GLsizeiptrARB size, const GLvoid * data);
 void glBindBufferBase(GLenum target, GLuint index, GLuint buffer);
 void glGetActiveUniformBlockiv(GLuint program, GLuint uniformBlockIndex, GLenum pname, GLint params);
+void * glMapBuffer(GLenum target, GLenum access);
+GLboolean glUnmapBuffer(GLenum target);
 
 #VAO
 void glBindVertexArray(GLuint array);
 void glGenVertexArrays(GLsizei n, GLuint *arrays);
-void glDeleteVertexArrays(GLsizei  n, const GLuint * arrays);
+void glDeleteVertexArrays(GLsizei n, const GLuint * arrays);
 
 #Uniform
 void glUniform1f(GLint location, GLfloat v0);
@@ -94,6 +96,7 @@ void glUniformMatrix4x3fv(GLint location, GLsizei count, GLboolean transpose, co
 
 GLint glGetUniformLocation(GLuint program, const GLchar *name);
 GLuint glGetUniformBlockIndex(GLuint program, const GLchar *uniformBlockName);
+void glUniformBlockBinding( GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding );
 
 #Vertex Attributes
 void glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer);
@@ -101,14 +104,25 @@ void glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei strid
 
 void glEnableVertexAttribArray(GLuint index);
 void glDisableVertexAttribArray(GLuint index);
-void glVertexAttribLPointer(GLuint index,  GLint size,  GLenum type,  GLsizei stride,  const GLvoid * pointer);
+void glVertexAttribLPointer(GLuint index, GLint size, GLenum type, GLsizei stride, const GLvoid * pointer);
 
 #Other
 const GLubyte* glGetStringi(GLenum name, GLuint index);
 
+#Framebuffer
+void glFramebufferTexture(GLenum target, GLenum attachment, GLuint texture, GLint level);
+void glFramebufferTexture1D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
+void glFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
+void glFramebufferTexture3D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint layer);
+
+void glDrawBuffers(GLsizei n, const GLenum *bufs);
+void glGenFramebuffers(GLsizei n, GLuint * buffers);
+void glBindFramebuffer(GLenum target, GLuint framebuffer);
+void glBlitFramebuffer(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1,GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1,GLbitfield mask, GLenum filter);
+
 #Functions not present in windows
 void glActiveTexture(GLenum texture);
-void glTexSubImage3D(GLenum target,  GLint level,  GLint xoffset,  GLint yoffset,  GLint zoffset,  GLsizei width,  GLsizei height,  GLsizei depth,  GLenum format,  GLenum type,  const GLvoid * data);
-void glTexImage3D(GLenum target,  GLint level,  GLint internalFormat,  GLsizei width,  GLsizei height,  GLsizei depth,  GLint border,  GLenum format,  GLenum type,  const GLvoid * data);
+void glTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid * data);
+void glTexImage3D(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid * data);
 
 #EOF
