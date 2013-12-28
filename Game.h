@@ -19,13 +19,6 @@
 
 GLint initializeGame();
 
-
 GLvoid updateGame();
-
-// TODO this function is only here in the testing phase 
-// where all the objects isn't fully functional.
-// All Entities will be responsible for their own drawing 
-// once they are registered to the Rendering Piepline
-GLvoid drawGame();
 
 #endif //_F_H_GAME_

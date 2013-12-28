@@ -15,6 +15,7 @@
 #include "Texture/Texture.h"
 #include "Model/Model.h"
 #include "Model/ModelLoader.h"
+#include "Material/Material.h"
 #include "Camera/Camera.h"
 #include "Graphics/Graphics.h"
 #include "Lib/FGLext.h"
@@ -26,15 +27,12 @@
 FModel **models;
 int modelNum;
 
-FCamera *camera;
+FModelGroup *modelGroup;
 
-GLuint uniformViewScreenMatrix = 0;
-GLuint uniformWorldViewMatrix = 0;
-GLuint uniformOrthoMatrix = 0;
-GLuint uniformFontSampler = 0;
+FMaterial **materials;
+int materialNum;
 
-FTexture2D *tex = NULL;
-GLint uniformTextureSampler = 0;
+FCamera *gCamera = NULL;
 
 FShader *shader = NULL;
 
@@ -42,14 +40,6 @@ FFont *font = NULL;
 
 GLint initializeGame()
 {
-  //Create Shader
-  shader = new FShader();
-
-  shader->loadShader("Shader/FX/3D/3DForward.glvs",GL_VERTEX_SHADER);
-  shader->loadShader("Shader/FX/3D/3DForward.glfs",GL_FRAGMENT_SHADER);
-
-  shader->loadProgram();
-
   //Load Scene
   FModelLoader loader = FModelLoader();
   const aiScene *scene = loader.loadScene("Assets/Beach.dae");
@@ -68,12 +58,12 @@ GLint initializeGame()
   {
     //Create Default Camera
     gLogv << "Using Default Camera" << std::endl;
-    camera = new FCamera();
+    gCamera = new FCamera();
 
-    camera->setViewPort(0,0,gWindow->getWindowWidth(),gWindow->getWindowHeight());
-    camera->setPosition(glm::vec3(4.f,3.f,-3.f));
-    camera->lookAt(glm::vec3(0.f,0.f,0.f));
-    camera->InitProjectionMatrix(45.f,0.1f,100.f);
+    gCamera->setViewPort(0,0,gWindow->getWindowWidth(),gWindow->getWindowHeight());
+    gCamera->setPosition(glm::vec3(4.f,3.f,-3.f));
+    gCamera->lookAt(glm::vec3(0.f,0.f,0.f));
+    gCamera->InitProjectionMatrix(45.f,0.1f,100.f);
   }
   else
   {
@@ -81,37 +71,32 @@ GLint initializeGame()
     gLogv << "Using Camera from model file" << std::endl;
     if(scene->mNumCameras > 1)
       gLogv << "\tIgnoring cameras after camera 1" << std::endl;
-    camera = loader.getCamera(0,scene);
+    gCamera = loader.getCamera(0,scene);
   }
 
   //Load ModelParts
-  FModelPart** parts = new FModelPart*[loader.getMeshCount()];
-
-  for(GLuint i = 0;i < loader.getMeshCount();i++)
-    parts[i] = loader.getMesh(i);
-
-  //Load Models
   models = new FModel*[loader.getMeshCount()];
 
   for(GLuint i = 0;i < loader.getMeshCount();i++)
-  {
-    models[i] = new FModel();
-    models[i]->loadModelFromPart(parts[i]);
-  }
+    models[i] = loader.getMesh(i);
 
   modelNum = loader.getMeshCount();
 
-  uniformViewScreenMatrix = glGetUniformLocation(shader->getProgram(), "ViewScreenMatrix" );
-  uniformWorldViewMatrix = glGetUniformLocation(shader->getProgram(), "WorldViewMatrix" );
- 
-  //Set Model Uniform Matrices
-  shader->bind();
-  camera->use();
-  camera->setMatrixUniform(uniformWorldViewMatrix, uniformViewScreenMatrix);
+  //Load Materials
+  materials = new FMaterial*[loader.getMaterialCount()];
 
-  //Set OpenGL Variables
-  glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LESS);
+  for(GLuint i = 0; i < loader.getMaterialCount();i++)
+    materials[i] = loader.getMaterial(i);
+
+  materialNum = loader.getMaterialCount();
+
+  //Create Model Group
+  modelGroup = new FModelGroup();
+  modelGroup->addModels(models, modelNum);
+  modelGroup->addMaterials(materials, materialNum);
+  modelGroup->finalize();
+
+  gModelEngine->registerModelGroup(modelGroup);
 
   //FFont
   font = new FFont();
@@ -119,38 +104,11 @@ GLint initializeGame()
 
   gFontEngine->addFont(font);
   
-  //Other
-  glEnable(GL_CULL_FACE);
-  glCullFace(GL_BACK);
-
-  glEnable (GL_BLEND);
-  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
   return 0;
 }
 
-GLvoid drawGame()
+GLvoid updateGame()
 {
-  //ENABLE Depth Test and Cull
-  glEnable(GL_CULL_FACE);
-  glEnable(GL_DEPTH_TEST);
-
-  //Bind Shader
-  shader->bind();
-
-  //Setup Screen Matrix
-  camera->use();
-
-  //Draw Models
-  for(int i = 0;i < modelNum;i++)
-  {
-    //Ready
-    models[i]->readyDraw();
-
-    //Render
-    models[i]->draw();
-  }
-
   //Draw some text
   font->drawText("Beach Scene DEMO", glm::vec2( 10, 10) );
 }
