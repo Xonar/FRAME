@@ -35,9 +35,12 @@ FFontEngine::FFontEngine()
 
   fontCamera.InitOrthoMatrix(0,gWindow->getWindowWidth(),0,gWindow->getWindowHeight());
 
-  this->uniformOrthoMatrix = glGetUniformBlockIndex(this->fontShader.getProgram(), "Matrices");
+  this->uniformOrthoMatrix = glGetUniformLocation(this->fontShader.getProgram(), "Ortho");
 
-  fontCamera.bindMatrixViewScreenToUBO(uniformOrthoMatrix);
+  //Set Ortho Matrix Value
+  fontShader.bind();
+  fontCamera.use();
+  fontCamera.setMatrixUniform(uniformOrthoMatrix);
 
   //OpenGL Buffers
   glGenVertexArrays(1, &this->vao);
@@ -109,9 +112,6 @@ void FFontEngine::render()
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(FVertexText) * vertices.size(), &vertices[0],
                    GL_DYNAMIC_DRAW);
-
-  //Bind OrthoMatrix
-  fontCamera.use();
 
   GLint numChars = 0;
 

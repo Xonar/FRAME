@@ -9,10 +9,7 @@ layout(location = 2) in int ch;
 out vec2 vstex;
 flat out int vschar;
 
-uniform Matrices
-{
-  uniform mat4 Ortho;
-};
+uniform mat4 Ortho;
 
 //Main
 void main()
