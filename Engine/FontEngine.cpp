@@ -93,6 +93,13 @@ void FFontEngine::addText(const GLint font, const std::string &text, const glm::
 
 void FFontEngine::render()
 {
+  //Set default framebuffer
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+  //Enable Blend States
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   //Disable Culling and Depth Testing
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_CULL_FACE);
