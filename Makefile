@@ -53,6 +53,12 @@ clean:
 	rm -f -r $(BUILD_DIR)
 	rm -f ./Graphics/GLFunctions.cpp ./Graphics/GLFunctions.h
 
+#Create Trace
+trace:
+	rm FRAME.trace
+	apitrace trace ./FRAME
+	qapitrace FRAME.trace
+
 #Executable : Objects
 $(EXECUTABLE) : $(OBJ_FILES)
 	$(LD) -o $(EXECUTABLE) $(OBJ_FILES) $(LDFLAGS)
