@@ -33,6 +33,8 @@ class FCamera
 
     glm::mat4 ViewScreenMatrix; //Projection or Ortho
     bool updateViewScreenMatrix;  
+
+    glm::mat4 wvs;
     //Attributes
     bool ready;
     glm::vec3 pos;
@@ -40,11 +42,10 @@ class FCamera
     glm::vec3 up;
 
     //GL Buffers
-    GLuint ubViewScreen;
-    GLuint ubWorldView;
+    GLuint ubo;
 
     //Functions
-    GLint updateUBO();
+    GLint update();
   public:
     FCamera();
     ~FCamera();
@@ -63,12 +64,10 @@ class FCamera
 
     GLvoid use();
 
-    void bindMatrixWorldViewToUBO(const GLuint block) const;
-    void bindMatrixViewScreenToUBO(const GLuint block) const;
+    void bindMatrixUBO(const GLuint block) const;
 
-    void setMatrixUniform(const GLuint worldView, const GLuint viewScreen) const;
-    void setMatrixUniformWorldView(const GLuint uniform) const;
-    void setMatrixUniformViewScreen(const GLuint uniform) const;
+    void setMatrixUniformBuffer() const;
+    void setMatrixUniform(const GLuint uniform) const;
 };
 
 #endif // _F_H_CAMERA_

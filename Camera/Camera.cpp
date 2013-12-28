@@ -29,20 +29,20 @@ FCamera::FCamera()
   this->dir = glm::vec3(0,0,1);
   this->up  = glm::vec3(0,1,0);
 
-  this->ubViewScreen = this->ubWorldView = 0;
+  this->ubo = 0;
+
+  this->WorldViewMatrix = this->ViewScreenMatrix = glm::mat4();
 }
 
 FCamera::~FCamera()
 {
-  if(this->ubViewScreen)
-    glDeleteBuffers(1, &this->ubViewScreen);
-  if(this->ubWorldView)
-    glDeleteBuffers(1, &this->ubWorldView);
+  if(this->ubo)
+    glDeleteBuffers(1, &this->ubo);
 
-  this->ubViewScreen = this->ubWorldView = 0;
+  this->ubo = 0;
 }
 
-GLint FCamera::updateUBO()
+GLint FCamera::update()
 {
   //If intialized
   if(this->ready)
@@ -51,21 +51,13 @@ GLint FCamera::updateUBO()
     if(this->updateWorldViewMatrix)
     {
       this->WorldViewMatrix = glm::lookAt(pos, pos+dir, up);
-      this->updateWorldViewMatrix = false;
-      
-      glBindBuffer(GL_UNIFORM_BUFFER, this->ubWorldView);
-
-      glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), &this->WorldViewMatrix[0][0], GL_DYNAMIC_DRAW);
     }
 
-    //Only update if it's neccesary
-    if(this->updateViewScreenMatrix)
+    //If Something Changed
+    if(this->updateViewScreenMatrix || this->updateWorldViewMatrix)
     {
-      this->updateViewScreenMatrix = false;
-
-      glBindBuffer(GL_UNIFORM_BUFFER, this->ubViewScreen);
-
-      glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), &this->ViewScreenMatrix[0][0], GL_DYNAMIC_DRAW);
+      this->wvs = this->ViewScreenMatrix * this->WorldViewMatrix;
+      this->updateViewScreenMatrix = this->updateWorldViewMatrix = false;
     }
   }
   else
@@ -96,15 +88,6 @@ GLint FCamera::InitOrthoMatrix( const float left, const float right, const float
   this->height = top - bottom;
   this->aspect = (float)this->width/this->height;
 
-  //Create a allocate ViewScreen and WorlView Matrix
-  glGenBuffers(1, &this->ubViewScreen);
-  glBindBuffer(GL_UNIFORM_BUFFER, this->ubViewScreen);
-  glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STREAM_DRAW);
-
-  glGenBuffers(1, &this->ubWorldView);
-  glBindBuffer(GL_UNIFORM_BUFFER, this->ubWorldView);
-  glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STREAM_DRAW);
-
   this->updateViewScreenMatrix = true;
 
   this->ViewScreenMatrix = glm::ortho(left,right,bottom,top,zNear,zFar);
@@ -123,11 +106,6 @@ GLint FCamera::InitOrthoMatrix(const float left, const float right, const float 
   this->height = top - bottom;
   this->aspect = (float)this->width/this->height;
 
-  //Create a allocate View Screen Matrix
-  glGenBuffers(1, &this->ubViewScreen);
-  glBindBuffer(GL_UNIFORM_BUFFER, this->ubViewScreen);
-  glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STREAM_DRAW);
-
   this->updateViewScreenMatrix = true;
   this->updateWorldViewMatrix = false;
 
@@ -140,17 +118,7 @@ GLint FCamera::InitOrthoMatrix(const float left, const float right, const float 
 //Init Projection Matrix
 GLint FCamera::InitProjectionMatrix(const float fovy, const float zNear, const float zFar)
 {
-  //Create a allocate ViewScreen and WorlView Matrix
-  glGenBuffers(1, &this->ubViewScreen);
-  glBindBuffer(GL_UNIFORM_BUFFER, this->ubViewScreen);
-  glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STREAM_DRAW);
-
-  glGenBuffers(1, &this->ubWorldView);
-  glBindBuffer(GL_UNIFORM_BUFFER, this->ubWorldView);
-  glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), NULL, GL_STREAM_DRAW);
-
   this->updateViewScreenMatrix = true;
-
   this->ViewScreenMatrix = glm::perspective(fovy, this->aspect, zNear, zFar);
 
   this->ready = true;
@@ -184,33 +152,11 @@ GLvoid FCamera::setUp(const glm::vec3 &up)
 GLvoid FCamera::use()
 {
   glViewport(this->x,this->y,this->width,this->height);
-  
-  this->updateUBO();
-}
-
-void FCamera::bindMatrixWorldViewToUBO(const GLuint block) const
-{
-  glBindBufferBase(GL_UNIFORM_BUFFER, block, this->ubViewScreen);
-}
-
-void FCamera::bindMatrixViewScreenToUBO(const GLuint block) const
-{
-  glBindBufferBase(GL_UNIFORM_BUFFER, block, this->ubViewScreen);
+  this->update();
 }
 
 //Use Camera (No UBO)
-void FCamera::setMatrixUniform(const GLuint worldView, const GLuint viewScreen) const
+void FCamera::setMatrixUniform(const GLuint uniform) const
 {
-  glUniformMatrix4fv(worldView, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
-  glUniformMatrix4fv(viewScreen, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
-}
-
-void FCamera::setMatrixUniformWorldView(const GLuint uniform) const
-{
-  glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->WorldViewMatrix[0][0] );
-}
-
-void FCamera::setMatrixUniformViewScreen(const GLuint uniform) const
-{
-  glUniformMatrix4fv(uniform, 1, GL_FALSE, &this->ViewScreenMatrix[0][0] );
+  glUniformMatrix4fv(uniform, 1, GL_FALSE, &wvs[0][0] );
 }
