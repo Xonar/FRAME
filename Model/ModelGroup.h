@@ -12,26 +12,21 @@
 #ifndef _F_H_MODEL_GROUP_
 #define _F_H_MODEL_GROUP_
 
-#include "ModelHandler.h"
+#include "Model.h"
 #include "../Texture/Texture.h"
 #include "../Graphics/Graphics.h"
 
 class FModelGroup
 {
   private:
-  
     //Buffers
     GLuint vbo;
     GLuint ibo;
     GLuint vao;
 
-    //Texture Objects
-    FTexture2DArray *tTexture;
-    FTexture2DArray *tHeightMap;
-    FTexture2DArray *tNormalMap;
-
     //Models
-    std::vector<FModelHandler> models;
+    std::vector<FModel*> models;
+    std::vector<FMaterial*> materials;
   public:
     FModelGroup();
     ~FModelGroup();
@@ -41,8 +36,12 @@ class FModelGroup
 
     GLvoid drawModelGroup() const;
 
-    GLvoid addModelHandler(const FModelHandler& handler);
-    GLvoid finalizeModelGroup();
+    GLvoid addModel(FModel *model);
+    GLvoid addModels(FModel **models, const GLuint modelNum); 
+    GLvoid addMaterial(FMaterial *material);
+    GLvoid addMaterials(FMaterial **materials, const GLuint materialNum);
+
+    GLvoid finalize();
 };
 
 #endif //_F_H_MODEL_GROUP
