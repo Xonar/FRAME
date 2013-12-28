@@ -23,7 +23,7 @@
 
 #include "../Graphics/Graphics.h"
 #include "../Camera/Camera.h"
-#include "../Model/ModelPart.h"
+#include "../Model/Model.h"
 #include "../Material/Material.h"
 
 //Functions that convert between assimp classes and glm structs
@@ -58,7 +58,7 @@ class FModelLoader
 
     //Get Mesh[Count]
     GLuint getMeshCount(const aiScene *s = scene);
-    FModelPart* getMesh(const GLuint i, const aiScene *s = scene);
+    FModel* getMesh(const GLuint i, const aiScene *s = scene);
 
     //Get Bone[Count]
     GLuint getBoneCount(const aiMesh *m = mesh);

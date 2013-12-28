@@ -154,7 +154,7 @@ GLuint FModelLoader::getMeshCount(const aiScene *s)
   }
 }
 
-FModelPart* FModelLoader::getMesh(const GLuint i, const aiScene *s)
+FModel* FModelLoader::getMesh(const GLuint i, const aiScene *s)
 {
   if(s != NULL)
   {
@@ -207,11 +207,15 @@ FModelPart* FModelLoader::getMesh(const GLuint i, const aiScene *s)
       //Create Model Part
       part->loadModelPartFromVerticesAndIndices(vertices, numVertices, indices, numIndices);
 
+      //Create Model from part and material
+      FModel *model = new FModel();
+      model->createModelFromPartsAndMaterial(&part, 1, mesh->mMaterialIndex);
+
       //Free Memory
       delete[] vertices;
       delete[] indices;
 
-      return part;
+      return model;
     }
     else
     {
