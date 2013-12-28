@@ -1,0 +1,21 @@
+#version 330
+
+//Input
+in vec2 ftex;
+in vec3 fnorm;
+in vec3 fpos;
+
+//Output - Deffered Textures
+layout(location = 0) out vec3 dCol;
+layout(location = 1) out vec3 dNorm;
+layout(location = 2) out vec3 dPos;
+
+uniform mat4 ModelWorldMatrix;
+
+//Main
+void main()
+{
+  dCol = vec3(1,1,1);
+  dNorm = fnorm.xyz;
+  dPos = fpos.xyz;
+}

@@ -1,20 +1,20 @@
 #version 330
 
 //Output From Previous Vertex Shader
-layout(location = 0) in vec4 vspos;
+layout(location = 0) in vec3 vspos;
 layout(location = 1) in vec2 vstex;
-layout(location = 2) in vec4 vsnorm;
+layout(location = 2) in vec3 vsnorm;
 
 uniform mat4 WorldViewScreenMatrix;
 
 out vec2 ftex;
-out vec4 fnorm;
-out vec4 fpos;
+out vec3 fnorm;
+out vec3 fpos;
 
 void main()
 {
   ftex = vstex;
   fnorm = vsnorm;
   fpos = vspos;
-  gl_Position = WorldViewScreenMatrix * vspos;
+  gl_Position = WorldViewScreenMatrix * vec4(vspos,1);
 }
