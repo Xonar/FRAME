@@ -155,12 +155,15 @@ int FWindow::Render() const
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  //Render Game
-  FTime startTime = FGetTime();
-  drawGame();
-  FTime endTime = FGetTime();
+  //Reset Timer
+  static FTime timer = FGetTime();
+  FTime oldTimer = timer;
+  timer = FGetTime();
 
-  FTime diffTime = endTime - startTime;
+  //Draw 3D Scene
+  gRenderEngine->render();
+
+  FTime diffTime = timer - oldTimer;
   minTime = std::min(minTime, diffTime);
   maxTime = std::max(diffTime, maxTime);
 
