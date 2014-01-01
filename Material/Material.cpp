@@ -63,5 +63,13 @@ FMaterial::~FMaterial()
 }
 
 //Materials not yet implemented in shader and we can't bind to nothing
-//FMaterial::bindMaterial(GLint index);
+void FMaterial::bindMaterial(GLint index)
+{
+  //Ignore Specular Components for now
+
+  //Bind Textures to corrosponding units
+  if(this->tDiffuse) tDiffuse->bindTexture(GL_TEXTURE0);
+  if(this->tNormal) tNormal->bindTexture(GL_TEXTURE1);
+  if(this->tHeight) tHeight->bindTexture(GL_TEXTURE2);
+}
 

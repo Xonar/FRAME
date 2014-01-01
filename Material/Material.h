@@ -35,7 +35,7 @@ class FMaterial
     FMaterial(aiMaterial *material);
     ~FMaterial();
 
-    GLvoid bindMaterial(GLint index);
+    void bindMaterial(GLint index);
 };
 
 #endif //_F_H_MATERIAL_
