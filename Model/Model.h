@@ -35,6 +35,7 @@ class FModel
     void createModelFromPartsAndMaterial(FModelPart **parts, GLuint numParts, GLuint material);
     
     std::vector<FModelPart*>& getParts() { return parts; }
+    GLuint getMaterialIndex() const { return this->materialIndex; }
 
     void drawModel() const;
 };
