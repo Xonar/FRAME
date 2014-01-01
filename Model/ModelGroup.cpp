@@ -36,10 +36,15 @@ void FModelGroup::drawModelGroupGeometry() const
 
 void FModelGroup::drawModelGroupTextured() const
 {
+  GLuint lastMaterialIndex = ~0;
   for(const FModel *it : this->models)
   {
     GLuint materialIndex = it->getMaterialIndex();
-    this->materials[materialIndex]->bindMaterial(0); //Ignore uniform block 
+    if(lastMaterialIndex != materialIndex)
+    {
+      this->materials[materialIndex]->bindMaterial(0); //Ignore uniform block 
+      lastMaterialIndex = materialIndex;
+    }
     it->drawModel();
   }
 }
@@ -66,6 +71,10 @@ GLvoid FModelGroup::addMaterials(FMaterial **materials, const GLuint materialNum
 
 GLvoid FModelGroup::finalize()
 {
+  //Sort Models according to materials
+  std::sort(this->models.begin(), this->models.end(), 
+        [](FModel* a, FModel* b) { return a->getMaterialIndex() < b->getMaterialIndex(); });
+
   //Create OpenGL buffers
   glGenVertexArrays(1, &this->vao);
   glGenBuffers(1, &this->vbo);
