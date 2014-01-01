@@ -73,7 +73,14 @@ FRenderEngine::FRenderEngine()
   //Get Uniform Locations from them
   this->u_deferred_wvs_matrix = glGetUniformLocation(s_deferred.getProgram(), "WorldViewScreenMatrix");
   this->u_deferred_mw_matrix = glGetUniformLocation(s_world.getProgram(), "ModelWorldMatrix");
-  
+  this->u_deferred_texture_sampler = glGetUniformLocation(s_deferred.getProgram(), "tTexture");
+  this->u_deferred_normal_sampler = glGetUniformLocation(s_deferred.getProgram(), "tNormal");
+  this->u_deferred_height_sampler = glGetUniformLocation(s_deferred.getProgram(), "tHeight");
+
+  //Bind Samplers to texture units
+  glUniform1i(u_deferred_texture_sampler, 0);
+  glUniform1i(u_deferred_normal_sampler, 1);
+  glUniform1i(u_deferred_height_sampler, 2);
 }
 
 void FRenderEngine::Init()
@@ -108,7 +115,7 @@ void FRenderEngine::render()
   glDisable(GL_BLEND);
 
   //Draw
-  gModelEngine->drawGeometry();
+  gModelEngine->drawTextured();
 
   //For Each Shadowing Light
   //TODO

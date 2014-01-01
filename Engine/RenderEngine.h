@@ -37,6 +37,9 @@ class FRenderEngine
   //Uniforms
   GLuint u_deferred_wvs_matrix;
   GLuint u_deferred_mw_matrix;
+  GLuint u_deferred_texture_sampler;
+  GLuint u_deferred_normal_sampler;
+  GLuint u_deferred_height_sampler;
 
  public:
   FRenderEngine();

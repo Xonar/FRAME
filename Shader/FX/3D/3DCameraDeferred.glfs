@@ -9,13 +9,17 @@ in vec3 fpos;
 layout(location = 0) out vec3 dCol;
 layout(location = 1) out vec3 dNorm;
 layout(location = 2) out vec3 dPos;
+//layout(location = 3) out vec2 dSpec;
 
 uniform mat4 ModelWorldMatrix;
+
+uniform sampler2D tTexture;
+//uniform sampler2D tNormal;
 
 //Main
 void main()
 {
-  dCol = vec3(1,1,1);
+  dCol = texture(tTexture, ftex).xyz;
   dNorm = fnorm.xyz;
   dPos = fpos.xyz;
 }
