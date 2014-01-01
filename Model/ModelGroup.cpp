@@ -26,10 +26,20 @@ void FModelGroup::readyModelGroup() const
   glBindVertexArray(this->vao);
 }
 
-void FModelGroup::drawModelGroup() const
+void FModelGroup::drawModelGroupGeometry() const
 {
   for(const FModel *it : this->models)
   {
+    it->drawModel();
+  }
+}
+
+void FModelGroup::drawModelGroupTextured() const
+{
+  for(const FModel *it : this->models)
+  {
+    GLuint materialIndex = it->getMaterialIndex();
+    this->materials[materialIndex]->bindMaterial(0); //Ignore uniform block 
     it->drawModel();
   }
 }

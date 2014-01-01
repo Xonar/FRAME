@@ -32,9 +32,9 @@ class FModelGroup
     ~FModelGroup();
 
     GLvoid readyModelGroup() const;
-    GLvoid readyModelGroupTextures() const;
 
-    GLvoid drawModelGroup() const;
+    GLvoid drawModelGroupGeometry() const;
+    GLvoid drawModelGroupTextured() const;
 
     GLvoid addModel(FModel *model);
     GLvoid addModels(FModel **models, const GLuint modelNum); 
