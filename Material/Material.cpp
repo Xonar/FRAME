@@ -11,6 +11,7 @@
 
 #include "Material.h"
 #include <assimp/types.h>
+#include "../Lib/Log.h"
 
 FMaterial::FMaterial(aiMaterial *material)
 {
@@ -27,6 +28,11 @@ FMaterial::FMaterial(aiMaterial *material)
     material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
     this->tDiffuse->loadTextureFromFile("Assets/" + std::string(path.C_Str()));
   }
+  else
+  {
+    gLogw << "Material Without Diffuse Texture!" << std::endl;
+    this->tDiffuse = NULL;
+  }
 
   //Normals
   if(material->GetTextureCount(aiTextureType_NORMALS) > 0)
@@ -36,6 +42,8 @@ FMaterial::FMaterial(aiMaterial *material)
     material->GetTexture(aiTextureType_NORMALS, 0, &path);
     this->tNormal->loadTextureFromFile("Assets/" + std::string(path.C_Str()));
   }
+  else
+    this->tNormal = NULL;
 
   //Height Map
   if(material->GetTextureCount(aiTextureType_HEIGHT) > 0)
@@ -45,6 +53,8 @@ FMaterial::FMaterial(aiMaterial *material)
     material->GetTexture(aiTextureType_HEIGHT, 0, &path);
     this->tHeight->loadTextureFromFile("Assets/" + std::string(path.C_Str()));
   }
+  else
+    this->tHeight = NULL;
 }
 
 FMaterial::~FMaterial()
