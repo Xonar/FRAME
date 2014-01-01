@@ -29,10 +29,7 @@ class FMaterial
     FTexture2D *tNormal;
 
     //Phong-Blinn Properties
-    glm::vec3 diffuse;
-    glm::vec3 ambient;
     glm::vec3 specular;
-    glm::vec3 emissive;
     GLfloat shininess;
   public:
     FMaterial(aiMaterial *material);

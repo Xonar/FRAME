@@ -14,11 +14,8 @@
 
 FMaterial::FMaterial(aiMaterial *material)
 {
-  material->Get(AI_MATKEY_COLOR_DIFFUSE, this->diffuse);
-  material->Get(AI_MATKEY_COLOR_AMBIENT, this->ambient);
   material->Get(AI_MATKEY_COLOR_SPECULAR, this->specular);
-  material->Get(AI_MATKEY_COLOR_EMISSIVE, this->emissive);
-  material->Get(AI_MATKEY_SHININESS, this->shininess);
+  material->Get(AI_MATKEY_SHININESS, this->shininess); //Exponenet
 
   //Get Texture
 
