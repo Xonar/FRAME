@@ -55,7 +55,7 @@ clean:
 
 #Create Trace
 trace:
-	rm FRAME.trace
+	-rm FRAME.trace
 	apitrace trace ./FRAME
 	qapitrace FRAME.trace
 
