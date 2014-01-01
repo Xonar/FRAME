@@ -45,6 +45,7 @@ const aiScene* FModelLoader::loadScene(const std::string &path)
   | aiProcess_JoinIdenticalVertices
   | aiProcess_GenSmoothNormals
   | aiProcess_ValidateDataStructure 
+  | aiProcess_FlipUVs
     );
 
   if(!scene)
