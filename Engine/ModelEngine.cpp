@@ -20,7 +20,16 @@ void FModelEngine::drawGeometry()
   for(const FModelGroup *it : this->modelGroups)
   {
     it->readyModelGroup();
-    it->drawModelGroup();
+    it->drawModelGroupGeometry();
+  }
+}
+
+void FModelEngine::drawTextured()
+{
+  for(const FModelGroup *it : this->modelGroups)
+  {
+    it->readyModelGroup();
+    it->drawModelGroupTextured();
   }
 }
 
