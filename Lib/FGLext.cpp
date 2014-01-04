@@ -166,6 +166,9 @@ GLvoid glVertexAttribPointers( FVertexEnum type )
       glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(FVertexText), (GLvoid*) (sizeof(float) * 2) );
       glVertexAttribIPointer(2, 1, GL_INT, sizeof(FVertexText), (GLvoid*) (sizeof(float) * 4) );
       break;
+    case F_VERTEX_DEFERRED:
+      glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(FVertexDeferred), NULL);
+      break;
     default:
       std::cerr << "F_INVALID_ENUM" << std::endl;
 
@@ -180,8 +183,9 @@ GLvoid glEnableVertexAttribs( FVertexEnum type )
     case F_VERTEX_TEXT:
       glEnableVertexAttribArray(2);
     case F_VERTEX_2:
-      glEnableVertexAttribArray(0);
       glEnableVertexAttribArray(1);
+    case F_VERTEX_DEFERRED:
+      glEnableVertexAttribArray(0);
       break;
    default:
       std::cerr << "F_INVALID_ENUM" << std::endl;
@@ -196,9 +200,9 @@ GLvoid glDisableVertexAttribs( FVertexEnum type )
     case F_VERTEX_TEXT:
       glDisableVertexAttribArray(2);
     case F_VERTEX_2:
-      glDisableVertexAttribArray(0);
       glDisableVertexAttribArray(1);
-      break;
+    case F_VERTEX_DEFERRED:
+      glDisableVertexAttribArray(0);
    default:
       std::cerr << "F_INVALID_ENUM" << std::endl;
   }
