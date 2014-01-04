@@ -48,7 +48,7 @@ GLint initializeGame()
   gLogv << "Model File : " << "Assets/Beach.dae" << std::endl;
   gLogv << "\tLights : " << scene->mNumLights << " (IGNORED)" << std::endl;
   gLogv << "\tAnimations : " << scene->mNumAnimations << " (IGNORED)" << std::endl;
-  gLogv << "\tMaterials : " << scene->mNumMaterials << " (IGNORED)" << std::endl;
+  gLogv << "\tMaterials : " << scene->mNumMaterials << " (PARTIALLY IMPLEMENTED)" << std::endl;
   gLogv << "\tMeshes : " << scene->mNumMeshes << std::endl;
   gLogv << "\tCameras : " << scene->mNumCameras << std::endl;
   gLogv << "\tTextures : " << scene->mNumTextures << " (IGNORED)" << std::endl;
