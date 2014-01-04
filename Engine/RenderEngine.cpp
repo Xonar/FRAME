@@ -21,7 +21,6 @@ FRenderEngine::FRenderEngine()
 
   //Create FBOs
   glGenFramebuffers(1, &this->fbo_deferred);
-  glGenFramebuffers(1, &this->fbo_final);
 
   //Create Textures
   glGenTextures(1, &this->t_deferred_col);
@@ -54,25 +53,15 @@ FRenderEngine::FRenderEngine()
   GLenum drawBuffers[] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
   glDrawBuffers(3, drawBuffers);
 
-  //TODO Final Buffer
-
   //Load Shaders
   this->s_deferred = FShader();
   this->s_deferred.loadShader("Shader/FX/3D/3DCameraView.glvs", GL_VERTEX_SHADER);
   this->s_deferred.loadShader("Shader/FX/3D/3DCameraDeferred.glfs", GL_FRAGMENT_SHADER);
   this->s_deferred.loadProgram();
 
-  this->s_world = FShader();
-  this->s_world.loadShader("Shader/FX/3D/3DWorld.glvs", GL_VERTEX_SHADER);
-  this->s_world.loadProgram();
-
-  this->s_final = FShader();
-  //this->s_final.loadShader("Shader/FX/3D/final.glfs" ,GL_FRAGMENT_SHADER);
-  //this->s_final.loadProgram();
 
   //Get Uniform Locations from them
   this->u_deferred_wvs_matrix = glGetUniformLocation(s_deferred.getProgram(), "WorldViewScreenMatrix");
-  this->u_deferred_mw_matrix = glGetUniformLocation(s_world.getProgram(), "ModelWorldMatrix");
   this->u_deferred_texture_sampler = glGetUniformLocation(s_deferred.getProgram(), "tTexture");
   this->u_deferred_normal_sampler = glGetUniformLocation(s_deferred.getProgram(), "tNormal");
   this->u_deferred_height_sampler = glGetUniformLocation(s_deferred.getProgram(), "tHeight");

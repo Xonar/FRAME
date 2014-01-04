@@ -21,7 +21,6 @@ class FRenderEngine
  private:
   //FBO's
   GLuint fbo_deferred;
-  GLuint fbo_final;
 
   //Textures
   GLuint t_deferred_col;
@@ -30,9 +29,7 @@ class FRenderEngine
   GLuint t_deferred_depth;
 
   //Shaders
-  FShader s_world;
   FShader s_deferred;
-  FShader s_final;
 
   //Uniforms
   GLuint u_deferred_wvs_matrix;
