@@ -48,6 +48,12 @@ struct FVertex3
   glm::vec3 nor;
 };
 
-enum FVertexEnum { F_VERTEX_TEXT, F_VERTEX_3, F_VERTEX_2 };
+//Deferred Vertex
+struct FVertexDeferred
+{
+  glm::vec2 pos;
+};
+
+enum FVertexEnum { F_VERTEX_TEXT, F_VERTEX_3, F_VERTEX_2, F_VERTEX_DEFERRED };
 
 #endif //_F_H_CONTAINER
