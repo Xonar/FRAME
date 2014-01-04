@@ -1,0 +1,11 @@
+#version 330
+
+layout(location = 0) in vec2 vert;
+
+out vec2 fTex;
+
+void main()
+{
+  fTex = vert;
+  gl_Position = vec4(2 * (vert - vec2(0.5,0.5)), 0, 1);
+}

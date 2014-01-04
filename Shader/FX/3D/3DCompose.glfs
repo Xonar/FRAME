@@ -1,0 +1,21 @@
+#version 330
+
+//Textures of from other renderers
+uniform sampler2D tDiffuse;
+uniform sampler2D tDepth;
+uniform sampler2D tNormal;
+
+in vec2 fTex;
+out vec4 col;
+
+void main()
+{
+  col.xyz = texture(tDiffuse, fTex).xyz;
+  float lambert = clamp(dot(texture(tNormal, fTex).xyz, normalize(vec3(5,0,3))),0,1);
+  col.w = 1.0f;
+
+
+  col.xyz *= lambert;
+  
+  //col.xyz = vec3(fTex,1);
+}
