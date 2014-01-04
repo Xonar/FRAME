@@ -30,6 +30,7 @@ class FRenderEngine
 
   //Shaders
   FShader s_deferred;
+  FShader s_compose;
 
   //Uniforms
   GLuint u_deferred_wvs_matrix;
@@ -37,6 +38,14 @@ class FRenderEngine
   GLuint u_deferred_texture_sampler;
   GLuint u_deferred_normal_sampler;
   GLuint u_deferred_height_sampler;
+  GLuint u_compose_diffuse_sampler;
+  GLuint u_compose_normal_sampler;
+  GLuint u_compose_depth_sampler;
+
+  //Deferred Qua
+  GLuint vao;
+  GLuint vbo;
+  GLuint ibo;
 
  public:
   FRenderEngine();

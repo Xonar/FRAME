@@ -13,6 +13,7 @@
 #include "../Global.h"
 #include "../Graphics/Graphics.h"
 #include "../Lib/Log.h"
+#include "../Lib/FGLext.h"
 
 FRenderEngine::FRenderEngine()
 {
@@ -67,6 +68,10 @@ FRenderEngine::FRenderEngine()
   this->s_deferred.loadShader("Shader/FX/3D/3DCameraDeferred.glfs", GL_FRAGMENT_SHADER);
   this->s_deferred.loadProgram();
 
+  this->s_compose = FShader();
+  this->s_compose.loadShader("Shader/FX/3D/3DCompose.glvs", GL_VERTEX_SHADER);
+  this->s_compose.loadShader("Shader/FX/3D/3DCompose.glfs", GL_FRAGMENT_SHADER);
+  this->s_compose.loadProgram();
 
   //Get Uniform Locations from them
   this->u_deferred_wvs_matrix = glGetUniformLocation(s_deferred.getProgram(), "WorldViewScreenMatrix");
@@ -74,10 +79,43 @@ FRenderEngine::FRenderEngine()
   this->u_deferred_normal_sampler = glGetUniformLocation(s_deferred.getProgram(), "tNormal");
   this->u_deferred_height_sampler = glGetUniformLocation(s_deferred.getProgram(), "tHeight");
 
+  this->u_compose_normal_sampler = glGetUniformLocation(s_compose.getProgram(), "tNormal");
+  this->u_compose_diffuse_sampler = glGetUniformLocation(s_compose.getProgram(), "tDiffuse");
+  this->u_compose_depth_sampler = glGetUniformLocation(s_compose.getProgram(), "tDepth");
+
   //Bind Samplers to texture units
+  s_deferred.bind();
   glUniform1i(u_deferred_texture_sampler, 0);
   glUniform1i(u_deferred_normal_sampler, 1);
   glUniform1i(u_deferred_height_sampler, 2);
+
+  s_compose.bind();
+  glUniform1i(u_compose_diffuse_sampler, 0);
+  glUniform1i(u_compose_depth_sampler, 1);
+  glUniform1i(u_compose_normal_sampler, 2);
+
+  //Create Quad for Deferred pass
+  glGenBuffers(1, &this->ibo);
+  glGenBuffers(1, &this->vbo);
+  glGenVertexArrays(1, &this->vao);
+
+  //Buffer Data
+  GLubyte ib[] = {0,1,2,0,2,3};
+  FVertexDeferred vb[] = {glm::vec2(0.f,0.f), glm::vec2(0.f,1.f), 
+                          glm::vec2(1.f,1.f), glm::vec2(1.f,0.f)};
+
+  //Bind Buffers
+  glBindVertexArray(this->vao);
+  glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->ibo);
+
+  //Upload Data
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLubyte) * 6, ib, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(FVertexDeferred) * 4, vb, GL_STATIC_DRAW);
+
+  //Set Vertex Attributes
+  glEnableVertexAttribs(F_VERTEX_DEFERRED);
+  glVertexAttribPointers(F_VERTEX_DEFERRED);
 }
 
 void FRenderEngine::Init()
@@ -114,18 +152,36 @@ void FRenderEngine::render()
   //Draw
   gModelEngine->drawTextured();
 
-  //For Each Shadowing Light
-  //TODO
+  //Ready
+  glDepthMask(GL_FALSE);
+  glDisable(GL_DEPTH_TEST);
+  glDisable(GL_CULL_FACE);
 
-  //TODO Compose scene
+  //TODO Lights
 
-  //FIXME Currently drawing buffers to screen patches for testing
+  //Compose scene
+
+  //Reset Framebuffer so that textures aren't in use
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-  glBindFramebuffer(GL_READ_FRAMEBUFFER, this->fbo_deferred);
-  glReadBuffer(GL_COLOR_ATTACHMENT0);
-  glBlitFramebuffer(0,0,640,480,320,240,640,480,GL_COLOR_BUFFER_BIT,GL_LINEAR);
-  glReadBuffer(GL_COLOR_ATTACHMENT1);
-  glBlitFramebuffer(0,0,640,480,0,0,320,240,GL_COLOR_BUFFER_BIT,GL_LINEAR);
-  glReadBuffer(GL_COLOR_ATTACHMENT2);
-  glBlitFramebuffer(0,0,640,480,320,0,640,240,GL_COLOR_BUFFER_BIT,GL_LINEAR);
+
+  //Ready by Binding Shader
+  s_compose.bind();
+  
+  //Bind Textures
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, t_deferred_col);
+  glActiveTexture(GL_TEXTURE1);
+  glBindTexture(GL_TEXTURE_2D, t_deferred_depth);
+  glActiveTexture(GL_TEXTURE2);
+  glBindTexture(GL_TEXTURE_2D, t_deferred_norm);
+
+  //Aim with vertex array object
+  glBindVertexArray(this->vao);
+
+  //Fire
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, NULL);
+
+  //Reset state
+  glDepthMask(GL_TRUE);
 }
+
