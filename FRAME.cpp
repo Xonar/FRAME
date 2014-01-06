@@ -30,6 +30,7 @@ FFontEngine *gFontEngine;
 FRenderEngine* gRenderEngine;
 FModelEngine* gModelEngine;
 FFont *gFontConsole;
+FKeyboard *gKeyboard;
 bool gDisplayFrameStats = true;
 
 int main(int argc, char *argv[])
@@ -105,6 +106,9 @@ int main(int argc, char *argv[])
 
   gRenderEngine->Init();
 
+  //Init IO
+  gKeyboard = new FKeyboard();
+
   //Game Loop
   while(gGameOn)
   {
@@ -119,6 +123,9 @@ int main(int argc, char *argv[])
         break;
       }
     }
+
+    //Update IO
+    gKeyboard->updateState();
     
     //Update
     updateGame();

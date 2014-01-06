@@ -18,6 +18,7 @@
 #include "Engine/RenderEngine.h"
 #include "Graphics/Graphics.h"
 #include "Camera/Camera.h"
+#include "Keyboard/Keyboard.h"
 
 //FRAME
 extern bool gGameOn;
@@ -35,6 +36,9 @@ extern FFont *gFontConsole;
 
 //Player Camera
 extern FCamera *gCamera;
+
+//IO
+extern FKeyboard *gKeyboard;
 
 //TERMINAL COLOUR CODES
 #ifdef COLOUR_TERMINAL
