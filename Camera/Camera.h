@@ -62,6 +62,10 @@ class FCamera
     GLvoid setDirection(const glm::vec3 &dir);
     GLvoid setUp(const glm::vec3 &up);
 
+    inline glm::vec3 getPosition() const { return this->pos; }
+    inline glm::vec3 getDirection() const { return this->dir; }
+    inline glm::vec3 getUp() const { return this->up; }
+
     GLvoid use();
 
     void bindMatrixUBO(const GLuint block) const;
