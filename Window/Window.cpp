@@ -153,8 +153,6 @@ int FWindow::Render() const
   static FTime minTime = { 1000, 0}, maxTime = {0,0};
   static int counter = 0;
 
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
   //Reset Timer
   static FTime timer = FGetTime();
   FTime oldTimer = timer;
