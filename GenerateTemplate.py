@@ -57,7 +57,7 @@ def genCPPSource(f, path):
  *      
  */
  
- """.replace("FILE", path[:path.rindex('.')]))
+""".replace("FILE", path[:path.rindex('.')]))
 
   #include Header
   f.write("#include \"FILE.h\"".replace("FILE", path[path.rindex('/')+1:path.rindex('.')]))
