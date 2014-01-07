@@ -31,6 +31,7 @@ FRenderEngine* gRenderEngine;
 FModelEngine* gModelEngine;
 FFont *gFontConsole;
 FKeyboard *gKeyboard;
+FMouse *gMouse;
 bool gDisplayFrameStats = true;
 
 int main(int argc, char *argv[])
@@ -108,6 +109,7 @@ int main(int argc, char *argv[])
 
   //Init IO
   gKeyboard = new FKeyboard();
+  gMouse = new FMouse();
 
   //Game Loop
   while(gGameOn)
@@ -126,6 +128,7 @@ int main(int argc, char *argv[])
 
     //Update IO
     gKeyboard->updateState();
+    gMouse->updateState();
     
     //Update
     updateGame();

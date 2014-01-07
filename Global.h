@@ -19,6 +19,7 @@
 #include "Graphics/Graphics.h"
 #include "Camera/Camera.h"
 #include "Keyboard/Keyboard.h"
+#include "Mouse/Mouse.h"
 
 //FRAME
 extern bool gGameOn;
@@ -39,6 +40,7 @@ extern FCamera *gCamera;
 
 //IO
 extern FKeyboard *gKeyboard;
+extern FMouse *gMouse;
 
 //TERMINAL COLOUR CODES
 #ifdef COLOUR_TERMINAL
