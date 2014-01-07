@@ -22,6 +22,7 @@
 #include "Container/Container.h"
 #include "Time/Time.h"
 #include "Lib/Log.h"
+#include "Camera/PlayerFreeCamera.h"
 
 //TODO Temp Resources
 FModel **models;
@@ -37,6 +38,8 @@ FCamera *gCamera = NULL;
 FShader *shader = NULL;
 
 FFont *font = NULL;
+
+FPlayerFreeCamera* playerCamera;
 
 GLint initializeGame()
 {
@@ -72,6 +75,9 @@ GLint initializeGame()
     if(scene->mNumCameras > 1)
       gLogv << "\tIgnoring cameras after camera 1" << std::endl;
     gCamera = loader.getCamera(0,scene);
+    
+    //TODO Improve
+    gCamera->setUp(glm::vec3(0,0,1));
   }
 
   //Load ModelParts
@@ -103,6 +109,9 @@ GLint initializeGame()
   font->createFromTTF("Assets/newscycle-regular.ttf", 18);
 
   gFontEngine->addFont(font);
+
+  //Free Look Camera
+  playerCamera = new FPlayerFreeCamera(gCamera);
   
   return 0;
 }
@@ -111,4 +120,7 @@ GLvoid updateGame()
 {
   //Draw some text
   font->drawText("Beach Scene DEMO", glm::vec2( 10, 10) );
+
+  //Update
+  playerCamera->update();
 }
