@@ -24,6 +24,11 @@
 #endif
 
 const char* F_TIME_UNIT_MAP[] = {"ns", "us", "ms", "s"};
+
+extern FTime gFrameTimeCur;
+extern FTime gFrameTimePrev;
+extern FTime gFrameTimeDelta;
+
 bool FTime::operator<(const FTime &B) const
 {
   return (this->s < B.s)?true:(this->n < B.n);
@@ -252,6 +257,16 @@ std::string FTimeString(const FTime &A)
   }
 
   return out;
+}
+
+float FGetTimeChange()
+{
+  return gFrameTimeDelta.s + 1e-9f * gFrameTimeDelta.n;   
+}
+
+double FGetTimeChangeDouble()
+{
+  return gFrameTimeDelta.s + 1e-9 * gFrameTimeDelta.n;  
 }
 
 std::string FTimePrecisionString(const FTimePrecision &A)

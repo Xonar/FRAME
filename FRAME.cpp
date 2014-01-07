@@ -33,6 +33,9 @@ FFont *gFontConsole;
 FKeyboard *gKeyboard;
 FMouse *gMouse;
 bool gDisplayFrameStats = true;
+FTime gFrameTimeCur = {0, 0};
+FTime gFrameTimePrev = {0, 0};
+FTime gFrameTimeDelta = {0, 0};
 
 int main(int argc, char *argv[])
 {
@@ -129,6 +132,11 @@ int main(int argc, char *argv[])
     //Update IO
     gKeyboard->updateState();
     gMouse->updateState();
+
+    //Update Time
+    gFrameTimePrev = gFrameTimeCur;
+    gFrameTimeCur = FGetTime();
+    gFrameTimeDelta = gFrameTimeCur - gFrameTimePrev;
     
     //Update
     updateGame();

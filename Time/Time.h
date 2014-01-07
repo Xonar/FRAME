@@ -55,6 +55,9 @@ FTime FGetTime();    // Returns seconds and nanoseconds
 FTime FGetStartTime();
 FTime FGetTimeSinceStart();
 
+float FGetTimeChange();
+double FGetTimeChangeDouble();
+
 std::string FTimePrecisionString(const FTimePrecision &A);
 std::string FTimeString(const FTime &A);
 
