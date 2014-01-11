@@ -19,7 +19,13 @@ uniform sampler2D tTexture;
 //Main
 void main()
 {
-  dCol = texture(tTexture, ftex).xyz;
+  vec4 diff = texture(tTexture, ftex);
+
+  //Discard if transparent
+  if(diff.w < 0.5)
+    discard;
+
+  dCol = diff.xyz;
   dNorm = fnorm.xyz;
   dPos = fpos.xyz;
 }
