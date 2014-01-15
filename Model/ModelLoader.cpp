@@ -19,6 +19,7 @@
 Assimp::Importer FModelLoader::aiImporter;
 const aiScene* FModelLoader::scene;
 const aiMesh* FModelLoader::mesh;
+std::string FModelLoader::sceneDirectory;
 
 glm::vec3 aiGLM(aiColor3D col)
 {
@@ -52,6 +53,8 @@ const aiScene* FModelLoader::loadScene(const std::string &path)
   {
     gLoge << "Failed loading scene : \"" << path << "\"" << std::endl;
   }
+
+  this->sceneDirectory = path.substr(0, path.rfind("/") + 1);
 
   return scene;
 }
@@ -278,7 +281,7 @@ FMaterial* FModelLoader::getMaterial(const GLuint i, const aiScene *s)
   {
     if(s->mNumMaterials > i)
     {
-      return new FMaterial(s->mMaterials[i]);
+      return new FMaterial(s->mMaterials[i], this->sceneDirectory);
     }
     else
     {

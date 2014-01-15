@@ -13,7 +13,7 @@
 #include <assimp/types.h>
 #include "../Lib/Log.h"
 
-FMaterial::FMaterial(aiMaterial *material)
+FMaterial::FMaterial(aiMaterial *material, std::string directory)
 {
   material->Get(AI_MATKEY_COLOR_SPECULAR, this->specular);
   material->Get(AI_MATKEY_SHININESS, this->shininess); //Exponenet
@@ -24,9 +24,11 @@ FMaterial::FMaterial(aiMaterial *material)
   if(material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
   {
     this->tDiffuse = new FTexture2D();
-    aiString path;
-    material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
-    this->tDiffuse->loadTextureFromFile("Assets/" + std::string(path.C_Str()));
+    aiString aiPath;
+    material->GetTexture(aiTextureType_DIFFUSE, 0, &aiPath);
+    std::string cPath(aiPath.C_Str());
+    std::replace(cPath.begin(), cPath.end(), '\\', '/');
+    this->tDiffuse->loadTextureFromFile(directory + cPath);
   }
   else
   {
@@ -38,9 +40,11 @@ FMaterial::FMaterial(aiMaterial *material)
   if(material->GetTextureCount(aiTextureType_NORMALS) > 0)
   {
     this->tNormal = new FTexture2D();
-    aiString path;
-    material->GetTexture(aiTextureType_NORMALS, 0, &path);
-    this->tNormal->loadTextureFromFile("Assets/" + std::string(path.C_Str()));
+    aiString aiPath;
+    material->GetTexture(aiTextureType_NORMALS, 0, &aiPath);
+    std::string cPath(aiPath.C_Str());
+    std::replace(cPath.begin(), cPath.end(), '\\', '/');
+    this->tNormal->loadTextureFromFile(directory + cPath);
   }
   else
     this->tNormal = NULL;
@@ -49,9 +53,11 @@ FMaterial::FMaterial(aiMaterial *material)
   if(material->GetTextureCount(aiTextureType_HEIGHT) > 0)
   {
     this->tHeight = new FTexture2D();
-    aiString path;
-    material->GetTexture(aiTextureType_HEIGHT, 0, &path);
-    this->tHeight->loadTextureFromFile("Assets/" + std::string(path.C_Str()));
+    aiString aiPath;
+    material->GetTexture(aiTextureType_HEIGHT, 0, &aiPath);
+    std::string cPath(aiPath.C_Str());
+    std::replace(cPath.begin(), cPath.end(), '\\', '/');
+    this->tHeight->loadTextureFromFile(directory + cPath);
   }
   else
     this->tHeight = NULL;

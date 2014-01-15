@@ -16,6 +16,7 @@
 
 #include <glm/glm.hpp>
 #include <assimp/material.h>
+#include <string>
 
 #include "../Graphics/Graphics.h"
 #include "../Texture/Texture.h"
@@ -32,7 +33,7 @@ class FMaterial
     glm::vec3 specular;
     GLfloat shininess;
   public:
-    FMaterial(aiMaterial *material);
+    FMaterial(aiMaterial *material, std::string path);
     ~FMaterial();
 
     void bindMaterial(GLint index);

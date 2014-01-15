@@ -38,6 +38,7 @@ class FModelLoader
 
     //Cached variables for easier access
     static const aiScene* scene;
+    static std::string sceneDirectory;
     static const aiMesh* mesh;
 
   public:
