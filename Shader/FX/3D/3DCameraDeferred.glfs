@@ -3,12 +3,12 @@
 //Input
 in vec2 ftex;
 in vec3 fnorm;
-in vec3 fpos;
+in vec4 fpos;
 
 //Output - Deffered Textures
-layout(location = 0) out vec3 dCol;
-layout(location = 1) out vec3 dNorm;
-layout(location = 2) out vec3 dPos;
+layout(location = 0) out vec4 dDeferred1;
+layout(location = 1) out vec4 dDeferred2;
+layout(location = 2) out vec4 dDeferred3;
 //layout(location = 3) out vec2 dSpec;
 
 uniform mat4 ModelWorldMatrix;
@@ -20,12 +20,22 @@ uniform sampler2D tTexture;
 void main()
 {
   vec4 diff = texture(tTexture, ftex);
+  float specular = 1.0f; //TODO
+  float shininess; //TODO
 
   //Discard if transparent
   if(diff.w < 0.5)
     discard;
 
-  dCol = diff.xyz;
-  dNorm = fnorm.xyz;
-  dPos = fpos.xyz;
+  //G-Buffer 1
+  dDeferred1.xyz = diff.xyz;                //Diffuse
+  dDeferred1.w = specular;                  //Specular
+
+  //G-Buffer2 
+  dDeferred2.xyz = fnorm.xyz;                //Normal
+  dDeferred2.w = shininess;                  //Shininess
+
+  //G-Buffer3
+  dDeferred3.xyz = fpos.xyz;                 //Position
+  dDeferred3.w = fpos.w;                     //Actual Depth
 }

@@ -26,25 +26,25 @@ FRenderEngine::FRenderEngine()
   //Create Textures
   glGenTextures(1, &this->t_deferred_col);
   glBindTexture(GL_TEXTURE_2D, this->t_deferred_col);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   
   glGenTextures(1, &this->t_deferred_norm);
   glBindTexture(GL_TEXTURE_2D, this->t_deferred_norm);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
   glGenTextures(1, &this->t_deferred_pos);
   glBindTexture(GL_TEXTURE_2D, this->t_deferred_pos);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
   glGenTextures(1, &this->t_deferred_depth);
   glBindTexture(GL_TEXTURE_2D, this->t_deferred_depth);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, NULL);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -74,14 +74,13 @@ FRenderEngine::FRenderEngine()
   this->s_compose.loadProgram();
 
   //Get Uniform Locations from them
-  this->u_deferred_wvs_matrix = glGetUniformLocation(s_deferred.getProgram(), "WorldViewScreenMatrix");
   this->u_deferred_texture_sampler = glGetUniformLocation(s_deferred.getProgram(), "tTexture");
   this->u_deferred_normal_sampler = glGetUniformLocation(s_deferred.getProgram(), "tNormal");
   this->u_deferred_height_sampler = glGetUniformLocation(s_deferred.getProgram(), "tHeight");
 
-  this->u_compose_normal_sampler = glGetUniformLocation(s_compose.getProgram(), "tNormal");
-  this->u_compose_diffuse_sampler = glGetUniformLocation(s_compose.getProgram(), "tDiffuse");
-  this->u_compose_depth_sampler = glGetUniformLocation(s_compose.getProgram(), "tDepth");
+  this->u_compose_deferred_1_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred1");
+  this->u_compose_deferred_2_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred2");
+  this->u_compose_deferred_3_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred3");
 
   //Bind Samplers to texture units
   s_deferred.bind();
@@ -90,9 +89,9 @@ FRenderEngine::FRenderEngine()
   glUniform1i(u_deferred_height_sampler, 2);
 
   s_compose.bind();
-  glUniform1i(u_compose_diffuse_sampler, 0);
-  glUniform1i(u_compose_depth_sampler, 1);
-  glUniform1i(u_compose_normal_sampler, 2);
+  glUniform1i(u_compose_deferred_1_sampler, 0);
+  glUniform1i(u_compose_deferred_2_sampler, 1);
+  glUniform1i(u_compose_deferred_3_sampler, 2);
 
   //Create Quad for Deferred pass
   glGenBuffers(1, &this->ibo);
@@ -144,8 +143,10 @@ void FRenderEngine::render()
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
 
-  glEnable(GL_CULL_FACE);
-  glCullFace(GL_BACK);
+  //glEnable(GL_CULL_FACE);
+  //glCullFace(GL_BACK);
+  
+  glDisable(GL_CULL_FACE);
 
   glDisable(GL_BLEND);
 
@@ -171,9 +172,9 @@ void FRenderEngine::render()
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, t_deferred_col);
   glActiveTexture(GL_TEXTURE1);
-  glBindTexture(GL_TEXTURE_2D, t_deferred_depth);
-  glActiveTexture(GL_TEXTURE2);
   glBindTexture(GL_TEXTURE_2D, t_deferred_norm);
+  glActiveTexture(GL_TEXTURE2);
+  glBindTexture(GL_TEXTURE_2D, t_deferred_pos);
 
   //Aim with vertex array object
   glBindVertexArray(this->vao);
