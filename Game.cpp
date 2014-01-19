@@ -45,10 +45,10 @@ GLint initializeGame()
 {
   //Load Scene
   FModelLoader loader = FModelLoader();
-  const aiScene *scene = loader.loadScene("Assets/Beach.dae");
+  const aiScene *scene = loader.loadScene("Assets/sponza/sponza.obj");
   
   //Log Information
-  gLogv << "Model File : " << "Assets/Beach.dae" << std::endl;
+  gLogv << "Model File : " << "Assets/sponza/sponza.obj" << std::endl;
   gLogv << "\tLights : " << scene->mNumLights << " (IGNORED)" << std::endl;
   gLogv << "\tAnimations : " << scene->mNumAnimations << " (IGNORED)" << std::endl;
   gLogv << "\tMaterials : " << scene->mNumMaterials << " (PARTIALLY IMPLEMENTED)" << std::endl;
@@ -119,7 +119,7 @@ GLint initializeGame()
 GLvoid updateGame()
 {
   //Draw some text
-  font->drawText("Beach Scene DEMO", glm::vec2( 10, 10) );
+  font->drawText("Sponza Scene DEMO", glm::vec2( 10, 10) );
 
   //Update
   playerCamera->update();

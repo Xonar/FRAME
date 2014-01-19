@@ -32,8 +32,8 @@ void FPlayerFreeCamera::update()
   glm::vec3 up;
 
   //Movement Variables
-  float speed =2.5;
-  float sprint = 5;
+  float speed = 4;
+  float sprint = 8;
   float sensitivity = 0.2;
   float delta = FGetTimeChange();
 
