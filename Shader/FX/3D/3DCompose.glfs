@@ -10,9 +10,10 @@ out vec4 col;
 
 void main()
 {
-  vec4 d1 = texture(tDeferred1, fTex);
-  vec4 d2 = texture(tDeferred2, fTex);
-  vec4 d3 = texture(tDeferred3, fTex);
+  ivec2 texelPos = ivec2(fTex * textureSize(tDeferred1, 0).xy);
+  vec4 d1 = texelFetch(tDeferred1, texelPos, 0);
+  vec4 d2 = texelFetch(tDeferred2, texelPos, 0);
+  vec4 d3 = texelFetch(tDeferred3, texelPos, 0);
 
   col.xyz = d1.xyz;
 
