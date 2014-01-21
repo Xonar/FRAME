@@ -63,6 +63,32 @@ FMaterial::FMaterial(aiMaterial *material, std::string directory)
   }
   else
     this->tHeight = NULL;
+
+  //Specular
+  if(material->GetTextureCount(aiTextureType_SPECULAR) > 0)
+  {
+    this->tSpecular = new FTexture2D();
+    aiString aiPath;
+    material->GetTexture(aiTextureType_SPECULAR, 0, &aiPath);
+    std::string cPath(aiPath.C_Str());
+    std::replace(cPath.begin(), cPath.end(), '\\', '/');
+    this->tSpecular->loadTextureFromFile(directory + cPath);
+  }
+  else
+    this->tNormal = NULL;
+
+  //shininess
+  if(material->GetTextureCount(aiTextureType_SHININESS) > 0)
+  {
+    this->tShininess = new FTexture2D();
+    aiString aiPath;
+    material->GetTexture(aiTextureType_SHININESS, 0, &aiPath);
+    std::string cPath(aiPath.C_Str());
+    std::replace(cPath.begin(), cPath.end(), '\\', '/');
+    this->tShininess->loadTextureFromFile(directory + cPath);
+  }
+  else
+    this->tNormal = NULL;
 }
 
 FMaterial::~FMaterial()

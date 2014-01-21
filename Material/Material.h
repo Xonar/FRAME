@@ -28,6 +28,8 @@ class FMaterial
     FTexture2D *tDiffuse;
     FTexture2D *tHeight;
     FTexture2D *tNormal;
+    FTexture2D *tSpecular;
+    FTexture2D *tShininess;
 
     //Phong-Blinn Properties
     GLfloat specular;
