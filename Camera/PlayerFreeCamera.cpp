@@ -76,8 +76,8 @@ void FPlayerFreeCamera::update()
     float theta = asin(glm::dot(up,forward));
 
     //Clamp theta rotation
-    const float low_limit = -1;
-    const float hi_limit = 1;
+    const float low_limit = -1.3;
+    const float hi_limit = 1.3;
     float new_theta = std::min(std::max(theta+mouse.y, low_limit), hi_limit);
 
     //Do rotations
