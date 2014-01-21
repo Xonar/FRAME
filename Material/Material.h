@@ -30,7 +30,7 @@ class FMaterial
     FTexture2D *tNormal;
 
     //Phong-Blinn Properties
-    glm::vec3 specular;
+    GLfloat specular;
     GLfloat shininess;
   public:
     FMaterial(aiMaterial *material, std::string path);

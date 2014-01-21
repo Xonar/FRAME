@@ -15,8 +15,10 @@
 
 FMaterial::FMaterial(aiMaterial *material, std::string directory)
 {
-  material->Get(AI_MATKEY_COLOR_SPECULAR, this->specular);
+  glm::vec3 tmpSpecular;
+  material->Get(AI_MATKEY_COLOR_SPECULAR, tmpSpecular);
   material->Get(AI_MATKEY_SHININESS, this->shininess); //Exponenet
+  this->specular = glm::length(tmpSpecular);
 
   //Get Texture
 
