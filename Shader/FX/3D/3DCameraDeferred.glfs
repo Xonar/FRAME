@@ -28,14 +28,14 @@ void main()
     discard;
 
   //G-Buffer 1
-  dDeferred1.xyz = diff.xyz;                //Diffuse
-  dDeferred1.w = specular;                  //Specular
+  dDeferred1.xyz = diff.xyz;                  //Diffuse
+  dDeferred1.w = specular;                    //Specular
 
   //G-Buffer2 
-  dDeferred2.xyz = fnorm.xyz;                //Normal
-  dDeferred2.w = shininess;                  //Shininess
+  dDeferred2.xyz = normalize(fnorm.xyz);      //Normal
+  dDeferred2.w = shininess;                   //Shininess
 
   //G-Buffer3
-  dDeferred3.xyz = fpos.xyz;                 //Position
-  dDeferred3.w = fpos.w;                     //Actual Depth
+  dDeferred3.xyz = fpos.xyz;                  //Position
+  dDeferred3.w = fpos.w;                      //Actual Depth
 }
