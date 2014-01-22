@@ -21,7 +21,7 @@ void main()
 {
   vec4 diff = texture(tTexture, ftex);
   float specular = 1.0f; //TODO
-  float shininess; //TODO
+  float shininess = 50; //TODO
 
   //Discard if transparent
   if(diff.w < 0.5)
