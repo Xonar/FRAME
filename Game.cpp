@@ -41,6 +41,8 @@ FFont *font = NULL;
 
 FPlayerFreeCamera* playerCamera;
 
+FLightDirectional* light1;
+
 GLint initializeGame()
 {
   //Load Scene
@@ -112,6 +114,12 @@ GLint initializeGame()
 
   //Free Look Camera
   playerCamera = new FPlayerFreeCamera(gCamera);
+
+  //Add Lights to scene
+  light1 = new FLightDirectional(glm::vec3(1, 1, 1), glm::vec3(1.0f,1.0f,1.0f));
+
+  //Register Light with LightEngine
+  gLightEngine->registerLight(light1);
   
   return 0;
 }
