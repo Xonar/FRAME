@@ -98,6 +98,7 @@ FRenderEngine::FRenderEngine()
   this->u_compose_deferred_1_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred1");
   this->u_compose_deferred_2_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred2");
   this->u_compose_deferred_3_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred3");
+  this->u_compose_light_sampler = glGetUniformLocation(s_compose.getProgram(), "tLight");
 
   //Bind Samplers to texture units
   s_deferred.bind();
@@ -109,6 +110,7 @@ FRenderEngine::FRenderEngine()
   glUniform1i(u_compose_deferred_1_sampler, 0);
   glUniform1i(u_compose_deferred_2_sampler, 1);
   glUniform1i(u_compose_deferred_3_sampler, 2);
+  glUniform1i(u_compose_light_sampler, 3);
 
   //Create Quad for Deferred pass
   glGenBuffers(1, &this->ibo);

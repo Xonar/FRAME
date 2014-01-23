@@ -4,6 +4,7 @@
 uniform sampler2D tDeferred1;
 uniform sampler2D tDeferred2;
 uniform sampler2D tDeferred3;
+uniform sampler2D tLight;
 
 in vec2 fTex;
 out vec4 col;
@@ -14,11 +15,9 @@ void main()
   vec4 d1 = texelFetch(tDeferred1, texelPos, 0);
   vec4 d2 = texelFetch(tDeferred2, texelPos, 0);
   vec4 d3 = texelFetch(tDeferred3, texelPos, 0);
+  vec3 light = texelFetch(tLight, texelPos, 0).xyz;
 
-  col.xyz = d1.xyz;
+  col.xyz = d1.xyz * light;
 
-  float lambert = clamp(-dot(d2.xyz, normalize(d3.xyz - vec3(0,20,0))),0,1);
   col.w = 1.0f;
-
-  col.xyz *= lambert;
 }
