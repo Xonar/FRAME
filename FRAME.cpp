@@ -29,6 +29,7 @@ FWindow *gWindow;
 FFontEngine *gFontEngine;
 FRenderEngine* gRenderEngine;
 FModelEngine* gModelEngine;
+FLightEngine* gLightEngine;
 FFont *gFontConsole;
 FKeyboard *gKeyboard;
 FMouse *gMouse;
@@ -102,6 +103,9 @@ int main(int argc, char *argv[])
 
   //Init RenderEngine
   gRenderEngine = new FRenderEngine();
+
+  //Init LightEngine
+  gLightEngine = new FLightEngine();
 
   //Init FTime
   initTime();

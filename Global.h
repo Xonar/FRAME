@@ -20,6 +20,7 @@
 #include "Camera/Camera.h"
 #include "Keyboard/Keyboard.h"
 #include "Mouse/Mouse.h"
+#include "Engine/LightEngine.h"
 
 //FRAME
 extern bool gGameOn;
@@ -31,6 +32,7 @@ extern FWindow *gWindow;
 extern FFontEngine *gFontEngine;
 extern FModelEngine *gModelEngine;
 extern FRenderEngine *gRenderEngine;
+extern FLightEngine *gLightEngine;
 
 //Console Font
 extern FFont *gFontConsole;
