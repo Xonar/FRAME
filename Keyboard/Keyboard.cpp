@@ -16,7 +16,8 @@
 FKeyboard::FKeyboard()
 {
   int num;
-  const Uint8 *state = SDL_GetKeyboardState(&num);
+
+  SDL_GetKeyboardState(&num);
 
   this->keyCur = new Uint8[num];
   this->keyPrev = new Uint8[num];
