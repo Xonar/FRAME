@@ -22,6 +22,7 @@ FRenderEngine::FRenderEngine()
 
   //Create FBOs
   glGenFramebuffers(1, &this->fbo_deferred);
+  glGenFramebuffers(1, &this->fbo_light);
 
   //Create Textures
   glGenTextures(1, &this->t_deferred_col);
@@ -48,6 +49,12 @@ FRenderEngine::FRenderEngine()
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+  glGenTextures(1, &this->t_deferred_light);
+  glBindTexture(GL_TEXTURE_2D, this->t_deferred_light);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
   //Bind Textures to Framebuffer: fbo_deferred
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_deferred);
   glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 
@@ -59,8 +66,17 @@ FRenderEngine::FRenderEngine()
   glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 
                           this->t_deferred_depth, 0);
 
-  GLenum drawBuffers[] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
+  //Set Buffer to draw
+  const GLenum drawBuffers[] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
   glDrawBuffers(3, drawBuffers);
+
+  //Bind Texture to Framebuffer: fbo_light
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_light);
+  glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                          this->t_deferred_light, 0);
+
+  //Set Buffer to draw
+  glDrawBuffers(1, drawBuffers);
 
   //Load Shaders
   this->s_deferred = FShader();
