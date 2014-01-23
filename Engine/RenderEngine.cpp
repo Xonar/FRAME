@@ -93,6 +93,7 @@ FRenderEngine::FRenderEngine()
   this->u_deferred_texture_sampler = glGetUniformLocation(s_deferred.getProgram(), "tTexture");
   this->u_deferred_normal_sampler = glGetUniformLocation(s_deferred.getProgram(), "tNormal");
   this->u_deferred_height_sampler = glGetUniformLocation(s_deferred.getProgram(), "tHeight");
+  this->u_deferred_wvs_matrix = glGetUniformLocation(s_deferred.getProgram(), "WorldViewScreenMatrix");
 
   this->u_compose_deferred_1_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred1");
   this->u_compose_deferred_2_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred2");
