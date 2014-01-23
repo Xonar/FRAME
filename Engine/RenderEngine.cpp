@@ -177,16 +177,8 @@ void FRenderEngine::render()
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_CULL_FACE);
 
-  //TODO Lights
-
   //Compose scene
 
-  //Reset Framebuffer so that textures aren't in use
-  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-
-  //Ready by Binding Shader
-  s_compose.bind();
-  
   //Bind Textures
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, t_deferred_col);
@@ -195,8 +187,35 @@ void FRenderEngine::render()
   glActiveTexture(GL_TEXTURE2);
   glBindTexture(GL_TEXTURE_2D, t_deferred_pos);
 
-  //Aim with vertex array object
+  //Bind screen quad VAO
   glBindVertexArray(this->vao);
+
+  //Lights
+
+  //Set Light FBO
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_light);
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  //Set Required Blending
+  glEnable(GL_BLEND);
+  glBlendEquation(GL_FUNC_ADD);
+  glBlendFunc(GL_ONE, GL_ONE);
+
+  //Render Lights
+  gLightEngine->render();  
+
+  //Use Screen FBO
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+  //Bind Light Texture
+  glActiveTexture(GL_TEXTURE3);
+  glBindTexture(GL_TEXTURE_2D, t_deferred_light);
+
+  //Turn of blending
+  glDisable(GL_BLEND);
+
+  //Ready by Binding Shader
+  s_compose.bind();
 
   //Fire
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, NULL);
@@ -204,4 +223,3 @@ void FRenderEngine::render()
   //Reset state
   glDepthMask(GL_TRUE);
 }
-
