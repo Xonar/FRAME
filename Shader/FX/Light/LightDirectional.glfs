@@ -3,14 +3,14 @@
 //Textures of from other renderers
 uniform sampler2D tDeferred1;
 uniform sampler2D tDeferred2;
-uniform sampler2D tDeferred3;
+uniform sampler2D tDepth;
 
 uniform vec3 uDirection;
 uniform vec3 uDiffuse;
-uniform vec3 uCamPos;
 
 in vec2 fTex;
-out vec3 col;
+in vec3 fCamDir;
+out vec4 col;
 
 void main()
 {
@@ -18,16 +18,19 @@ void main()
   ivec2 texelPos = ivec2(fTex * textureSize(tDeferred1, 0).xy);
   vec4 d1 = texelFetch(tDeferred1, texelPos, 0);
   vec4 d2 = texelFetch(tDeferred2, texelPos, 0);
-  vec4 d3 = texelFetch(tDeferred3, texelPos, 0);
 
-  //Calculate reflection vector and camera direction
-  vec3 reflection = -reflect(uDirection, d2.xyz);
-  vec3 camDir = normalize(uCamPos - d3.xyz);
+  //Calculate Normal
+  vec3 normal = d2.xyz * 2 - 1;
+
+  //Calculate reflection vector
+  vec3 reflection = -reflect(uDirection, normal);
+  vec3 camDir = normalize(-fCamDir);
   
   //Calculate Lighting
-  float lambert = max(dot(d2.xyz, uDirection), 0);
-  float specular = pow(max(dot(reflection, camDir), 0), d2.w) * d1.w;
+  float lambert = max(dot(normal, uDirection), 0);
+  float specular = pow(max(dot(reflection, camDir), 0), 50) * 1.f;
 
   //Final Light
-  col = uDiffuse * (lambert + specular);
+  col.xyz = uDiffuse * (lambert + specular);
+  col.w = 1.0f;
 }

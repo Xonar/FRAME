@@ -34,6 +34,7 @@ class FLightEngine
     GLint u_directional_dir;
     GLint u_directional_dif;
     GLint u_directional_cpos;
+    GLint u_directional_svw;
 
     //Point Light
     GLint u_point_d1_sampler;
@@ -42,6 +43,7 @@ class FLightEngine
     GLint u_point_pos;
     GLint u_point_dif;
     GLint u_point_cpos;
+    GLint u_point_svw;
 
   public:
     FLightEngine();

@@ -24,16 +24,15 @@ FLightEngine::FLightEngine()
   //Get Uniforms
   this->u_directional_d1_sampler = glGetUniformLocation(s_directional.getProgram(), "tDeferred1");
   this->u_directional_d2_sampler = glGetUniformLocation(s_directional.getProgram(), "tDeferred2");
-  this->u_directional_d3_sampler = glGetUniformLocation(s_directional.getProgram(), "tDeferred3");
   this->u_directional_dir = glGetUniformLocation(s_directional.getProgram(), "uDirection");
   this->u_directional_dif = glGetUniformLocation(s_directional.getProgram(), "uDiffuse");
   this->u_directional_cpos = glGetUniformLocation(s_directional.getProgram(), "uCamPos");
+  this->u_directional_svw = glGetUniformLocation(s_directional.getProgram(), "ScreenViewWorldMatrix");
 
   //Bind Uniforms
   this->s_directional.bind();
   glUniform1i(u_directional_d1_sampler, 0);
   glUniform1i(u_directional_d2_sampler, 1);
-  glUniform1i(u_directional_d3_sampler, 2);
 }
 
 void FLightEngine::registerLight(FLightDirectional* light)
@@ -45,7 +44,11 @@ void FLightEngine::render()
 {
   //Directional Lights
   this->s_directional.bind();
-  glUniform3fv(this->u_directional_cpos, 1, &gCamera->getPosition()[0]);
+
+  //Set Uniforms
+  gCamera->setInverseMatrixUniform(this->u_directional_svw);
+
+  //Loop over directional lights
   for(FLightDirectional* l : lightsDirectional)
   {
     //Set Uniforms
