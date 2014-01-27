@@ -21,8 +21,8 @@ class FWindow
 private:
   //SDL Window
   std::string title = "NULL";
-  int width=640;
-  int height=480;
+  int width=1280;
+  int height=800;
   int bpp=32;
   int mode=SDL_WINDOW_OPENGL;
   
