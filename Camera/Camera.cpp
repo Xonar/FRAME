@@ -57,6 +57,7 @@ GLint FCamera::update()
     if(this->updateViewScreenMatrix || this->updateWorldViewMatrix)
     {
       this->wvs = this->ViewScreenMatrix * this->WorldViewMatrix;
+      this->svw = glm::inverse(wvs);
       this->updateViewScreenMatrix = this->updateWorldViewMatrix = false;
     }
   }
@@ -159,4 +160,9 @@ GLvoid FCamera::use()
 void FCamera::setMatrixUniform(const GLuint uniform) const
 {
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &wvs[0][0] );
+}
+
+void FCamera::setInverseMatrixUniform(const GLuint uniform) const
+{
+  glUniformMatrix4fv(uniform, 1, GL_FALSE, &svw[0][0] );
 }

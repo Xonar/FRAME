@@ -34,7 +34,7 @@ class FCamera
     glm::mat4 ViewScreenMatrix; //Projection or Ortho
     bool updateViewScreenMatrix;  
 
-    glm::mat4 wvs;
+    glm::mat4 wvs, svw;
     //Attributes
     bool ready;
     glm::vec3 pos;
@@ -72,6 +72,8 @@ class FCamera
 
     void setMatrixUniformBuffer() const;
     void setMatrixUniform(const GLuint uniform) const;
+
+    void setInverseMatrixUniform(const GLuint uniform) const;
 };
 
 #endif // _F_H_CAMERA_
