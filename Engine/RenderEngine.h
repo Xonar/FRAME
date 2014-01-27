@@ -26,7 +26,6 @@ class FRenderEngine
   //Textures
   GLuint t_deferred_col;
   GLuint t_deferred_norm;
-  GLuint t_deferred_pos;
   GLuint t_deferred_depth;
   GLuint t_deferred_light;
 
@@ -42,7 +41,6 @@ class FRenderEngine
   GLuint u_deferred_height_sampler;
   GLuint u_compose_deferred_1_sampler;
   GLuint u_compose_deferred_2_sampler;
-  GLuint u_compose_deferred_3_sampler;
   GLuint u_compose_light_sampler;
 
   //Deferred Qua

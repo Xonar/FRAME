@@ -9,14 +9,11 @@ uniform mat4 WorldViewScreenMatrix;
 
 out vec2 ftex;
 out vec3 fnorm;
-out vec4 fpos;
 
 void main()
 {
   ftex = vstex;
   fnorm = vsnorm;
-  fpos.xyz = vspos;
-  gl_Position = WorldViewScreenMatrix * vec4(vspos,1);
 
-  fpos.w = gl_Position.z;
+  gl_Position = WorldViewScreenMatrix * vec4(vspos,1);
 }

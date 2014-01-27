@@ -27,19 +27,13 @@ FRenderEngine::FRenderEngine()
   //Create Textures
   glGenTextures(1, &this->t_deferred_col);
   glBindTexture(GL_TEXTURE_2D, this->t_deferred_col);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   
   glGenTextures(1, &this->t_deferred_norm);
   glBindTexture(GL_TEXTURE_2D, this->t_deferred_norm);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-  glGenTextures(1, &this->t_deferred_pos);
-  glBindTexture(GL_TEXTURE_2D, this->t_deferred_pos);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -61,14 +55,12 @@ FRenderEngine::FRenderEngine()
                           this->t_deferred_col, 0);
   glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, 
                           this->t_deferred_norm, 0);
-  glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, 
-                          this->t_deferred_pos, 0);
   glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 
                           this->t_deferred_depth, 0);
 
   //Set Buffer to draw
-  const GLenum drawBuffers[] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
-  glDrawBuffers(3, drawBuffers);
+  const GLenum drawBuffers[] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
+  glDrawBuffers(2, drawBuffers);
 
   //Bind Texture to Framebuffer: fbo_light
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_light);
@@ -97,7 +89,6 @@ FRenderEngine::FRenderEngine()
 
   this->u_compose_deferred_1_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred1");
   this->u_compose_deferred_2_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred2");
-  this->u_compose_deferred_3_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred3");
   this->u_compose_light_sampler = glGetUniformLocation(s_compose.getProgram(), "tLight");
 
   //Bind Samplers to texture units
@@ -109,8 +100,8 @@ FRenderEngine::FRenderEngine()
   s_compose.bind();
   glUniform1i(u_compose_deferred_1_sampler, 0);
   glUniform1i(u_compose_deferred_2_sampler, 1);
-  glUniform1i(u_compose_deferred_3_sampler, 2);
-  glUniform1i(u_compose_light_sampler, 3);
+  glUniform1i(u_compose_light_sampler, 3); //Leave space for in texture unit 2 incase
+                                           //sudden extra data requirements
 
   //Create Quad for Deferred pass
   glGenBuffers(1, &this->ibo);
@@ -184,8 +175,6 @@ void FRenderEngine::render()
   glBindTexture(GL_TEXTURE_2D, t_deferred_col);
   glActiveTexture(GL_TEXTURE1);
   glBindTexture(GL_TEXTURE_2D, t_deferred_norm);
-  glActiveTexture(GL_TEXTURE2);
-  glBindTexture(GL_TEXTURE_2D, t_deferred_pos);
 
   //Bind screen quad VAO
   glBindVertexArray(this->vao);
