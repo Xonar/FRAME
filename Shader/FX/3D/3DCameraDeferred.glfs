@@ -29,6 +29,6 @@ void main()
   dDeferred1.w = specular;                    //Specular
 
   //G-Buffer2 
-  dDeferred2.xyz = normalize(fnorm.xyz) * 0.5 + vec3(0.5, 0.5, 0.5);  //Normal
+  dDeferred2.xyz = normalize(fnorm.xyz);      //Normal
   dDeferred2.w = shininess;                   //Shininess
 }

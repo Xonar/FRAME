@@ -20,7 +20,7 @@ void main()
   vec4 d2 = texelFetch(tDeferred2, texelPos, 0);
 
   //Calculate Normal
-  vec3 normal = d2.xyz * 2 - 1;
+  vec3 normal = d2.xyz;
 
   //Calculate reflection vector
   vec3 reflection = -reflect(uDirection, normal);
