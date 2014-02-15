@@ -22,7 +22,7 @@ private:
   //SDL Window
   std::string title = "NULL";
   int width=1280;
-  int height=800;
+  int height=720;
   int bpp=32;
   int mode=SDL_WINDOW_OPENGL;
   
