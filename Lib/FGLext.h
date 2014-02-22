@@ -22,6 +22,7 @@ const GLchar* glDebugSourceString(const GLenum source);
 const GLchar* glDebugTypeString(const GLenum type);
 const GLchar* glDebugSeverityString(const GLenum severe);
 const GLchar* glDebugCategoryAMDString(const GLenum category);
+const GLchar* glFramebufferCompleteString(const GLenum complete);
 
 GLboolean glIsExtensionSupported(const std::string &ext);
 
