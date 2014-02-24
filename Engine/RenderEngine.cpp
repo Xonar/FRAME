@@ -70,6 +70,13 @@ FRenderEngine::FRenderEngine()
   //Set Buffer to draw
   glDrawBuffers(1, drawBuffers);
 
+  //Check Framebuffer status
+  GLenum fbo_status = glCheckFramebufferStatus( GL_DRAW_FRAMEBUFFER );
+
+
+  if(fbo_status != GL_FRAMEBUFFER_COMPLETE)
+    gLogw << "Framebuffer status : " << glFramebufferCompleteString(fbo_status) << std::endl;
+
   //Load Shaders
   this->s_deferred = FShader();
   this->s_deferred.loadShader("Shader/FX/3D/3DCameraView.glvs", GL_VERTEX_SHADER);
