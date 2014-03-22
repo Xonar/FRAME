@@ -52,7 +52,7 @@ void FShader::unbind() const
   glUseProgram(0);
 }
 
-void FShader::printProgramLog(const GLuint program) const
+void FShader::printProgramLog(const GLuint program)
 {
   if(program && glIsProgram(program))
   {
@@ -76,7 +76,7 @@ void FShader::printProgramLog(const GLuint program) const
   }
 }
 
-void FShader::printShaderLog(const GLuint shader) const
+void FShader::printShaderLog(const GLuint shader)
 {
   if(shader && glIsShader(shader))
   {

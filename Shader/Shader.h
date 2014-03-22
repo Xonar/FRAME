@@ -26,8 +26,6 @@ class FShader
             te, //Tesselation Evaluation
             fs; //Fragment Shader
 
-    void printProgramLog(const GLuint program ) const;
-    void printShaderLog(const  GLuint shader ) const;
   public:
     FShader();
     ~FShader();
@@ -44,6 +42,10 @@ class FShader
 
     //ACCESSOR METHODS
     GLuint getProgram() const { return glProg; };
+
+    //Shader Logs
+    static void printProgramLog(const GLuint program );
+    static void printShaderLog(const  GLuint shader );
 };
 
 #endif // _F_H_SHADER
