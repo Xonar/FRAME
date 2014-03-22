@@ -40,6 +40,7 @@ class FModelLoader
     static const aiScene* scene;
     static std::string sceneDirectory;
     static const aiMesh* mesh;
+    static float sizeFactor;
 
   public:
     //Constructor/Deconstructor
@@ -48,6 +49,7 @@ class FModelLoader
     
     //Loads Scene and caches scene
     const aiScene* loadScene(const std::string &path);
+    const aiScene* loadScene(const std::string &path, float sizeFactor);
 
     //Get Animation[Count]
     GLuint getAnimationCount(const aiScene *s = scene);

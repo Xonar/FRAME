@@ -20,6 +20,7 @@ Assimp::Importer FModelLoader::aiImporter;
 const aiScene* FModelLoader::scene;
 const aiMesh* FModelLoader::mesh;
 std::string FModelLoader::sceneDirectory;
+float FModelLoader::sizeFactor = 1;
 
 glm::vec3 aiGLM(aiColor3D col)
 {
@@ -40,6 +41,13 @@ FModelLoader::~FModelLoader()
     
 const aiScene* FModelLoader::loadScene(const std::string &path)
 {
+  return this->loadScene(path, 1);
+}
+const aiScene* FModelLoader::loadScene(const std::string &path, float sizeFactor)
+{
+  //Set Size Factor
+  this->sizeFactor = sizeFactor;
+
   //Load Scene
   scene = aiImporter.ReadFile(path, 0
   | aiProcess_Triangulate
@@ -119,8 +127,8 @@ FCamera* FModelLoader::getCamera(const GLuint i,const aiScene* s)
       glm::mat4 mat = this->getNodeTransformation(cam->mName.C_Str());
 
       //Get Camera
-      glm::vec3 pos = (mat * glm::vec4(aiGLM(cam->mPosition), 1.f)).xyz();
-      glm::vec3 lookAt = (mat * glm::vec4(aiGLM(cam->mLookAt), 1.f)).xyz();
+      glm::vec3 pos = (mat * glm::vec4(aiGLM(cam->mPosition), 1.f)).xyz() * sizeFactor;
+      glm::vec3 lookAt = (mat * glm::vec4(aiGLM(cam->mLookAt), 1.f)).xyz() * sizeFactor;
       glm::vec3 up = (mat * glm::vec4(aiGLM(cam->mUp),0.f)).xyz();
       float cpnear = cam->mClipPlaneNear;
       float cpfar = cam->mClipPlaneFar;
@@ -181,7 +189,7 @@ FModel* FModelLoader::getMesh(const GLuint i, const aiScene *s)
       //Positions
       if(mesh->HasPositions())
         for(GLuint i = 0;i < numVertices; i++)
-          vertices[i].pos = (nodeTransform * glm::vec4(aiGLM(mesh->mVertices[i]),1.f)).xyz();
+          vertices[i].pos = (nodeTransform * glm::vec4(aiGLM(mesh->mVertices[i]),1.f)).xyz() * sizeFactor;
       else
       {
         gLogw << "Mesh Doesn't Contain Positions! Can't create Part." << std::endl;
