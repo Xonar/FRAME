@@ -155,6 +155,11 @@ GLvoid APIENTRY glDebugMessageCallbackFunction( GLenum source, GLenum type, GLui
   gLoge << "Type:     " << glDebugTypeString(type) << std::endl;
   gLoge << "Severity: " << glDebugSeverityString(severity) << std::endl;
   gLoge << "Message:  " << std::endl << "\t" << message << std::endl;
+
+  //Get Rid of Unused Var Warnings
+  id = id;
+  userParam = userParam;
+  length = length;
 }
 
 GLvoid APIENTRY glDebugMessageCallbackFunctionAMD( GLuint id, GLenum category,
@@ -163,6 +168,11 @@ GLvoid APIENTRY glDebugMessageCallbackFunctionAMD( GLuint id, GLenum category,
   gLoge << "Category: " << glDebugCategoryAMDString(category) << std::endl;
   gLoge << "Severity: " << glDebugSeverityString(severity) << std::endl;
   gLoge << "Message:  " << std::endl << "\t" << message << std::endl;
+
+  //Get Rid of Unused Var Warnings
+  id = id;
+  length = length;
+  userParam = userParam;
 }
 
 GLvoid glVertexAttribPointers( FVertexEnum type )
