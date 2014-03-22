@@ -35,7 +35,9 @@ class FShader
     GLint bind() const;
     void unbind() const;
 
+    //Shader Functions
     GLint loadShader(const std::string &shader, const GLenum type);
+    GLuint getShader(const GLenum type);
 
     GLint loadProgram();
     void freeProgram();

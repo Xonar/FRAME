@@ -100,6 +100,26 @@ void FShader::printShaderLog(const GLuint shader) const
   }
 }
 
+GLuint FShader::getShader(const GLenum type)
+{
+  switch(type)
+  {
+    case GL_VERTEX_SHADER:
+      return vs;
+    case GL_GEOMETRY_SHADER:
+      return gs;
+    case GL_TESS_EVALUATION_SHADER:
+      return te;
+    case GL_TESS_CONTROL_SHADER:
+      return tc;
+    case GL_FRAGMENT_SHADER:
+      return fs;
+    default:
+      gLoge << "Invalid GLenum passed to getShader : " << type << std::endl;
+      return 0;
+  }
+}
+
 GLint FShader::loadShader(const std::string &shader, const GLenum type)
 {
   gLogv << "Loading Shader : " << shader << std::endl;
