@@ -40,6 +40,13 @@ FTime gFrameTimeDelta = {0, 0};
 
 int main(int argc, char *argv[])
 {
+  //Display Command Line Arguments
+  std::cout << "Arguments Passed to Program: " << std::endl;
+  for(int i = 0; i < argc; i++)
+    std::cout << "\t " << i << ": " << argv[i] << std::endl;
+
+  //TODO Parse Arguments
+
   //Init SDL
   FWindow window("FRAME Engine Test");
 
