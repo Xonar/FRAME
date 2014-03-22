@@ -34,6 +34,9 @@ class FMaterial
     //Phong-Blinn Properties
     GLfloat specular;
     GLfloat shininess;
+
+    //Optional Information
+    std::string id = "";
   public:
     FMaterial(aiMaterial *material, std::string path);
     ~FMaterial();

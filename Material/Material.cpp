@@ -20,6 +20,10 @@ FMaterial::FMaterial(aiMaterial *material, std::string directory)
   material->Get(AI_MATKEY_SHININESS, this->shininess); //Exponenet
   this->specular = glm::length(tmpSpecular);
 
+  aiString aiName;
+  material->Get(AI_MATKEY_NAME, aiName);
+  this->id = std::string(aiName.C_Str());
+
   //Get Texture
 
   //Diffuse
@@ -34,7 +38,7 @@ FMaterial::FMaterial(aiMaterial *material, std::string directory)
   }
   else
   {
-    gLogw << "Material Without Diffuse Texture!" << std::endl;
+    gLogw << "Material Without Diffuse Texture! (" << this->id << ")" << std::endl;
     this->tDiffuse = NULL;
   }
 
