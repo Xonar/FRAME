@@ -215,40 +215,17 @@ GLint FShader::loadProgram()
 
   //Attach all shaders
   if(this->vs)
-  {
     glAttachShader(this->glProg, this->vs);
-    glDeleteShader(this->vs);
-    this->vs = 0;
-  }
-  
   if(this->gs)
-  {
     glAttachShader(this->glProg, this->gs);
-    glDeleteShader(this->gs);
-    this->gs = 0;
-  }
-  
   if(this->tc)
-  {
     glAttachShader(this->glProg, this->tc);
-    glDeleteShader(this->tc);
-    this->tc = 0;
-  }
-  
   if(this->te)
-  {
     glAttachShader(this->glProg, this->te);
-    glDeleteShader(this->te);
-    this->te = 0;
-  }
-
   if(this->fs)
-  {
     glAttachShader(this->glProg, this->fs);
-    glDeleteShader(this->fs);
-    this->fs = 0;
-  }
 
+  //Link Shaders
   glLinkProgram(this->glProg);
 
   //Check if it linked succesfully
