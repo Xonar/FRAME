@@ -14,6 +14,7 @@
 
 #include "../Graphics/Graphics.h"
 #include <string>
+#include <map>
 
 class FShader
 {
@@ -26,10 +27,14 @@ class FShader
             te, //Tesselation Evaluation
             fs; //Fragment Shader
 
+    //Reference to Self in ShaderManager
+    std::map<std::string, FShader*>::iterator ref;
+
   public:
     FShader();
     ~FShader();
 
+    //State Functions
     GLint bind() const;
     void unbind() const;
 
@@ -37,6 +42,7 @@ class FShader
     GLint loadShader(const std::string &shader, const GLenum type);
     GLuint getShader(const GLenum type);
 
+    //Program Functions
     GLint loadProgram();
     void freeProgram();
 
