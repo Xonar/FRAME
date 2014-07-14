@@ -68,7 +68,7 @@ GLint initializeGame()
     gCamera->setViewPort(0,0,gWindow->getWindowWidth(),gWindow->getWindowHeight());
     gCamera->setPosition(glm::vec3(4.f,3.f,-3.f));
     gCamera->lookAt(glm::vec3(0.f,0.f,0.f));
-    gCamera->InitProjectionMatrix(45.f,0.1f,100.f);
+    gCamera->InitProjectionMatrix(glm::radians(45.f),0.1f,100.f);
   }
   else
   {

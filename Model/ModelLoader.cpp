@@ -132,8 +132,8 @@ FCamera* FModelLoader::getCamera(const GLuint i,const aiScene* s)
       glm::vec3 up = (mat * glm::vec4(aiGLM(cam->mUp),0.f)).xyz();
       float cpnear = cam->mClipPlaneNear;
       float cpfar = cam->mClipPlaneFar;
-      //Convert from Horizontal Radians to Vertical Degrees
-      float fov = cam->mHorizontalFOV * 57.2957795 / width * height;
+      //Convert from Horizontal Radians to Vertical Radians
+      float fov = glm::radians(cam->mHorizontalFOV * 57.2957795 / width * height);
 
       //Set Camera Attributes
       camera->setPosition(pos);

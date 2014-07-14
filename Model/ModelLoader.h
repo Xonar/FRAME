@@ -19,6 +19,7 @@
 #include <assimp/Importer.hpp>
 
 #define GLM_SWIZZLE
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 
 #include "../Graphics/Graphics.h"

@@ -11,6 +11,7 @@
 
 #include "ModelPart.h"
 
+#define GLM_FORCE_RADIANS
 #include <glm/gtx/vector_angle.hpp>
 
 FModelPart::FModelPart()

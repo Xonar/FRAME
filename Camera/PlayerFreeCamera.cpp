@@ -12,6 +12,7 @@
  
 #include "PlayerFreeCamera.h"
 #include "../Global.h"
+#define GLM_FORCE_RADIANS
 #include <glm/gtx/rotate_vector.hpp>
 #include "../Lib/Log.h"
 #include "../Time/Time.h"
@@ -81,8 +82,8 @@ void FPlayerFreeCamera::update()
     float new_theta = std::min(std::max(theta+mouse.y, low_limit), hi_limit);
 
     //Do rotations
-    forward = glm::rotate(forward, new_theta - theta, right);
-    forward = glm::rotate(forward, mouse.x, up);
+    forward = glm::rotate(forward, glm::radians(new_theta - theta), right);
+    forward = glm::rotate(forward, glm::radians(mouse.x), up);
 
     //Update Direction
     this->camera->setDirection(forward);
