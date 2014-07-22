@@ -11,7 +11,7 @@
 
 #include "ModelLoader.h"
 #include "../Lib/Log.h"
-#include "../Global.h"
+#include "../Window/Window.h"
 
 #include <assimp/postprocess.h>
 

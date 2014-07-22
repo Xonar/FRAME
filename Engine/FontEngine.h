@@ -12,16 +12,17 @@
 #ifndef _F_H_ENGINE_FONT_
 #define _F_H_ENGINE_FONT_
 
+class FFontEngine;
+
 #include <vector>
 #include <list>
 
 #include "../GUI/Font.h"
+#include "../Engine/FontHandler.h"
 #include "../Shader/Shader.h"
 #include "../Camera/Camera.h"
 #include "../Container/Container.h"
 #include "../Graphics/Graphics.h"
-
-#include "FontHandler.h"
 
 #define F_FONT_ENGINE_MAX_CHARACTERS_PER_DRAW 512
 
@@ -50,5 +51,8 @@ class FFontEngine
 
     void render();
 };
+
+//Global Handle
+extern FFontEngine *gFontEngine;
 
 #endif //_F_H_ENGINE_FONT_

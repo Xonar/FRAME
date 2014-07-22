@@ -12,6 +12,8 @@
 #ifndef _F_H_FONT_
 #define _F_H_FONT_
 
+class FFont;
+
 #include <SDL2/SDL_ttf.h>
 
 #include <glm/glm.hpp>
@@ -21,6 +23,7 @@
 
 #include "../Container/Container.h"
 #include "../Texture/Texture.h"
+#include "../Engine/FontEngine.h"
 
 class FFont
 {
@@ -63,5 +66,8 @@ class FFont
     void generateStringVertexData(const std::string &text, 
           const glm::vec2 &off, std::vector<FVertexText> &out) const;
 };
+
+//Global Handle
+extern FFont *gFontConsole;
 
 #endif //_F_H_FONT_

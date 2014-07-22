@@ -12,7 +12,6 @@
 #include "Font.h"
 #include "../Graphics/Graphics.h"
 #include "../Lib/FGLext.h"
-#include "../Global.h"
 #include "../Lib/Log.h"
 
 #include <vector>

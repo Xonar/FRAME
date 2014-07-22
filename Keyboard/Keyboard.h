@@ -32,4 +32,7 @@ class FKeyboard
     bool isKeyUp(GLuint key);
 };
 
+//Global Handle
+extern FKeyboard *gKeyboard;
+
 #endif // _F_H_KEYBOARD_

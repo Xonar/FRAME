@@ -10,10 +10,13 @@
  */
 
 #include "RenderEngine.h"
-#include "../Global.h"
+#include "../Camera/Camera.h"
 #include "../Graphics/Graphics.h"
 #include "../Lib/Log.h"
 #include "../Lib/FGLext.h"
+#include "../Window/Window.h"
+#include "../Engine/LightEngine.h"
+#include "../Engine/ModelEngine.h"
 
 FRenderEngine::FRenderEngine()
 {

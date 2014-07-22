@@ -13,6 +13,8 @@
 #ifndef _F_H_CAMERA_
 #define _F_H_CAMERA_
 
+class FCamera;
+
 #include <glm/glm.hpp>
 
 #include "../Graphics/Graphics.h"
@@ -75,5 +77,8 @@ class FCamera
 
     void setInverseMatrixUniform(const GLuint uniform) const;
 };
+
+//Global Handle
+extern FCamera *gCamera;
 
 #endif // _F_H_CAMERA_

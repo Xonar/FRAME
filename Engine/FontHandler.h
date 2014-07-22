@@ -12,8 +12,11 @@
 #ifndef _F_H_FONT_HANDLER_
 #define _F_H_FONT_HANDLER_
 
+class FFontHandler;
+
 #include "../GUI/Font.h"
 #include "../Container/Container.h"
+
 #include <vector>
 
 class FFontHandler

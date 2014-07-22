@@ -11,10 +11,11 @@
  */
  
 #include "PlayerFreeCamera.h"
-#include "../Global.h"
 #define GLM_FORCE_RADIANS
 #include <glm/gtx/rotate_vector.hpp>
 #include "../Lib/Log.h"
+#include "../Keyboard/Keyboard.h"
+#include "../Mouse/Mouse.h"
 #include "../Time/Time.h"
 #include <cmath>
 

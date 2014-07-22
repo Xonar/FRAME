@@ -11,9 +11,10 @@
 
 #include "Window.h"
 #include "../Game.h"
-#include "../Global.h"
 #include "../Time/Time.h"
-
+#include "../Global.h"
+#include "../Engine/RenderEngine.h"
+#include "../GUI/Font.h"
 #include "../Lib/Log.h"
 #include "../Graphics/Graphics.h"
 
@@ -75,7 +76,7 @@ int FWindow::Init()
 
   gLogv << "OpenGL Version String : " << sGLVersion << std::endl;
 
-  //Desotry Context as it's not needed any more
+  //Destroy Context as it's not needed any more
   SDL_GL_DeleteContext(this->context);
   bool validGLVersion = true;
 

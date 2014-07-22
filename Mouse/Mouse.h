@@ -34,4 +34,7 @@ class FMouse
     bool isButtonLifted(int button);
 };
 
+//Global Handle
+extern FMouse *gMouse;
+
 #endif // _F_H_MOUSE_

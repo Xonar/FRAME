@@ -12,6 +12,8 @@
 #ifndef _F_H_LIGHTENGINE_
 #define _F_H_LIGHTENGINE_
 
+class FLightEngine;
+
 #include <list>
 
 #include "../Light/Light.h"
@@ -52,5 +54,8 @@ class FLightEngine
 
     void render();
 };
+
+//Global Handle
+extern FLightEngine *gLightEngine;
 
 #endif // _F_H_LIGHTENGINE_

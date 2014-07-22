@@ -12,6 +12,8 @@
 #ifndef _F_H_PLAYERFREECAMERA_
 #define _F_H_PLAYERFREECAMERA_
 
+class FPlayerFreeCamera;
+
 #include "Camera.h"
 
 class FPlayerFreeCamera

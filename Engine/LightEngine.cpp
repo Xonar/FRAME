@@ -11,7 +11,7 @@
  */
  
 #include "LightEngine.h"
-#include "../Global.h"
+#include "../Camera/Camera.h"
 
 FLightEngine::FLightEngine()
 {

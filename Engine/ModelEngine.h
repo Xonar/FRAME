@@ -12,6 +12,8 @@
 #ifndef _F_H_MODEL_ENGINE_
 #define _F_H_MODEL_ENGINE_
 
+class FModelEngine;
+
 #include "../Model/ModelGroup.h"
 #include <list>
 
@@ -27,5 +29,8 @@ class FModelEngine
     void drawTextured();
     void drawGeometry();
 };
+
+//Global Handle
+extern FModelEngine *gModelEngine;
 
 #endif //_F_H_MODEL_ENGINE_

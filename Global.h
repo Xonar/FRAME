@@ -6,43 +6,15 @@
  *      Xonar <Paul le Roux>
  *
  * Description :
- *      Contains all global variables
+ *      Contains all global macro's
  */
 
 #ifndef _F_H_GLOBAL_
 #define _F_H_GLOBAL_
 
-#include "Window/Window.h"
-#include "Engine/FontEngine.h"
-#include "Engine/ModelEngine.h"
-#include "Engine/RenderEngine.h"
-#include "Graphics/Graphics.h"
-#include "Camera/Camera.h"
-#include "Keyboard/Keyboard.h"
-#include "Mouse/Mouse.h"
-#include "Engine/LightEngine.h"
-
 //FRAME
 extern bool gGameOn;
 extern bool gDisplayFrameStats;
-
-extern FWindow *gWindow;
-
-//Engines
-extern FFontEngine *gFontEngine;
-extern FModelEngine *gModelEngine;
-extern FRenderEngine *gRenderEngine;
-extern FLightEngine *gLightEngine;
-
-//Console Font
-extern FFont *gFontConsole;
-
-//Player Camera
-extern FCamera *gCamera;
-
-//IO
-extern FKeyboard *gKeyboard;
-extern FMouse *gMouse;
 
 //TERMINAL COLOUR CODES
 #ifdef COLOUR_TERMINAL

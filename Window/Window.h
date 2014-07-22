@@ -12,6 +12,8 @@
 #ifndef _F_H_WINDOW_
 #define _F_H_WINDOW_
 
+class FWindow;
+
 #include <string>
 
 #include <SDL2/SDL.h>
@@ -49,5 +51,8 @@ public:
   int getWindowHeight() const { return height; }
   int getWindowWidth() const { return width; }
 };
+
+//GLOBAL VARIABLES
+extern FWindow *gWindow;
 
 #endif // _F_H_WINDOW_

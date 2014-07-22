@@ -11,10 +11,9 @@
 
 #include "FontEngine.h"
 
-#include "../Global.h"
-
 #include "../Graphics/Graphics.h"
 #include "../Lib/FGLext.h"
+#include "../Window/Window.h"
 
 FFontEngine::FFontEngine()
 {

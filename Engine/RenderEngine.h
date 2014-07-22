@@ -12,7 +12,8 @@
 #ifndef _F_H_RENDER_ENGINE_
 #define _F_H_RENDER_ENGINE_
 
-#include "ModelEngine.h"
+class FRenderEngine;
+
 #include "../Graphics/Graphics.h"
 #include "../Shader/Shader.h"
 
@@ -54,5 +55,8 @@ class FRenderEngine
 
   void render();
 };
+
+//Global Handle
+extern FRenderEngine *gRenderEngine;
 
 #endif //_F_H_RENDER_ENGINE_

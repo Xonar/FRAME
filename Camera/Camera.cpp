@@ -11,7 +11,6 @@
 
 #include "Camera.h"
 #include "../Graphics/Graphics.h"
-#include "../Global.h"
 #include "../Lib/Log.h"
 
 #define GLM_FORCE_RADIANS
