@@ -77,6 +77,9 @@ int main(int argc, char *argv[])
   initGLFunction();
 
 #ifdef DEBUG
+  //Force Debug Messages
+  glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, 0, GL_TRUE);
+
   //Start Debug Output
   if(glIsExtensionSupported("GL_KHR_debug"))
   {

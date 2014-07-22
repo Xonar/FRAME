@@ -109,6 +109,8 @@ void glVertexAttribLPointer(GLuint index, GLint size, GLenum type, GLsizei strid
 #Other
 const GLubyte* glGetStringi(GLenum name, GLuint index);
 
+void glDebugMessageControl(GLenum source, GLenum type, GLenum severity, GLsizei count, const GLuint *ids, GLboolean enabled);
+
 #Framebuffer
 void glFramebufferTexture(GLenum target, GLenum attachment, GLuint texture, GLint level);
 void glFramebufferTexture1D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
