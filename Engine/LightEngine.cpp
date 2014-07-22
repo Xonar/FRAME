@@ -12,14 +12,13 @@
  
 #include "LightEngine.h"
 #include "../Camera/Camera.h"
+#include "../Shader/ShaderManager.h"
 
 FLightEngine::FLightEngine()
 {
   //Load Shaders
-  this->s_directional = FShader();
-  this->s_directional.loadShader("Shader/FX/3D/3DCompose.glvs", GL_VERTEX_SHADER);
-  this->s_directional.loadShader("Shader/FX/Light/LightDirectional.glfs", GL_FRAGMENT_SHADER);
-  this->s_directional.loadProgram();
+  this->s_directional = *gShaderManager->loadShader("LightDirectional",
+      "Shader/FX/3D/3DCompose.glvs", "Shader/FX/Light/LightDirectional.glfs");
 
   //Get Uniforms
   this->u_directional_d1_sampler = glGetUniformLocation(s_directional.getProgram(), "tDeferred1");

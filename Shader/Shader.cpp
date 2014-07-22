@@ -13,8 +13,8 @@
 
 #include "../Graphics/Graphics.h"
 #include "../Lib/Files.h"
-#include "../Global.h"
 #include "../Lib/Log.h"
+#include "ShaderManager.h"
 
 
 FShader::FShader()
@@ -122,9 +122,9 @@ GLuint FShader::getShader(const GLenum type)
 
 GLint FShader::loadShader(const std::string &shader, const GLenum type)
 {
-  gLogv << "Loading Shader : " << shader << std::endl;
   GLuint* pShader = NULL;
 
+  //Check that the shader isn't overwritten
   switch(type)
   {
     case GL_VERTEX_SHADER:
@@ -169,32 +169,8 @@ GLint FShader::loadShader(const std::string &shader, const GLenum type)
       break;
   }
 
-  std::string shaderSrc = readFileIntoString(shader);
-  if(shaderSrc.compare("") == 0)
-  {
-    gLoge << "Cant compile shader without source!" << std::endl;
-    return 1;
-  }
-
-  GLint result;
-
-  GLuint shader = glCreateShader(type);
-
-  const char* pSrc = &shaderSrc[0];
-
-  glShaderSource(shader, 1, &pSrc, NULL);
-  glCompileShader(shader);
-
-  glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
-
-  if(result == GL_FALSE)
-  {
-    printShaderLog(shader);
-    return 1;
-  }
-
-  if(pShader)
-    *pShader = shader;
+  //Fetch Shader Source
+  *pShader = gShaderManager->getShaderObject(shader, type);
 
   return 0;
 }

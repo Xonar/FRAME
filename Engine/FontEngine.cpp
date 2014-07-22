@@ -13,6 +13,7 @@
 
 #include "../Graphics/Graphics.h"
 #include "../Lib/FGLext.h"
+#include "../Shader/ShaderManager.h"
 #include "../Window/Window.h"
 
 FFontEngine::FFontEngine()
@@ -20,12 +21,8 @@ FFontEngine::FFontEngine()
   this->ibo = this->vbo = this->vao = this->numFonts = 0;
 
   //Init Font Shader
-  this->fontShader = FShader();
-
-  this->fontShader.loadShader("Shader/FX/Text/text.glvs",GL_VERTEX_SHADER);
-  this->fontShader.loadShader("Shader/FX/Text/text.glfs",GL_FRAGMENT_SHADER);
-
-  this->fontShader.loadProgram();
+  this->fontShader = *gShaderManager->loadShader("FontShader", "Shader/FX/Text/text.glvs", 
+                                                            "Shader/FX/Text/text.glfs");
 
   this->uniformFontTexture = glGetUniformLocation(this->fontShader.getProgram(), "Texture");
   

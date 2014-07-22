@@ -10,19 +10,26 @@
  *
  */
 
-#include "Game.h"
-#include "Global.h"
-#include "Texture/Texture.h"
-#include "Model/Model.h"
-#include "Model/ModelLoader.h"
-#include "Material/Material.h"
 #include "Camera/Camera.h"
+#include "Camera/PlayerFreeCamera.h"
+#include "Container/Container.h"
+#include "Engine/ModelEngine.h"
+#include "Engine/LightEngine.h"
+#include "GUI/Font.h"
+#include "Game.h"
 #include "Graphics/Graphics.h"
 #include "Lib/FGLext.h"
-#include "Container/Container.h"
-#include "Time/Time.h"
 #include "Lib/Log.h"
-#include "Camera/PlayerFreeCamera.h"
+#include "Light/Light.h"
+#include "Material/Material.h"
+#include "Model/Model.h"
+#include "Model/Model.h"
+#include "Model/ModelGroup.h"
+#include "Model/ModelLoader.h"
+#include "Shader/Shader.h"
+#include "Texture/Texture.h"
+#include "Time/Time.h"
+#include "Window/Window.h"
 
 //TODO Temp Resources
 FModel **models;

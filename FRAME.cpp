@@ -26,6 +26,7 @@
 #include "Lib/FGLext.h"
 #include "Time/Time.h"
 #include "Lib/Log.h"
+#include "Shader/ShaderManager.h"
 #include "Keyboard/Keyboard.h"
 #include "Mouse/Mouse.h"
 
@@ -43,6 +44,7 @@ bool gDisplayFrameStats = true;
 FTime gFrameTimeCur = {0, 0};
 FTime gFrameTimePrev = {0, 0};
 FTime gFrameTimeDelta = {0, 0};
+FShaderManager* gShaderManager;
 
 int main(int argc, char *argv[])
 {
@@ -102,6 +104,9 @@ int main(int argc, char *argv[])
     gLogw << "No GL Error messages will be displayed!" << std::endl;
   }
 #endif //DEBUG
+
+  //Init Shader Manager
+  gShaderManager = new FShaderManager();
   
   //Init SDL Font Engine
   TTF_Init();
