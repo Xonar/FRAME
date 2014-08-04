@@ -123,6 +123,11 @@ void glGenFramebuffers(GLsizei n, GLuint * buffers);
 void glBindFramebuffer(GLenum target, GLuint framebuffer);
 void glBlitFramebuffer(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1,GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1,GLbitfield mask, GLenum filter);
 
+#Textures
+void glTexStorage2D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height);
+void glTexStorage3D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth);
+void glGenerateMipmap(GLenum target);
+
 #Functions not present in windows
 void glActiveTexture(GLenum texture);
 void glTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid * data);

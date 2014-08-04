@@ -28,29 +28,35 @@ FRenderEngine::FRenderEngine()
   glGenFramebuffers(1, &this->fbo_light);
 
   //Create Textures
+
+  gLogv << "Creating Gbuffer: Color" << std::endl;
   glGenTextures(1, &this->t_deferred_col);
   glBindTexture(GL_TEXTURE_2D, this->t_deferred_col);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8, width, height);
   
+  gLogv << "Creating Gbuffer: Normals" << std::endl;
   glGenTextures(1, &this->t_deferred_norm);
   glBindTexture(GL_TEXTURE_2D, this->t_deferred_norm);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8_SNORM, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8_SNORM, width, height);
 
+  gLogv << "Creating Gbuffer: Depth" << std::endl;
   glGenTextures(1, &this->t_deferred_depth);
   glBindTexture(GL_TEXTURE_2D, this->t_deferred_depth);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, width, height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT24, width, height);
 
+  gLogv << "Creating Gbuffer: Light" << std::endl;
   glGenTextures(1, &this->t_deferred_light);
   glBindTexture(GL_TEXTURE_2D, this->t_deferred_light);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA16F, width, height);
+
 
   //Bind Textures to Framebuffer: fbo_deferred
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_deferred);
@@ -64,6 +70,12 @@ FRenderEngine::FRenderEngine()
   //Set Buffer to draw
   const GLenum drawBuffers[] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
   glDrawBuffers(2, drawBuffers);
+
+  //Check Framebuffer status
+  GLenum fbo_status = glCheckFramebufferStatus( GL_DRAW_FRAMEBUFFER );
+
+  if(fbo_status != GL_FRAMEBUFFER_COMPLETE)
+    gLogw << "Framebuffer status : " << glFramebufferCompleteString(fbo_status) << std::endl;
 
   //Bind Texture to Framebuffer: fbo_light
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_light);
@@ -180,6 +192,10 @@ void FRenderEngine::render()
 
   //Compose scene
 
+  //Set Light FBO
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_light);
+  glClear(GL_COLOR_BUFFER_BIT);
+
   //Bind Textures
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, t_deferred_col);
@@ -190,10 +206,6 @@ void FRenderEngine::render()
   glBindVertexArray(this->vao);
 
   //Lights
-
-  //Set Light FBO
-  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_light);
-  glClear(GL_COLOR_BUFFER_BIT);
 
   //Set Required Blending
   glEnable(GL_BLEND);
