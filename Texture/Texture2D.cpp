@@ -33,11 +33,15 @@ int FTexture2D::loadTextureFromSurface(const SDL_Surface* const surface)
 
     glGenTextures( 1, &glTexture);
     glBindTexture( GL_TEXTURE_2D, glTexture);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
     glTexImage2D( GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE,
                   surface->pixels );
+
+    glGenerateMipmap(GL_TEXTURE_2D);
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   }
   else
   {
