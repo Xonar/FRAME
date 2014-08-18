@@ -18,6 +18,15 @@
 #include "../Engine/LightEngine.h"
 #include "../Engine/ModelEngine.h"
 
+void FRenderEngine::createGBufferTexture(GLuint &tex, GLenum format, GLint width, GLint height)
+{
+  glGenTextures(1, &tex);
+  glBindTexture(GL_TEXTURE_2D, tex);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexStorage2D(GL_TEXTURE_2D, 1, format, width, height);
+}
+
 FRenderEngine::FRenderEngine()
 {
   int width = gWindow->getWindowWidth();
@@ -28,34 +37,18 @@ FRenderEngine::FRenderEngine()
   glGenFramebuffers(1, &this->fbo_light);
 
   //Create Textures
-
   gLogv << "Creating Gbuffer: Color" << std::endl;
-  glGenTextures(1, &this->t_deferred_col);
-  glBindTexture(GL_TEXTURE_2D, this->t_deferred_col);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8, width, height);
+  createGBufferTexture(this->t_deferred_col, GL_RGBA8, width, height);
   
   gLogv << "Creating Gbuffer: Normals" << std::endl;
-  glGenTextures(1, &this->t_deferred_norm);
-  glBindTexture(GL_TEXTURE_2D, this->t_deferred_norm);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8_SNORM, width, height);
+  //createGBufferTexture( this->t_deferred_norm, GL_RGBA8_SNORM, width,height);
+  createGBufferTexture( this->t_deferred_norm, GL_RGBA8, width,height);
 
   gLogv << "Creating Gbuffer: Depth" << std::endl;
-  glGenTextures(1, &this->t_deferred_depth);
-  glBindTexture(GL_TEXTURE_2D, this->t_deferred_depth);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT24, width, height);
+  createGBufferTexture( this->t_deferred_depth, GL_DEPTH_COMPONENT24, width,height);
 
   gLogv << "Creating Gbuffer: Light" << std::endl;
-  glGenTextures(1, &this->t_deferred_light);
-  glBindTexture(GL_TEXTURE_2D, this->t_deferred_light);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA16F, width, height);
+  createGBufferTexture( this->t_deferred_light, GL_RGBA16F, width,height);
 
 
   //Bind Textures to Framebuffer: fbo_deferred
