@@ -36,10 +36,6 @@ int FTexture2DArray::loadTextureFromSurface(const SDL_Surface * const surface[],
 
     glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    //glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_RGBA, max_width, max_height, num, 0, format, 
-    //             GL_UNSIGNED_BYTE, NULL);
-
     glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, max_width, max_height, num);
    
     for(int i = 0;i < num; i++)
