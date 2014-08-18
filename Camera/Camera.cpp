@@ -166,3 +166,8 @@ void FCamera::setInverseMatrixUniform(const GLuint uniform) const
 {
   glUniformMatrix4fv(uniform, 1, GL_FALSE, &svw[0][0] );
 }
+
+void FCamera::setPositionUniform(const GLuint uniform)
+{
+  glUniform3fv(uniform, 1, &this->pos.x);
+}

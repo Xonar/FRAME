@@ -76,6 +76,7 @@ class FCamera
     void setMatrixUniform(const GLuint uniform) const;
 
     void setInverseMatrixUniform(const GLuint uniform) const;
+    void setPositionUniform(const GLuint uniform);
 };
 
 //Global Handle
