@@ -3,7 +3,6 @@
 //Textures of from other renderers
 uniform sampler2D tDeferred1;
 uniform sampler2D tDeferred2;
-uniform sampler2D tDepth;
 
 uniform vec3 uDirection;
 uniform vec3 uDiffuse;
@@ -20,11 +19,11 @@ void main()
   vec4 d2 = texelFetch(tDeferred2, texelPos, 0);
 
   //Calculate Normal
-  vec3 normal = d2.xyz;
+  vec3 normal = d2.xyz  * 2 - 1;
 
   //Calculate reflection vector
-  vec3 reflection = -reflect(uDirection, normal);
-  vec3 camDir = normalize(-fCamDir);
+  vec3 reflection = reflect(uDirection, normal);
+  vec3 camDir = normalize(fCamDir);
   
   //Calculate Lighting
   float lambert = max(dot(normal, uDirection), 0);
