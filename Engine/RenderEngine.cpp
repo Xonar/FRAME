@@ -72,7 +72,7 @@ FRenderEngine::FRenderEngine()
   GLenum fbo_status = glCheckFramebufferStatus( GL_DRAW_FRAMEBUFFER );
 
   if(fbo_status != GL_FRAMEBUFFER_COMPLETE)
-    gLogw << "Framebuffer status : " << glFramebufferCompleteString(fbo_status) << std::endl;
+    gLogw << "Framebuffer status (GBuffer):" << glFramebufferCompleteString(fbo_status) << std::endl;
 
   //Bind Texture to Framebuffer: fbo_light
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_light);
@@ -100,7 +100,7 @@ FRenderEngine::FRenderEngine()
   fbo_status = glCheckFramebufferStatus( GL_DRAW_FRAMEBUFFER );
 
   if(fbo_status != GL_FRAMEBUFFER_COMPLETE)
-    gLogw << "Framebuffer status : " << glFramebufferCompleteString(fbo_status) << std::endl;
+    gLogw << "Framebuffer status (Position): " << glFramebufferCompleteString(fbo_status) << std::endl;
 
   //Load Shaders
   this->s_deferred = *gShaderManager->loadShader("3DCameraDeferred",
