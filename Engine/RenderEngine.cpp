@@ -14,6 +14,7 @@
 #include "../Graphics/Graphics.h"
 #include "../Lib/Log.h"
 #include "../Lib/FGLext.h"
+#include "../Shader/ShaderManager.h"
 #include "../Window/Window.h"
 #include "../Engine/LightEngine.h"
 #include "../Engine/ModelEngine.h"
@@ -86,15 +87,11 @@ FRenderEngine::FRenderEngine()
     gLogw << "Framebuffer status : " << glFramebufferCompleteString(fbo_status) << std::endl;
 
   //Load Shaders
-  this->s_deferred = FShader();
-  this->s_deferred.loadShader("Shader/FX/3D/3DCameraView.glvs", GL_VERTEX_SHADER);
-  this->s_deferred.loadShader("Shader/FX/3D/3DCameraDeferred.glfs", GL_FRAGMENT_SHADER);
-  this->s_deferred.loadProgram();
+  this->s_deferred = *gShaderManager->loadShader("3DCameraDeferred",
+      "Shader/FX/3D/3DCameraView.glvs", "Shader/FX/3D/3DCameraDeferred.glfs");
 
-  this->s_compose = FShader();
-  this->s_compose.loadShader("Shader/FX/3D/3DCompose.glvs", GL_VERTEX_SHADER);
-  this->s_compose.loadShader("Shader/FX/3D/3DCompose.glfs", GL_FRAGMENT_SHADER);
-  this->s_compose.loadProgram();
+  this->s_compose = *gShaderManager->loadShader("3DCompose", "Shader/FX/3D/3DCompose.glvs",
+      "Shader/FX/3D/3DCompose.glfs");
 
   //Get Uniform Locations from them
   this->u_deferred_texture_sampler = glGetUniformLocation(s_deferred.getProgram(), "tTexture");
