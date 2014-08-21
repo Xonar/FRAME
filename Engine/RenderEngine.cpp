@@ -36,6 +36,7 @@ FRenderEngine::FRenderEngine()
   //Create FBOs
   glGenFramebuffers(1, &this->fbo_deferred);
   glGenFramebuffers(1, &this->fbo_light);
+  glGenFramebuffers(1, &this->fbo_pos);
 
   //Create Textures
   gLogv << "Creating Gbuffer: Color" << std::endl;
@@ -51,6 +52,8 @@ FRenderEngine::FRenderEngine()
   gLogv << "Creating Gbuffer: Light" << std::endl;
   createGBufferTexture( this->t_deferred_light, GL_RGBA16F, width,height);
 
+  gLogv << "Creating Gbuffer: Position" << std::endl;
+  createGBufferTexture( this->t_deferred_pos, GL_RGBA16F, width,height);
 
   //Bind Textures to Framebuffer: fbo_deferred
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_deferred);
@@ -80,8 +83,21 @@ FRenderEngine::FRenderEngine()
   glDrawBuffers(1, drawBuffers);
 
   //Check Framebuffer status
-  GLenum fbo_status = glCheckFramebufferStatus( GL_DRAW_FRAMEBUFFER );
+  fbo_status = glCheckFramebufferStatus( GL_DRAW_FRAMEBUFFER );
 
+  if(fbo_status != GL_FRAMEBUFFER_COMPLETE)
+    gLogw << "Framebuffer status (Light): " << glFramebufferCompleteString(fbo_status) << std::endl;
+
+  //Bind Textures to Framebuffer: fbo_pos
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_pos);
+  glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                          this->t_deferred_pos, 0);
+
+  //Set Buffer to draw
+  glDrawBuffers(1, drawBuffers);
+
+  //Check Framebuffer status
+  fbo_status = glCheckFramebufferStatus( GL_DRAW_FRAMEBUFFER );
 
   if(fbo_status != GL_FRAMEBUFFER_COMPLETE)
     gLogw << "Framebuffer status : " << glFramebufferCompleteString(fbo_status) << std::endl;
@@ -93,6 +109,9 @@ FRenderEngine::FRenderEngine()
   this->s_compose = *gShaderManager->loadShader("3DCompose", "Shader/FX/3D/3DCompose.glvs",
       "Shader/FX/3D/3DCompose.glfs");
 
+  this->s_pos = *gShaderManager->loadShader("3DPositionDeferred", "Shader/FX/3D/3DCompose.glvs",
+      "Shader/FX/3D/3DPositionDeferred.glfs");
+
   //Get Uniform Locations from them
   this->u_deferred_texture_sampler = glGetUniformLocation(s_deferred.getProgram(), "tTexture");
   this->u_deferred_normal_sampler = glGetUniformLocation(s_deferred.getProgram(), "tNormal");
@@ -101,7 +120,12 @@ FRenderEngine::FRenderEngine()
 
   this->u_compose_deferred_1_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred1");
   this->u_compose_deferred_2_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred2");
+  this->u_compose_deferred_3_sampler = glGetUniformLocation(s_compose.getProgram(), "tDeferred3");
   this->u_compose_light_sampler = glGetUniformLocation(s_compose.getProgram(), "tLight");
+
+  this->u_pos_depth_sampler = glGetUniformLocation(s_pos.getProgram(), "tDepth");
+  this->u_pos_cam_pos_vec = glGetUniformLocation(s_pos.getProgram(), "uCamPos");
+  this->u_pos_svw = glGetUniformLocation(s_pos.getProgram(), "ScreenViewWorldMatrix");
 
   //Bind Samplers to texture units
   s_deferred.bind();
@@ -112,8 +136,11 @@ FRenderEngine::FRenderEngine()
   s_compose.bind();
   glUniform1i(u_compose_deferred_1_sampler, 0);
   glUniform1i(u_compose_deferred_2_sampler, 1);
-  glUniform1i(u_compose_light_sampler, 3); //Leave space for in texture unit 2 incase
-                                           //sudden extra data requirements
+  glUniform1i(u_compose_deferred_3_sampler, 2);
+  glUniform1i(u_compose_light_sampler, 3);
+
+  s_pos.bind();
+  glUniform1i(u_pos_depth_sampler, 4);
 
   //Create Quad for Deferred pass
   glGenBuffers(1, &this->ibo);
@@ -182,20 +209,42 @@ void FRenderEngine::render()
 
   //Compose scene
 
-  //Set Light FBO
-  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_light);
-  glClear(GL_COLOR_BUFFER_BIT);
-
   //Bind Textures
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, t_deferred_col);
   glActiveTexture(GL_TEXTURE1);
   glBindTexture(GL_TEXTURE_2D, t_deferred_norm);
+  glActiveTexture(GL_TEXTURE4);
+  glBindTexture(GL_TEXTURE_2D, t_deferred_depth);
 
   //Bind screen quad VAO
   glBindVertexArray(this->vao);
 
+  //Create Position G-Buffer
+
+  //Bind Shader
+  s_pos.bind();
+
+  //Set Position FBO
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_pos);
+  //glClear - no clear necesarry as everything is drawn over
+
+  //Set Camera Uniforms
+  gCamera->setPositionUniform(this->u_pos_cam_pos_vec);
+  gCamera->setInverseMatrixUniform(this->u_pos_svw);
+
+  //Draw Position GBuffer
+  glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, NULL);
+
   //Lights
+
+  //Set Light FBO
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->fbo_light);
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  //Bind Position GBuffer
+  glActiveTexture(GL_TEXTURE3);
+  glBindTexture(GL_TEXTURE_2D, t_deferred_pos);
 
   //Set Required Blending
   glEnable(GL_BLEND);

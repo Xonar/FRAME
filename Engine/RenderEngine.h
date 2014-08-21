@@ -23,16 +23,19 @@ class FRenderEngine
   //FBO's
   GLuint fbo_deferred;
   GLuint fbo_light;
+  GLuint fbo_pos;
 
   //Textures
   GLuint t_deferred_col;
   GLuint t_deferred_norm;
   GLuint t_deferred_depth;
   GLuint t_deferred_light;
+  GLuint t_deferred_pos;
 
   //Shaders
   FShader s_deferred;
   FShader s_compose;
+  FShader s_pos;
 
   //Uniforms
   GLuint u_deferred_wvs_matrix;
@@ -40,9 +43,15 @@ class FRenderEngine
   GLuint u_deferred_texture_sampler;
   GLuint u_deferred_normal_sampler;
   GLuint u_deferred_height_sampler;
+
   GLuint u_compose_deferred_1_sampler;
   GLuint u_compose_deferred_2_sampler;
+  GLuint u_compose_deferred_3_sampler;
   GLuint u_compose_light_sampler;
+
+  GLuint u_pos_depth_sampler;
+  GLuint u_pos_cam_pos_vec;
+  GLuint u_pos_svw;
 
   //Deferred Qua
   GLuint vao;
