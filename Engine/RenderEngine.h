@@ -49,6 +49,9 @@ class FRenderEngine
   GLuint vbo;
   GLuint ibo;
 
+  //Private Functions used to reduce code size
+  void createGBufferTexture(GLuint &tex, GLenum format, GLint width, GLint height);
+
  public:
   FRenderEngine();
   void Init();
